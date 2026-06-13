@@ -24,8 +24,7 @@ const LEVEL_TITLES: Record<string, string> = {
   "3.3": "Change the behavior", "3.4": "Add a delay", "3.5": "Conditions",
   "4.1": "Fill in the blanks", "4.2": "Add a component",
   "4.3": "Create an automation", "4.4": "Write a complete config",
-  "5.1": "Flash your first device", "5.2": "Debug with logs",
-  "5.3": "OTA updates", "5.4": "Integration with Home Assistant",
+  "5.1": "Debug with logs", "5.2": "Integration with Home Assistant",
   "6.1": "Lambdas", "6.2": "Custom components", "6.3": "I2C and SPI devices",
 }
 
@@ -85,7 +84,7 @@ function Breadcrumb() {
 export function Header() {
   const { completedLevels, streak, achievements } = useProgressStore()
   const { theme, setTheme } = useTheme()
-  const totalLevels = 25
+  const totalLevels = 23
   const progressPercent = (completedLevels.length / totalLevels) * 100
 
   return (

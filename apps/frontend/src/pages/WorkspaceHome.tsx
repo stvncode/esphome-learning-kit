@@ -90,7 +90,7 @@ export function WorkspaceHome() {
           <h1 className="text-2xl font-bold tracking-tight">Workspace</h1>
         </div>
         <p className="text-sm text-muted-foreground">
-          Build your ESPHome config visually, then export ready-to-flash YAML.
+          Build your ESPHome config visually, then export YAML to flash with ESPHome.
         </p>
       </div>
 

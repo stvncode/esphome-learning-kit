@@ -30,8 +30,8 @@ export function HomeHero() {
           </h1>
         </div>
         <p className="text-muted-foreground leading-relaxed max-w-md">
-          Go from zero to flashing real hardware. Start with drag-and-drop flows, discover the
-          YAML behind them, then write complete configs yourself.
+          Go from zero to real hardware. Start with drag-and-drop flows, discover the
+          YAML behind them, then write complete configs to flash with ESPHome.
         </p>
         <div className="flex gap-3">
           <Button asChild size="lg" className="gap-2">
@@ -51,8 +51,8 @@ export function HomeHero() {
         <div className="flex gap-6 pt-2">
           {[
             { label: "Phases", value: "6" },
-            { label: "Levels", value: "25" },
-            { label: "Your Progress", value: `${Math.round((completedLevels.length / 25) * 100)}%` },
+            { label: "Levels", value: "23" },
+            { label: "Your Progress", value: `${Math.round((completedLevels.length / 23) * 100)}%` },
           ].map((s) => (
             <div key={s.label}>
               <p className="text-2xl font-bold">{s.value}</p>

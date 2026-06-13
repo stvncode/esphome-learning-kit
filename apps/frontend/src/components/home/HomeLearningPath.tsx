@@ -51,11 +51,11 @@ const PHASES = [
   {
     id: 5,
     title: "Real Hardware",
-    description: "Flash devices and integrate with Home Assistant",
+    description: "Debug with logs and integrate with Home Assistant",
     icon: Wifi,
     color: "from-cyan-500 to-teal-500",
     bgGlow: "bg-cyan-500/20",
-    levels: 4,
+    levels: 2,
     firstLevel: "5.1",
   },
   {
@@ -93,7 +93,7 @@ export function HomeLearningPath() {
           <p className="text-sm text-muted-foreground mt-1">Six phases, each building on the last.</p>
         </div>
         <Badge variant="outline" className="text-muted-foreground">
-          6 Phases · 25 Levels
+          6 Phases · 23 Levels
         </Badge>
       </motion.div>
 

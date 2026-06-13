@@ -21,7 +21,7 @@ const FEATURES = [
   {
     icon: Wifi,
     title: "Real Hardware",
-    desc: "Export your config, flash your ESP32, and it shows up in Home Assistant. From learning to production in minutes.",
+    desc: "Export your config and flash it with ESPHome — your device shows up in Home Assistant. From learning to production in minutes.",
     gradient: "from-green-500/10 to-emerald-500/10",
     iconColor: "text-green-500",
     border: "border-green-500/20",

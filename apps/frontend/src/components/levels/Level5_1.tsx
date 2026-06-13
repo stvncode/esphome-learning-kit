@@ -1,158 +1,126 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import {
   CheckCircle2,
   ChevronRight,
-  ChevronDown,
+  Play,
+  AlertTriangle,
+  Info,
   XCircle,
   Terminal,
-  Usb,
-  Wifi,
-  FileCode,
-  Cpu,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
-interface Step {
-  id: string
-  number: number
-  title: string
-  icon: React.ElementType
-  iconColor: string
-  iconBg: string
-  explanation: string
+interface LogLine {
+  level: "I" | "W" | "E"
+  tag: string
+  line: string
+  message: string
 }
 
-const steps: Step[] = [
+const LOG_LINES: LogLine[] = [
+  { level: "I", tag: "app:029", line: "29", message: "ESPHome version 2024.1.0" },
+  { level: "I", tag: "wifi:103", line: "103", message: "Connecting to WiFi..." },
+  { level: "I", tag: "wifi:104", line: "104", message: "Connected! IP: 192.168.1.42" },
+  { level: "I", tag: "binary_sensor:013", line: "013", message: "'My Button': Sending state ON" },
+  { level: "W", tag: "component:214", line: "214", message: "Component gpio has a call chain longer than 10" },
+  { level: "E", tag: "gpio:102", line: "102", message: "Pin GPIO34 is input-only! Cannot use as output" },
+  { level: "I", tag: "light:036", line: "036", message: "'My Light': Setting brightness: 100%" },
+]
+
+const LOG_DELAY_MS = 600
+
+interface RadioOption {
+  id: string
+  text: string
+  correct: boolean
+}
+
+const radioOptions: RadioOption[] = [
   {
-    id: "write",
-    number: 1,
-    title: "Write your config",
-    icon: FileCode,
-    iconColor: "text-cyan-400",
-    iconBg: "bg-cyan-500/20",
-    explanation:
-      "Create a YAML file (e.g. my-device.yaml) with your ESPHome configuration. This defines the device name, WiFi credentials, and all your components like buttons and lights.",
+    id: "a",
+    text: "WiFi failed to connect to the network",
+    correct: false,
   },
   {
-    id: "connect",
-    number: 2,
-    title: "Connect device via USB",
-    icon: Usb,
-    iconColor: "text-cyan-400",
-    iconBg: "bg-cyan-500/20",
-    explanation:
-      "Plug your ESP32 into your computer using a USB data cable (not a charge-only cable). Your OS will assign it a serial port like /dev/ttyUSB0 (Linux/Mac) or COM3 (Windows).",
+    id: "b",
+    text: "GPIO34 is input-only and can't be used as output",
+    correct: true,
   },
   {
-    id: "flash",
-    number: 3,
-    title: "Run esphome run config.yaml",
-    icon: Terminal,
-    iconColor: "text-cyan-400",
-    iconBg: "bg-cyan-500/20",
-    explanation:
-      "ESPHome compiles your YAML into firmware, then uploads it to the device over USB using the esptool. The first flash always requires USB — subsequent updates can be done over WiFi (OTA).",
-  },
-  {
-    id: "wifi",
-    number: 4,
-    title: "Device connects to WiFi",
-    icon: Wifi,
-    iconColor: "text-cyan-400",
-    iconBg: "bg-cyan-500/20",
-    explanation:
-      "After flashing, the device boots and connects to your WiFi network using the credentials in the config. You'll see its IP address in the logs. From here it can be controlled over the network.",
+    id: "c",
+    text: "The light brightness was set too high",
+    correct: false,
   },
 ]
 
-interface Question {
-  id: string
-  question: string
-  answers: { id: string; text: string }[]
-  correctId: string
-  explanation: string
+const logLevelIcon = (level: "I" | "W" | "E") => {
+  if (level === "E") return <XCircle className="h-3.5 w-3.5 text-red-500 shrink-0" />
+  if (level === "W") return <AlertTriangle className="h-3.5 w-3.5 text-yellow-500 shrink-0" />
+  return <Info className="h-3.5 w-3.5 text-blue-400 shrink-0" />
 }
 
-const questions: Question[] = [
-  {
-    id: "q1",
-    question: "What command do you run to flash an ESPHome device for the first time?",
-    answers: [
-      { id: "a", text: "esphome flash config.yaml" },
-      { id: "b", text: "esphome run config.yaml" },
-      { id: "c", text: "esphome upload config.yaml" },
-      { id: "d", text: "esphome build config.yaml" },
-    ],
-    correctId: "b",
-    explanation:
-      "esphome run config.yaml compiles the firmware and immediately flashes it to the connected device. esphome compile only builds without flashing.",
-  },
-  {
-    id: "q2",
-    question: "What does ESPHome do after the device is successfully flashed?",
-    answers: [
-      { id: "a", text: "It powers off and waits for manual reboot" },
-      { id: "b", text: "It reboots the device and it connects to WiFi" },
-      { id: "c", text: "It asks you to re-enter WiFi credentials" },
-      { id: "d", text: "It opens a browser window to configure the device" },
-    ],
-    correctId: "b",
-    explanation:
-      "After flashing, the device automatically reboots. It then runs the newly flashed firmware and connects to the WiFi network specified in the config.",
-  },
-]
+const logLevelColor = (level: "I" | "W" | "E") => {
+  if (level === "E") return "text-red-400"
+  if (level === "W") return "text-yellow-400"
+  return "text-muted-foreground"
+}
 
 export function Level5_1() {
-  const [openSteps, setOpenSteps] = useState<Set<string>>(new Set())
-  const [answers, setAnswers] = useState<Record<string, string>>({})
-  const [submitted, setSubmitted] = useState<Record<string, boolean>>({})
+  const [playing, setPlaying] = useState(false)
+  const [visibleCount, setVisibleCount] = useState(0)
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
+  const [submitted, setSubmitted] = useState(false)
   const [levelComplete, setLevelComplete] = useState(false)
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const { completeLevel, completedLevels } = useProgressStore()
   const isCompleted = completedLevels.includes("5.1")
 
-  const allStepsRead = openSteps.size === steps.length
+  const logsFinished = visibleCount >= LOG_LINES.length
 
-  const toggleStep = (id: string) => {
-    const next = new Set(openSteps)
-    if (next.has(id)) {
-      next.delete(id)
-    } else {
-      next.add(id)
+  const handlePlay = () => {
+    if (playing || logsFinished) return
+    setPlaying(true)
+  }
+
+  useEffect(() => {
+    if (!playing) return
+    if (visibleCount >= LOG_LINES.length) {
+      setPlaying(false)
+      return
     }
-    setOpenSteps(next)
-  }
+    intervalRef.current = setInterval(() => {
+      setVisibleCount((prev) => {
+        if (prev >= LOG_LINES.length) {
+          clearInterval(intervalRef.current!)
+          setPlaying(false)
+          return prev
+        }
+        return prev + 1
+      })
+    }, LOG_DELAY_MS)
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current)
+    }
+  }, [playing])
 
-  const handleAnswer = (questionId: string, answerId: string) => {
-    if (submitted[questionId]) return
-    const newAnswers = { ...answers, [questionId]: answerId }
-    const newSubmitted = { ...submitted, [questionId]: true }
-    setAnswers(newAnswers)
-    setSubmitted(newSubmitted)
-
-    if (Object.keys(newSubmitted).length === questions.length) {
-      const allCorrect = questions.every((q) => newAnswers[q.id] === q.correctId)
-      if (allCorrect && !levelComplete) {
-        setLevelComplete(true)
-        completeLevel("5.1")
-      }
+  const handleSubmit = () => {
+    if (!selectedAnswer) return
+    setSubmitted(true)
+    const correct = radioOptions.find((o) => o.id === selectedAnswer)?.correct ?? false
+    if (correct && !levelComplete) {
+      setLevelComplete(true)
+      completeLevel("5.1")
     }
   }
 
-  const allAnswered = Object.keys(submitted).length === questions.length
-  const allCorrect = questions.every((q) => answers[q.id] === q.correctId)
-
-  const reset = () => {
-    setAnswers({})
-    setSubmitted({})
-    setLevelComplete(false)
-  }
+  const correctOption = radioOptions.find((o) => o.correct)
 
   return (
     <div className="mx-auto max-w-4xl p-8">
@@ -167,247 +135,199 @@ export function Level5_1() {
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Flash Your First Device</h1>
+        <h1 className="mb-2 text-3xl font-bold">Debug with Logs</h1>
         <p className="text-lg text-muted-foreground">
-          Learn the ESPHome flashing process step by step, then answer a quick quiz.
+          Read a simulated ESPHome log and identify what went wrong.
         </p>
       </div>
 
-      {/* Timeline */}
-      <div className="mb-8 space-y-3">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground mb-4">
-          The Flashing Process — click each step to learn more
-        </h2>
-        {steps.map((step, idx) => {
-          const Icon = step.icon
-          const isOpen = openSteps.has(step.id)
-          const isRead = openSteps.has(step.id)
-          return (
-            <div key={step.id} className="flex gap-4">
-              {/* Timeline connector */}
-              <div className="flex flex-col items-center">
-                <div
-                  className={cn(
-                    "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold transition-colors",
-                    isRead ? "bg-green-500/20 text-green-400" : "bg-muted text-muted-foreground"
-                  )}
-                >
-                  {isRead ? <CheckCircle2 className="h-4 w-4" /> : step.number}
-                </div>
-                {idx < steps.length - 1 && (
-                  <div className={cn("mt-1 w-px flex-1 min-h-[1.5rem]", isRead ? "bg-green-500/30" : "bg-border/50")} />
-                )}
-              </div>
+      {/* Info card */}
+      <Card className="mb-6 border-cyan-500/30 bg-cyan-500/5">
+        <CardContent className="flex items-start gap-4 py-4">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-cyan-500/20">
+            <Terminal className="h-5 w-5 text-cyan-400" />
+          </div>
+          <div>
+            <p className="font-medium text-foreground">Reading ESPHome logs</p>
+            <p className="text-sm text-muted-foreground">
+              Logs have three levels:{" "}
+              <span className="text-blue-400 font-mono">[I]</span> INFO — normal operation,{" "}
+              <span className="text-yellow-400 font-mono">[W]</span> WARNING — something may be wrong,{" "}
+              <span className="text-red-400 font-mono">[E]</span> ERROR — something failed.
+              Errors are the first place to look when a device isn't working.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
-              {/* Step card */}
-              <Card
+      {/* Log viewer */}
+      <Card className="mb-8 border-border/50 bg-card/50">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Terminal className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm">Simulated Log Output</CardTitle>
+            </div>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={handlePlay}
+              disabled={playing || logsFinished}
+            >
+              <Play className="mr-2 h-3 w-3" />
+              {logsFinished ? "Log complete" : playing ? "Playing…" : "Play logs"}
+            </Button>
+          </div>
+          <CardDescription className="text-xs">
+            Watch the log stream in real time
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="rounded-lg border border-border/50 bg-gray-950 p-4 min-h-[240px] font-mono text-xs space-y-1">
+            {LOG_LINES.slice(0, visibleCount).map((line, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.2 }}
                 className={cn(
-                  "mb-2 flex-1 border-border/50 bg-card/50 overflow-hidden transition-colors",
-                  isRead && "border-cyan-500/30"
+                  "flex items-start gap-2",
+                  line.level === "E" && "bg-red-500/10 -mx-4 px-4 py-0.5 rounded"
                 )}
               >
-                <button
-                  onClick={() => toggleStep(step.id)}
-                  className="flex w-full items-center gap-4 p-4 text-left"
-                >
-                  <div
-                    className={cn(
-                      "flex h-9 w-9 shrink-0 items-center justify-center rounded-lg",
-                      step.iconBg
-                    )}
-                  >
-                    <Icon className={cn("h-4 w-4", step.iconColor)} />
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-sm">{step.title}</p>
-                  </div>
-                  <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                    <ChevronDown className="h-4 w-4 text-muted-foreground" />
-                  </motion.div>
-                </button>
+                {logLevelIcon(line.level)}
+                <span className={cn("font-mono", logLevelColor(line.level))}>
+                  [{line.level}][{line.tag}]: {line.message}
+                </span>
+              </motion.div>
+            ))}
+            {visibleCount === 0 && (
+              <p className="text-muted-foreground/40 text-center pt-8">
+                Press "Play logs" to start the simulation
+              </p>
+            )}
+          </div>
+        </CardContent>
+      </Card>
 
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.2 }}
+      {/* Quiz — shown after logs finish */}
+      <AnimatePresence>
+        {logsFinished && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <Card className="border-border/50 bg-card/50">
+              <CardHeader>
+                <CardTitle className="text-base">What went wrong?</CardTitle>
+                <CardDescription>
+                  Based on the ERROR line in the log above, select the correct diagnosis.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                {radioOptions.map((option) => {
+                  const isSelected = selectedAnswer === option.id
+                  const showResult = submitted
+                  const showCorrect = showResult && option.correct
+                  const showWrong = showResult && isSelected && !option.correct
+
+                  return (
+                    <motion.button
+                      key={option.id}
+                      onClick={() => !submitted && setSelectedAnswer(option.id)}
+                      disabled={submitted}
+                      whileHover={!submitted ? { scale: 1.01 } : {}}
+                      whileTap={!submitted ? { scale: 0.99 } : {}}
+                      className={cn(
+                        "flex w-full items-center gap-3 rounded-lg border-2 p-3 text-left text-sm transition-all",
+                        showCorrect
+                          ? "border-green-500 bg-green-500/10 text-green-400"
+                          : showWrong
+                          ? "border-red-500 bg-red-500/10 text-red-400"
+                          : isSelected
+                          ? "border-primary bg-primary/5"
+                          : "border-border/50 hover:border-border hover:bg-muted/50"
+                      )}
                     >
-                      <div className="border-t border-border/50 px-4 py-3">
-                        <p className="text-sm text-muted-foreground">{step.explanation}</p>
+                      <div
+                        className={cn(
+                          "flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
+                          showCorrect
+                            ? "border-green-500 bg-green-500/20"
+                            : showWrong
+                            ? "border-red-500 bg-red-500/20"
+                            : isSelected
+                            ? "border-primary bg-primary/20"
+                            : "border-muted-foreground/40"
+                        )}
+                      >
+                        {showCorrect && <CheckCircle2 className="h-3 w-3 text-green-500" />}
+                        {showWrong && <XCircle className="h-3 w-3 text-red-500" />}
                       </div>
+                      {option.text}
+                    </motion.button>
+                  )
+                })}
+
+                {!submitted && (
+                  <Button
+                    onClick={handleSubmit}
+                    disabled={!selectedAnswer}
+                    className="w-full mt-2"
+                  >
+                    Submit Answer
+                  </Button>
+                )}
+
+                <AnimatePresence>
+                  {submitted && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      className="space-y-4 overflow-hidden"
+                    >
+                      <div
+                        className={cn(
+                          "rounded-lg p-4 text-sm",
+                          levelComplete
+                            ? "border border-green-500/30 bg-green-500/5 text-green-300"
+                            : "border border-red-500/30 bg-red-500/5 text-red-300"
+                        )}
+                      >
+                        {levelComplete ? (
+                          <>
+                            <p className="font-medium mb-1">Correct!</p>
+                            <p className="text-xs text-muted-foreground">
+                              The ERROR line{" "}
+                              <code className="font-mono">[E][gpio:102]: Pin GPIO34 is input-only!</code>{" "}
+                              means you tried to use GPIO34 as an output pin, but it only supports input.
+                              Use a different GPIO pin for your light.
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <p className="font-medium mb-1">Not quite.</p>
+                            <p className="text-xs">
+                              Look at the red ERROR line in the log. The correct answer is:{" "}
+                              <span className="font-medium">{correctOption?.text}</span>
+                            </p>
+                          </>
+                        )}
+                      </div>
+
+                      {levelComplete && (
+                        <Button asChild className="w-full">
+                          <Link to="/app/level/5.2">
+                            Continue to Level 5.2
+                            <ChevronRight className="ml-2 h-4 w-4" />
+                          </Link>
+                        </Button>
+                      )}
                     </motion.div>
                   )}
                 </AnimatePresence>
-              </Card>
-            </div>
-          )
-        })}
-      </div>
-
-      {/* Progress notice */}
-      {!allStepsRead && (
-        <div className="mb-6 rounded-lg border border-cyan-500/30 bg-cyan-500/5 p-4 text-sm text-cyan-300 text-center">
-          Read all {steps.length} steps to unlock the quiz ({openSteps.size}/{steps.length} read)
-        </div>
-      )}
-
-      {/* Quiz */}
-      <AnimatePresence>
-        {allStepsRead && (
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-6"
-          >
-            <div className="flex items-center gap-3">
-              <Cpu className="h-5 w-5 text-cyan-400" />
-              <h2 className="text-lg font-semibold">Quiz — answer both correctly to complete</h2>
-            </div>
-
-            {questions.map((q, qi) => {
-              const userAnswer = answers[q.id]
-              const isSubmitted = submitted[q.id]
-              return (
-                <Card
-                  key={q.id}
-                  className={cn(
-                    "border-border/50 bg-card/50",
-                    isSubmitted && userAnswer === q.correctId && "border-green-500/30",
-                    isSubmitted && userAnswer !== q.correctId && "border-red-500/30"
-                  )}
-                >
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start gap-3">
-                      <div
-                        className={cn(
-                          "flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold",
-                          isSubmitted && userAnswer === q.correctId
-                            ? "bg-green-500/20 text-green-400"
-                            : isSubmitted && userAnswer !== q.correctId
-                            ? "bg-red-500/20 text-red-400"
-                            : "bg-muted text-muted-foreground"
-                        )}
-                      >
-                        {qi + 1}
-                      </div>
-                      <CardTitle className="text-sm leading-relaxed">{q.question}</CardTitle>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-2">
-                      {q.answers.map((answer) => {
-                        const isSelected = userAnswer === answer.id
-                        const isCorrect = answer.id === q.correctId
-                        const showCorrect = isSubmitted && isCorrect
-                        const showWrong = isSubmitted && isSelected && !isCorrect
-                        return (
-                          <motion.button
-                            key={answer.id}
-                            onClick={() => handleAnswer(q.id, answer.id)}
-                            disabled={isSubmitted}
-                            whileHover={!isSubmitted ? { scale: 1.01 } : {}}
-                            whileTap={!isSubmitted ? { scale: 0.99 } : {}}
-                            className={cn(
-                              "flex w-full items-center gap-3 rounded-lg border-2 p-3 text-left text-sm transition-all",
-                              showCorrect
-                                ? "border-green-500 bg-green-500/10 text-green-400"
-                                : showWrong
-                                ? "border-red-500 bg-red-500/10 text-red-400"
-                                : isSelected
-                                ? "border-primary bg-primary/5"
-                                : "border-border/50 hover:border-border hover:bg-muted/50"
-                            )}
-                          >
-                            <div
-                              className={cn(
-                                "flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs font-bold",
-                                showCorrect ? "bg-green-500/20" : showWrong ? "bg-red-500/20" : "bg-muted"
-                              )}
-                            >
-                              {showCorrect ? (
-                                <CheckCircle2 className="h-4 w-4 text-green-500" />
-                              ) : showWrong ? (
-                                <XCircle className="h-4 w-4 text-red-500" />
-                              ) : (
-                                answer.id.toUpperCase()
-                              )}
-                            </div>
-                            {answer.text}
-                          </motion.button>
-                        )
-                      })}
-                    </div>
-                    <AnimatePresence>
-                      {isSubmitted && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          className="mt-3 overflow-hidden"
-                        >
-                          <div
-                            className={cn(
-                              "rounded-lg p-3 text-xs",
-                              userAnswer === q.correctId
-                                ? "border border-green-500/30 bg-green-500/5 text-green-300"
-                                : "border border-red-500/30 bg-red-500/5 text-red-300"
-                            )}
-                          >
-                            <span className="font-medium">
-                              {userAnswer === q.correctId ? "Correct! " : "Not quite — "}
-                            </span>
-                            {q.explanation}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </CardContent>
-                </Card>
-              )
-            })}
-
-            <AnimatePresence>
-              {allAnswered && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
-                  <Card
-                    className={cn(
-                      "border",
-                      allCorrect
-                        ? "border-green-500/30 bg-green-500/5"
-                        : "border-amber-500/30 bg-amber-500/5"
-                    )}
-                  >
-                    <CardContent className="py-6 text-center">
-                      {allCorrect ? (
-                        <>
-                          <CheckCircle2 className="h-10 w-10 text-green-500 mx-auto mb-3" />
-                          <h3 className="mb-2 text-xl font-bold">Perfect!</h3>
-                          <p className="mb-6 text-sm text-muted-foreground">
-                            You understand the flashing process. On to debugging!
-                          </p>
-                          <Button asChild>
-                            <Link to="/app/level/5.2">
-                              Continue to Level 5.2
-                              <ChevronRight className="ml-2 h-4 w-4" />
-                            </Link>
-                          </Button>
-                        </>
-                      ) : (
-                        <>
-                          <p className="mb-4 text-sm text-muted-foreground">
-                            Review the explanations and try the quiz again.
-                          </p>
-                          <Button variant="outline" onClick={reset}>
-                            Try Again
-                          </Button>
-                        </>
-                      )}
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              )}
-            </AnimatePresence>
+              </CardContent>
+            </Card>
           </motion.div>
         )}
       </AnimatePresence>

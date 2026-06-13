@@ -17,8 +17,8 @@ const STEPS = [
   {
     n: "03",
     icon: Cpu,
-    title: "Flash & automate",
-    desc: "Export your config and flash your ESP32. Your device shows up in Home Assistant, ready to automate.",
+    title: "Export & deploy",
+    desc: "Export your config and open it in ESPHome to flash your ESP32. Your device shows up in Home Assistant, ready to automate.",
   },
 ]
 
@@ -33,7 +33,7 @@ export function HowItWorksSection() {
           className="mb-16 text-center"
         >
           <p className="mb-3 text-sm font-medium text-primary">The path</p>
-          <h2 className="text-3xl font-bold text-foreground">From zero to flashed — step by step</h2>
+          <h2 className="text-3xl font-bold text-foreground">From zero to deployed — step by step</h2>
         </motion.div>
 
         <div className="relative grid gap-8 md:grid-cols-3">

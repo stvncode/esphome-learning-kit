@@ -411,8 +411,8 @@ export function Level6_3() {
                       ))}
                     </div>
                     <p className="mb-6 text-sm text-muted-foreground">
-                      You now have the full ESPHome toolkit — from first flash all the way to custom
-                      C++ components. Go build something amazing.
+                      You now have the full ESPHome toolkit — from your first visual flow all the way
+                      to custom C++ components. Go build something amazing.
                     </p>
                     <div className="flex justify-center">
                       <Badge className="bg-gradient-to-r from-pink-500/20 to-violet-500/20 px-4 py-2 text-base text-pink-300">

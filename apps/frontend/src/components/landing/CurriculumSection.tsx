@@ -6,7 +6,7 @@ const PHASES = [
   { id: 2, title: "Revealing the Code",     icon: Code2,     color: "from-blue-500 to-cyan-500",     levels: 4 },
   { id: 3, title: "Guided Editing",         icon: Pencil,    color: "from-green-500 to-emerald-500", levels: 5 },
   { id: 4, title: "Building from Scratch",  icon: Hammer,    color: "from-purple-500 to-pink-500",   levels: 4 },
-  { id: 5, title: "Real Hardware",          icon: Wifi,      color: "from-cyan-500 to-teal-500",     levels: 4 },
+  { id: 5, title: "Real Hardware",          icon: Wifi,      color: "from-cyan-500 to-teal-500",     levels: 2 },
   { id: 6, title: "Advanced Topics",        icon: Sparkles,  color: "from-pink-500 to-rose-500",     levels: 3 },
 ]
 
@@ -22,7 +22,7 @@ export function CurriculumSection() {
         >
           <div>
             <p className="mb-2 text-sm font-medium text-primary">Curriculum</p>
-            <h2 className="text-3xl font-bold text-foreground">6 phases. 25 levels.</h2>
+            <h2 className="text-3xl font-bold text-foreground">6 phases. 23 levels.</h2>
           </div>
           <span className="text-sm text-muted-foreground">From first click to advanced config</span>
         </motion.div>

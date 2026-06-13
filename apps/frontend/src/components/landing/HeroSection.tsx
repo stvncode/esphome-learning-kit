@@ -49,8 +49,8 @@ export function HeroSection({ opacity, y }: HeroSectionProps) {
                 </span>
               </h1>
               <p className="max-w-md text-lg leading-relaxed text-muted-foreground">
-                Learn ESPHome through 25 guided levels. Start by dragging visual flows, watch the
-                YAML generate live, then flash real hardware. All in one place.
+                Learn ESPHome through 23 guided levels. Start by dragging visual flows, watch the
+                YAML generate live, then export it to flash with ESPHome on real hardware.
               </p>
             </div>
 
@@ -68,7 +68,7 @@ export function HeroSection({ opacity, y }: HeroSectionProps) {
 
             <div className="flex gap-8 border-t border-border pt-6">
               {[
-                { value: "25", label: "Guided levels" },
+                { value: "23", label: "Guided levels" },
                 { value: "6", label: "Phases" },
                 { value: "Workspace", label: "Builder + YAML editor" },
               ].map((s) => (
@@ -163,7 +163,7 @@ export function HeroSection({ opacity, y }: HeroSectionProps) {
               </div>
               <div>
                 <p className="text-xs font-medium text-foreground">ESP32-C6</p>
-                <p className="text-[10px] text-muted-foreground">Ready to flash</p>
+                <p className="text-[10px] text-muted-foreground">Ready for ESPHome</p>
               </div>
             </motion.div>
           </motion.div>

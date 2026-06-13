@@ -75,10 +75,8 @@ const phases = [
     color: "text-cyan-400",
     bgColor: "bg-cyan-400/10",
     levels: [
-      { id: "5.1", title: "Flash your first device" },
-      { id: "5.2", title: "Debug with logs" },
-      { id: "5.3", title: "OTA updates" },
-      { id: "5.4", title: "Integration with Home Assistant" },
+      { id: "5.1", title: "Debug with logs" },
+      { id: "5.2", title: "Integration with Home Assistant" },
     ],
   },
   {

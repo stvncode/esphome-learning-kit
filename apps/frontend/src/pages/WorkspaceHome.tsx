@@ -15,6 +15,7 @@ import {
   STARTER_KIT_NODES,
 } from "@/components/workspace/constants"
 import type { SavedProject } from "@/components/workspace/types"
+import { useWorkspaceT } from "@/components/workspace/workspace.i18n"
 import { listProjects } from "@/lib/api"
 import { useQuery } from "@tanstack/react-query"
 import { motion } from "framer-motion"
@@ -25,15 +26,16 @@ import { useNavigate } from "react-router-dom"
 type Template = "starter-kit" | "blank"
 
 const STARTER_KIT_FEATURES = [
-  { icon: Cpu, label: "ESP32-C6 Dev Kit", color: "text-blue-400" },
-  { icon: Radio, label: "Button + PIR Motion Sensor", color: "text-purple-400" },
-  { icon: Droplets, label: "AHT20 Temp / Humidity", color: "text-teal-400" },
-  { icon: Sparkles, label: "RGB LED Array", color: "text-violet-400" },
-  { icon: Bell, label: "Buzzer", color: "text-rose-400" },
+  { icon: Cpu, labelKey: "home.feat.devkit" as const, color: "text-blue-400" },
+  { icon: Radio, labelKey: "home.feat.button" as const, color: "text-purple-400" },
+  { icon: Droplets, labelKey: "home.feat.aht20" as const, color: "text-teal-400" },
+  { icon: Sparkles, labelKey: "home.feat.rgb" as const, color: "text-violet-400" },
+  { icon: Bell, labelKey: "home.feat.buzzer" as const, color: "text-rose-400" },
 ]
 
 export function WorkspaceHome() {
   const navigate = useNavigate()
+  const t = useWorkspaceT()
   const [template, setTemplate] = useState<Template>("starter-kit")
   const [projectName, setProjectName] = useState("")
   const [board, setBoard] = useState(STARTER_KIT_BOARD)
@@ -86,17 +88,15 @@ export function WorkspaceHome() {
       <div className="space-y-1">
         <div className="flex items-center gap-2">
           <Wrench className="h-5 w-5 text-emerald-400" />
-          <h1 className="text-2xl font-bold tracking-tight">Workspace</h1>
+          <h1 className="text-2xl font-bold tracking-tight">{t("home.title")}</h1>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Build your ESPHome config visually, then export YAML to flash with ESPHome.
-        </p>
+        <p className="text-sm text-muted-foreground">{t("home.subtitle")}</p>
       </div>
 
       {/* Template selection */}
       <div className="space-y-3">
         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          Start from
+          {t("home.startFrom")}
         </p>
         <div className="grid grid-cols-2 gap-4">
           {/* Starter Kit card */}
@@ -117,22 +117,20 @@ export function WorkspaceHome() {
             >
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">
-                  <CardTitle className="text-sm">Starter Kit</CardTitle>
+                  <CardTitle className="text-sm">{t("home.starterKit")}</CardTitle>
                   {template === "starter-kit" && (
                     <Badge variant="outline" className="border-emerald-500/40 text-emerald-400 text-[10px]">
-                      Selected
+                      {t("home.selected")}
                     </Badge>
                   )}
                 </div>
-                <CardDescription className="text-xs">
-                  Pre-loaded with all components from the ESP32-C6 starter kit
-                </CardDescription>
+                <CardDescription className="text-xs">{t("home.starterKitDesc")}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-1.5">
-                {STARTER_KIT_FEATURES.map(({ icon: Icon, label, color }) => (
-                  <div key={label} className="flex items-center gap-2">
+                {STARTER_KIT_FEATURES.map(({ icon: Icon, labelKey, color }) => (
+                  <div key={labelKey} className="flex items-center gap-2">
                     <Icon className={`h-3.5 w-3.5 ${color}`} />
-                    <span className="text-xs text-muted-foreground">{label}</span>
+                    <span className="text-xs text-muted-foreground">{t(labelKey)}</span>
                   </div>
                 ))}
               </CardContent>
@@ -154,16 +152,14 @@ export function WorkspaceHome() {
             >
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">
-                  <CardTitle className="text-sm">Blank Canvas</CardTitle>
+                  <CardTitle className="text-sm">{t("home.blank")}</CardTitle>
                   {template === "blank" && (
                     <Badge variant="outline" className="border-blue-500/40 text-blue-400 text-[10px]">
-                      Selected
+                      {t("home.selected")}
                     </Badge>
                   )}
                 </div>
-                <CardDescription className="text-xs">
-                  Start from scratch and add your own components
-                </CardDescription>
+                <CardDescription className="text-xs">{t("home.blankDesc")}</CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-3 pt-1">
                 <div className="rounded-lg border border-dashed border-border/60 bg-muted/30 p-4 flex items-center justify-center">
@@ -171,7 +167,7 @@ export function WorkspaceHome() {
                 </div>
                 {template === "blank" && (
                   <div className="space-y-1.5">
-                    <p className="text-xs font-medium text-muted-foreground">Board</p>
+                    <p className="text-xs font-medium text-muted-foreground">{t("home.board")}</p>
                     <Select value={board} onValueChange={setBoard}>
                       <SelectTrigger className="h-8 text-sm w-full">
                         <SelectValue />
@@ -195,7 +191,7 @@ export function WorkspaceHome() {
       {/* Project name + Create */}
       <div className="space-y-3">
         <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-          Project name
+          {t("home.projectName")}
         </p>
         <div className="flex gap-3">
           <Input
@@ -206,15 +202,12 @@ export function WorkspaceHome() {
             className="h-9"
           />
           <Button onClick={handleCreate} className="h-9 gap-2 shrink-0">
-            Open Builder
+            {t("home.openBuilder")}
             <ChevronRight className="h-4 w-4" />
           </Button>
         </div>
         {template === "starter-kit" && (
-          <p className="text-[11px] text-muted-foreground">
-            Board: <span className="text-foreground/70">ESP32-C6 DevKit</span> — nodes will be
-            pre-placed on the canvas.
-          </p>
+          <p className="text-[11px] text-muted-foreground">{t("home.starterHint")}</p>
         )}
       </div>
 
@@ -222,7 +215,7 @@ export function WorkspaceHome() {
       {savedProjects.length > 0 && (
         <div className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            Recent projects
+            {t("home.recent")}
           </p>
           <div className="space-y-2">
             {[...savedProjects]
@@ -244,7 +237,7 @@ export function WorkspaceHome() {
                         <p className="text-xs text-muted-foreground">
                           {BOARD_OPTIONS.find((b) => b.value === project.board)?.label ?? project.board ?? "ESP32"}
                           {" · "}
-                          {project.nodes.length} node{project.nodes.length !== 1 ? "s" : ""}
+                          {t(project.nodes.length === 1 ? "home.node" : "home.nodes", { n: project.nodes.length })}
                         </p>
                       </div>
                       <div className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground">

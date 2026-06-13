@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button"
+import { useTranslation } from "@/lib/i18n"
 import { motion } from "framer-motion"
 import { ArrowLeft, Cpu, Home, Wifi, WifiOff } from "lucide-react"
 import { Link, useNavigate } from "react-router-dom"
 
 export function NotFound() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-background px-6 text-center">
@@ -62,10 +64,9 @@ export function NotFound() {
         transition={{ delay: 0.35, duration: 0.4 }}
         className="space-y-3 mb-8"
       >
-        <h1 className="text-2xl font-bold text-foreground">Node not found</h1>
+        <h1 className="text-2xl font-bold text-foreground">{t("notFound.title")}</h1>
         <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
-          Looks like this connection is broken. The page you're looking for doesn't exist or was
-          moved.
+          {t("notFound.desc")}
         </p>
       </motion.div>
 
@@ -78,12 +79,12 @@ export function NotFound() {
       >
         <Button variant="outline" onClick={() => navigate(-1)} className="gap-2">
           <ArrowLeft className="h-4 w-4" />
-          Go back
+          {t("notFound.goBack")}
         </Button>
         <Button asChild className="gap-2">
           <Link to="/">
             <Home className="h-4 w-4" />
-            Home page
+            {t("notFound.home")}
           </Link>
         </Button>
       </motion.div>

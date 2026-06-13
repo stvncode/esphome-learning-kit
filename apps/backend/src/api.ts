@@ -152,6 +152,16 @@ api.delete("/projects", async (c) => {
   return c.json({ success: true });
 });
 
+// ── Account ───────────────────────────────────────────────────────────────────
+
+api.delete("/account", async (c) => {
+  const userId = c.get("userId");
+  // FK cascades remove the user's sessions, progress, projects, classes,
+  // memberships, quiz scores and invites.
+  await db.delete(user).where(eq(user.id, userId));
+  return c.json({ success: true });
+});
+
 // ── Quiz scores ───────────────────────────────────────────────────────────────
 
 api.get("/quiz-scores", async (c) => {

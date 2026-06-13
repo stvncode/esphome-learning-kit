@@ -1,3 +1,5 @@
+import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
+import { useTranslation } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import {
@@ -97,6 +99,7 @@ const phases = [
 
 export function Sidebar() {
   const location = useLocation()
+  const { t } = useTranslation()
 
   return (
     <aside className="fixed left-0 top-0 z-30 flex h-svh w-64 flex-col border-r border-border/50 bg-sidebar min-h-0">
@@ -107,7 +110,7 @@ export function Sidebar() {
         </div>
         <div>
           <h1 className="font-semibold tracking-tight">ESPHome Learn</h1>
-          <p className="text-xs text-muted-foreground">Starter Kit Guide</p>
+          <p className="text-xs text-muted-foreground">{t("nav.starterKitGuide")}</p>
         </div>
       </div>
 
@@ -128,7 +131,7 @@ export function Sidebar() {
           }
         >
           <Home className="h-4 w-4" />
-          Dashboard
+          {t("nav.dashboard")}
         </NavLink>
 
         {/* Workspace Link */}
@@ -145,7 +148,7 @@ export function Sidebar() {
           }
         >
           <Wrench className="h-4 w-4" />
-          Workspace
+          {t("nav.workspace")}
         </NavLink>
 
         {/* Classes Link */}
@@ -161,7 +164,7 @@ export function Sidebar() {
           }
         >
           <GraduationCap className="h-4 w-4" />
-          Classes
+          {t("nav.classes")}
         </NavLink>
 
         {/* Phase Groups */}
@@ -181,11 +184,9 @@ export function Sidebar() {
         >
           <p className="flex items-center gap-1.5 text-xs font-medium text-foreground">
             <BookOpen className="h-3.5 w-3.5" />
-            Stuck on a term?
+            {t("nav.helpTitle")}
           </p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Open the glossary for plain-language definitions.
-          </p>
+          <p className="mt-1 text-xs text-muted-foreground">{t("nav.helpBody")}</p>
         </NavLink>
       </div>
     </aside>
@@ -199,6 +200,7 @@ interface PhaseGroupProps {
 
 function PhaseGroup({ phase, currentPath }: PhaseGroupProps) {
   const Icon = phase.icon
+  const { levelTitle, phaseLabel } = useCurriculumLabels()
 
   return (
     <div className="space-y-1 overflow-hidden">
@@ -211,7 +213,7 @@ function PhaseGroup({ phase, currentPath }: PhaseGroupProps) {
         <div className={cn("shrink-0 rounded-md p-1", phase.bgColor)}>
           <Icon className="h-3.5 w-3.5" />
         </div>
-        <span className="min-w-0 truncate flex-1">Phase {phase.id}</span>
+        <span className="min-w-0 truncate flex-1">{phaseLabel(phase.id)}</span>
       </div>
       <div className="space-y-0.5 overflow-hidden">
         {phase.levels.map((level) => {
@@ -236,7 +238,7 @@ function PhaseGroup({ phase, currentPath }: PhaseGroupProps) {
               )}
               <span className="relative flex min-w-0 flex-1 items-center gap-2">
                 <span className="shrink-0 font-mono text-xs opacity-60">{level.id}</span>
-                <span className="truncate">{level.title}</span>
+                <span className="truncate">{levelTitle(level.id)}</span>
               </span>
             </NavLink>
           )

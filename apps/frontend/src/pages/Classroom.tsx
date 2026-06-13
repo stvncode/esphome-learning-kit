@@ -21,12 +21,14 @@ import {
   removeClassroomMember,
   renameClassroom,
 } from "@/lib/api"
-import { levelMeta } from "@/lib/curriculum"
+import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { AnimatePresence, motion } from "framer-motion"
 import { ArrowLeft, Check, Copy, Loader2, LogOut, Mail, Pencil, Trash2, Trophy, UserX } from "lucide-react"
 import { useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
+import { useClassesT } from "./classes.i18n"
 
 const MEDALS = ["🥇", "🥈", "🥉"]
 
@@ -34,6 +36,7 @@ export function Classroom() {
   const { id } = useParams<{ id: string }>()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const t = useClassesT()
   const [copied, setCopied] = useState(false)
   const [renameOpen, setRenameOpen] = useState(false)
   const [newName, setNewName] = useState("")
@@ -57,7 +60,7 @@ export function Classroom() {
     mutationFn: () => deleteClassroom(id!),
     onSuccess: () => {
       invalidate()
-      toast.success("Class deleted")
+      toast.success(t("toastDeleted"))
       navigate("/app/classes")
     },
     onError: (e: Error) => toast.error(e.message),
@@ -67,7 +70,7 @@ export function Classroom() {
     mutationFn: () => leaveClassroom(id!),
     onSuccess: () => {
       invalidate()
-      toast.success("Left the class")
+      toast.success(t("toastLeft"))
       navigate("/app/classes")
     },
     onError: (e: Error) => toast.error(e.message),
@@ -78,7 +81,7 @@ export function Classroom() {
     onSuccess: () => {
       invalidate()
       setRenameOpen(false)
-      toast.success("Class renamed")
+      toast.success(t("toastRenamed"))
     },
     onError: (e: Error) => toast.error(e.message),
   })
@@ -87,7 +90,7 @@ export function Classroom() {
     mutationFn: (userId: string) => removeClassroomMember(id!, userId),
     onSuccess: () => {
       invalidate()
-      toast.success("Student removed")
+      toast.success(t("toastRemoved"))
     },
     onError: (e: Error) => toast.error(e.message),
   })
@@ -101,7 +104,7 @@ export function Classroom() {
     onSuccess: ({ invited }) => {
       setInviteOpen(false)
       setEmailsText("")
-      toast.success(`Invited ${invited} student${invited !== 1 ? "s" : ""}`)
+      toast.success(t("toastInvited", { n: invited }))
     },
     onError: (e: Error) => toast.error(e.message),
   })
@@ -117,9 +120,9 @@ export function Classroom() {
   if (isError || !room) {
     return (
       <div className="mx-auto max-w-4xl px-6 py-10 text-center">
-        <p className="text-muted-foreground">This class couldn't be loaded.</p>
+        <p className="text-muted-foreground">{t("notLoaded")}</p>
         <Button asChild variant="outline" className="mt-4">
-          <Link to="/app/classes">Back to Classes</Link>
+          <Link to="/app/classes">{t("backBtn")}</Link>
         </Button>
       </div>
     )
@@ -130,7 +133,7 @@ export function Classroom() {
   const copyCode = () => {
     navigator.clipboard.writeText(room.code)
     setCopied(true)
-    toast.success("Class code copied")
+    toast.success(t("toastCodeCopied"))
     setTimeout(() => setCopied(false), 2000)
   }
 
@@ -142,14 +145,14 @@ export function Classroom() {
           className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
-          Classes
+          {t("back")}
         </Link>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <h1 className="text-2xl font-bold tracking-tight">{room.name}</h1>
-              <Badge variant={isTeacher ? "default" : "secondary"} className="capitalize">
-                {room.role}
+              <Badge variant={isTeacher ? "default" : "secondary"}>
+                {isTeacher ? t("roleTeacher") : t("roleStudent")}
               </Badge>
               {isTeacher && (
                 <Button
@@ -166,14 +169,14 @@ export function Classroom() {
               )}
             </div>
             <p className="text-sm text-muted-foreground">
-              {room.members.length} student{room.members.length !== 1 ? "s" : ""}
+              {t(room.members.length === 1 ? "student" : "students", { n: room.members.length })}
             </p>
           </div>
           {isTeacher ? (
             <div className="flex items-center gap-2">
               <Button className="gap-2" onClick={() => setInviteOpen(true)}>
                 <Mail className="h-4 w-4" />
-                Invite students
+                {t("invite")}
               </Button>
               <Button variant="outline" className="gap-2 font-mono tracking-widest" onClick={copyCode}>
                 {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
@@ -185,10 +188,9 @@ export function Classroom() {
                 className="text-red-400 hover:text-red-400"
                 onClick={() =>
                   confirm({
-                    title: "Delete this class?",
-                    description:
-                      "This permanently removes the class and all its memberships. This can't be undone.",
-                    confirmLabel: "Delete class",
+                    title: t("confirmDeleteTitle"),
+                    description: t("confirmDeleteDesc"),
+                    confirmLabel: t("delete"),
                     onConfirm: () => deleteMutation.mutateAsync(),
                   })
                 }
@@ -199,7 +201,7 @@ export function Classroom() {
           ) : (
             <Button variant="outline" className="gap-2 text-red-400" onClick={() => leaveMutation.mutate()}>
               <LogOut className="h-4 w-4" />
-              Leave class
+              {t("leave")}
             </Button>
           )}
         </div>
@@ -209,61 +211,77 @@ export function Classroom() {
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-base">
             <Trophy className="h-4 w-4 text-amber-500" />
-            Leaderboard
+            {t("leaderboard")}
           </CardTitle>
           <CardDescription className="text-xs">
-            Ranked by levels completed, then achievements.{" "}
-            {isTeacher && "Click a student to see details."}
+            {t("leaderboardDesc")} {isTeacher && t("leaderboardHint")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           {room.members.length === 0 ? (
             <p className="py-6 text-center text-sm text-muted-foreground">
-              No students yet. {isTeacher && "Share the class code to get started."}
+              {t("noStudents")} {isTeacher && t("noStudentsTeacher")}
             </p>
           ) : (
             <div className="space-y-1">
-              {room.members.map((m, i) => (
-                <div
-                  key={m.userId}
-                  className={`flex items-center gap-3 rounded-lg border border-border/50 px-3 py-2.5 ${
-                    isTeacher ? "cursor-pointer hover:border-border hover:bg-muted/30" : ""
-                  }`}
-                  onClick={() => isTeacher && setViewing({ userId: m.userId, name: m.name })}
-                >
-                  <span className="w-6 text-center text-sm font-semibold">
-                    {MEDALS[i] ?? <span className="text-muted-foreground">{i + 1}</span>}
-                  </span>
-                  <span className="min-w-0 flex-1 truncate text-sm font-medium">{m.name}</span>
-                  <div className="flex shrink-0 items-center gap-4 text-xs text-muted-foreground">
-                    <span>
-                      <span className="font-semibold text-foreground">{m.completedCount}</span>/{TOTAL_LEVELS} levels
+              <AnimatePresence initial={false}>
+                {room.members.map((m, i) => (
+                  <motion.div
+                    layout
+                    key={m.userId}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, height: 0, marginTop: 0 }}
+                    transition={{ type: "spring", duration: 0.45, bounce: 0.2 }}
+                    className={`flex items-center gap-3 rounded-lg border border-border/50 px-3 py-2.5 ${
+                      isTeacher ? "cursor-pointer hover:border-border hover:bg-muted/30" : ""
+                    }`}
+                    onClick={() => isTeacher && setViewing({ userId: m.userId, name: m.name })}
+                  >
+                    <span className="w-6 text-center text-sm font-semibold">
+                      {MEDALS[i] ? (
+                        <motion.span
+                          key={`medal-${i}`}
+                          initial={{ scale: 0, rotate: -30 }}
+                          animate={{ scale: 1, rotate: 0 }}
+                          transition={{ type: "spring", bounce: 0.5, delay: 0.1 }}
+                          className="inline-block"
+                        >
+                          {MEDALS[i]}
+                        </motion.span>
+                      ) : (
+                        <span className="text-muted-foreground">{i + 1}</span>
+                      )}
                     </span>
-                    <span className="hidden sm:inline">🏆 {m.achievementCount}</span>
-                    {m.averageQuizScore !== null && (
-                      <span className="hidden sm:inline">📊 {m.averageQuizScore}%</span>
-                    )}
-                    {isTeacher && (
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-7 w-7 text-red-400 hover:text-red-400"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          confirm({
-                            title: `Remove ${m.name}?`,
-                            description: `${m.name} will be removed from this class. They keep their own progress.`,
-                            confirmLabel: "Remove student",
-                            onConfirm: () => removeMutation.mutateAsync(m.userId),
-                          })
-                        }}
-                      >
-                        <UserX className="h-3.5 w-3.5" />
-                      </Button>
-                    )}
-                  </div>
-                </div>
-              ))}
+                    <span className="min-w-0 flex-1 truncate text-sm font-medium">{m.name}</span>
+                    <div className="flex shrink-0 items-center gap-4 text-xs text-muted-foreground">
+                      <span>{t("levelsOf", { done: m.completedCount, total: TOTAL_LEVELS })}</span>
+                      <span className="hidden sm:inline">🏆 {m.achievementCount}</span>
+                      {m.averageQuizScore !== null && (
+                        <span className="hidden sm:inline">📊 {m.averageQuizScore}%</span>
+                      )}
+                      {isTeacher && (
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-7 w-7 text-red-400 hover:text-red-400"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            confirm({
+                              title: t("confirmRemoveTitle", { name: m.name }),
+                              description: t("confirmRemoveDesc", { name: m.name }),
+                              confirmLabel: t("confirmRemoveBtn"),
+                              onConfirm: () => removeMutation.mutateAsync(m.userId),
+                            })
+                          }}
+                        >
+                          <UserX className="h-3.5 w-3.5" />
+                        </Button>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           )}
         </CardContent>
@@ -273,23 +291,20 @@ export function Classroom() {
       <Dialog open={inviteOpen} onOpenChange={setInviteOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Invite students</DialogTitle>
-            <DialogDescription>
-              Enter email addresses (separated by commas, spaces, or new lines). Each student gets a
-              link to join {room.name}.
-            </DialogDescription>
+            <DialogTitle>{t("inviteTitle")}</DialogTitle>
+            <DialogDescription>{t("inviteDesc", { name: room.name })}</DialogDescription>
           </DialogHeader>
           <textarea
             value={emailsText}
             onChange={(e) => setEmailsText(e.target.value)}
             rows={4}
-            placeholder="ada@school.edu, grace@school.edu"
+            placeholder={t("invitePlaceholder")}
             className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
           <DialogFooter>
             <Button onClick={() => inviteMutation.mutate()} disabled={!emailsText.trim() || inviteMutation.isPending}>
               {inviteMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
-              Send invites
+              {t("inviteBtn")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -299,7 +314,7 @@ export function Classroom() {
       <Dialog open={renameOpen} onOpenChange={setRenameOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Rename class</DialogTitle>
+            <DialogTitle>{t("renameTitle")}</DialogTitle>
           </DialogHeader>
           <Input
             value={newName}
@@ -309,18 +324,14 @@ export function Classroom() {
           <DialogFooter>
             <Button onClick={() => renameMutation.mutate()} disabled={!newName.trim() || renameMutation.isPending}>
               {renameMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
-              Save
+              {t("save")}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
       {/* Student drill-down */}
-      <StudentDetailDialog
-        classId={id!}
-        member={viewing}
-        onClose={() => setViewing(null)}
-      />
+      <StudentDetailDialog classId={id!} member={viewing} onClose={() => setViewing(null)} />
 
       {confirmDialog}
     </div>
@@ -336,6 +347,8 @@ function StudentDetailDialog({
   member: { userId: string; name: string } | null
   onClose: () => void
 }) {
+  const t = useClassesT()
+  const { levelTitle } = useCurriculumLabels()
   const { data, isLoading } = useQuery({
     queryKey: ["classroom", classId, "member", member?.userId],
     queryFn: () => getClassroomMember(classId, member!.userId),
@@ -347,7 +360,7 @@ function StudentDetailDialog({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{member?.name}</DialogTitle>
-          <DialogDescription>Progress in this class</DialogDescription>
+          <DialogDescription>{t("memberProgress")}</DialogDescription>
         </DialogHeader>
         {isLoading || !data ? (
           <div className="flex justify-center py-8">
@@ -356,16 +369,14 @@ function StudentDetailDialog({
         ) : (
           <div className="space-y-4">
             <div className="flex gap-4 text-sm">
-              <span>
-                <span className="font-semibold">{data.completedLevels.length}</span>/{TOTAL_LEVELS} levels
-              </span>
-              <span>🏆 {data.achievementCount} achievements</span>
+              <span>{t("levelsOf", { done: data.completedLevels.length, total: TOTAL_LEVELS })}</span>
+              <span>🏆 {t("achievementsCount", { n: data.achievementCount })}</span>
             </div>
 
             <div>
-              <p className="mb-1 text-xs font-medium text-muted-foreground">Completed levels</p>
+              <p className="mb-1 text-xs font-medium text-muted-foreground">{t("completedLevels")}</p>
               {data.completedLevels.length === 0 ? (
-                <p className="text-xs text-muted-foreground">None yet.</p>
+                <p className="text-xs text-muted-foreground">{t("noneYet")}</p>
               ) : (
                 <div className="flex flex-wrap gap-1">
                   {data.completedLevels.map((lvl) => (
@@ -378,15 +389,15 @@ function StudentDetailDialog({
             </div>
 
             <div>
-              <p className="mb-1 text-xs font-medium text-muted-foreground">Quiz scores</p>
+              <p className="mb-1 text-xs font-medium text-muted-foreground">{t("quizScores")}</p>
               {data.quizScores.length === 0 ? (
-                <p className="text-xs text-muted-foreground">No quizzes taken yet.</p>
+                <p className="text-xs text-muted-foreground">{t("noQuizzes")}</p>
               ) : (
                 <div className="space-y-1">
                   {data.quizScores.map((q) => (
                     <div key={q.levelId} className="flex justify-between text-xs">
                       <span className="text-muted-foreground">
-                        {q.levelId} · {levelMeta(q.levelId)?.title ?? "Quiz"}
+                        {q.levelId} · {levelTitle(q.levelId)}
                       </span>
                       <span className="font-medium">
                         {q.score}/{q.total}

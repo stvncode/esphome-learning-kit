@@ -1,6 +1,7 @@
 import { motion } from "framer-motion"
 import { Bell, Code2, Cpu, Lightbulb, Play, Radio, Settings, Zap } from "lucide-react"
 import { AnimatedFlowDemo } from "./AnimatedFlowDemo"
+import { useLandingT } from "./landing.i18n"
 
 const YAML_LINES = [
   { indent: 0, text: "esphome:", color: "text-blue-400" },
@@ -17,7 +18,6 @@ const YAML_LINES = [
   { indent: 2, text: "name: RGB LED", color: "text-green-300" },
 ]
 
-const PANEL_TABS = ["Properties", "YAML", "Logs"]
 
 const NODES_PREVIEW = [
   { label: "Button",       sub: "GPIO9",  icon: Cpu,      bg: "bg-blue-500/20",   color: "text-blue-400" },
@@ -27,6 +27,13 @@ const NODES_PREVIEW = [
 ]
 
 export function BuilderPreviewSection() {
+  const t = useLandingT()
+  const panelTabs = [t("builder.tabProperties"), "YAML", t("builder.tabLogs")]
+  const callouts = [
+    { titleKey: "builder.callout1Title" as const, descKey: "builder.callout1Desc" as const },
+    { titleKey: "builder.callout2Title" as const, descKey: "builder.callout2Desc" as const },
+    { titleKey: "builder.callout3Title" as const, descKey: "builder.callout3Desc" as const },
+  ]
   return (
     <section id="builder" className="border-t border-border py-24">
       <div className="mx-auto max-w-6xl px-6">
@@ -37,10 +44,10 @@ export function BuilderPreviewSection() {
           transition={{ duration: 0.5 }}
           className="mb-16 text-center"
         >
-          <p className="mb-3 text-sm font-medium text-primary">Builder</p>
-          <h2 className="text-3xl font-bold text-foreground">Visual flows. Real YAML. One workspace.</h2>
+          <p className="mb-3 text-sm font-medium text-primary">{t("builder.eyebrow")}</p>
+          <h2 className="text-3xl font-bold text-foreground">{t("builder.title")}</h2>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto text-sm leading-relaxed">
-            Connect nodes visually and watch valid ESPHome configuration generate in real time. Switch to YAML view anytime to see the code behind your design.
+            {t("builder.subtitle")}
           </p>
         </motion.div>
 
@@ -68,7 +75,7 @@ export function BuilderPreviewSection() {
           <div className="flex" style={{ minHeight: 400 }}>
             {/* Left sidebar */}
             <div className="hidden w-48 shrink-0 flex-col border-r border-border bg-muted/20 p-3 md:flex">
-              <p className="mb-3 px-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Components</p>
+              <p className="mb-3 px-1 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{t("builder.components")}</p>
               <div className="space-y-1">
                 {[
                   { icon: Cpu,      label: "ESP32-C6",  color: "text-blue-400",   bg: "bg-blue-500/15" },
@@ -130,7 +137,7 @@ export function BuilderPreviewSection() {
             <div className="hidden w-56 shrink-0 flex-col border-l border-border bg-muted/20 xl:flex">
               {/* Panel tabs */}
               <div className="flex border-b border-border">
-                {PANEL_TABS.map((tab, i) => (
+                {panelTabs.map((tab, i) => (
                   <button
                     key={tab}
                     className={`flex-1 py-2 text-[10px] font-medium transition-colors ${
@@ -146,7 +153,7 @@ export function BuilderPreviewSection() {
 
               {/* Properties panel */}
               <div className="flex-1 p-3 space-y-3">
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Selected Node</p>
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{t("builder.selectedNode")}</p>
                 <div className="space-y-2">
                   {[
                     { label: "Name", value: "button_1" },
@@ -164,7 +171,7 @@ export function BuilderPreviewSection() {
                 </div>
 
                 <div className="border-t border-border pt-3">
-                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Flow</p>
+                  <p className="mb-2 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">{t("builder.flow")}</p>
                   <div className="space-y-1.5">
                     {NODES_PREVIEW.map((n) => (
                       <div key={n.label} className="flex items-center gap-1.5 rounded-md bg-card/60 px-2 py-1">
@@ -183,7 +190,7 @@ export function BuilderPreviewSection() {
 
               {/* YAML preview strip */}
               <div className="border-t border-border bg-gray-950/80 p-3">
-                <p className="mb-2 text-[9px] font-semibold uppercase tracking-wider text-green-500/70">Live YAML</p>
+                <p className="mb-2 text-[9px] font-semibold uppercase tracking-wider text-green-500/70">{t("builder.liveYaml")}</p>
                 <div className="space-y-0.5 font-mono text-[8px] leading-relaxed">
                   {YAML_LINES.slice(0, 8).map((line, i) => (
                     <div key={i} style={{ paddingLeft: line.indent * 10 }} className={line.color}>
@@ -199,21 +206,17 @@ export function BuilderPreviewSection() {
 
         {/* Feature callouts below the mockup */}
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
-          {[
-            { title: "Drag & drop nodes", desc: "Components, triggers, actions — drag them onto the canvas and wire them up." },
-            { title: "Instant YAML output", desc: "Every connection you make generates valid ESPHome YAML in real time." },
-            { title: "Switch views anytime", desc: "Toggle between Builder and YAML views without losing your work." },
-          ].map((item, i) => (
+          {callouts.map((item, i) => (
             <motion.div
-              key={item.title}
+              key={item.titleKey}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
               className="rounded-xl border border-border bg-card/50 p-4"
             >
-              <p className="mb-1 text-sm font-semibold text-foreground">{item.title}</p>
-              <p className="text-xs leading-relaxed text-muted-foreground">{item.desc}</p>
+              <p className="mb-1 text-sm font-semibold text-foreground">{t(item.titleKey)}</p>
+              <p className="text-xs leading-relaxed text-muted-foreground">{t(item.descKey)}</p>
             </motion.div>
           ))}
         </div>

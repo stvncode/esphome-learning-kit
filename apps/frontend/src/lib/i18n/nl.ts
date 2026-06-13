@@ -1,0 +1,108 @@
+import type { TranslationKey } from "./en"
+
+export const nl: Record<TranslationKey, string> = {
+  "nav.dashboard": "Dashboard",
+  "nav.workspace": "Werkruimte",
+  "nav.classes": "Klassen",
+  "nav.glossary": "Woordenlijst",
+  "nav.settings": "Instellingen",
+  "nav.builder": "Bouwer",
+  "nav.starterKitGuide": "Starterkit-gids",
+  "nav.helpTitle": "Een term onduidelijk?",
+  "nav.helpBody": "Open de woordenlijst voor heldere uitleg.",
+
+  "header.yourProgress": "Jouw voortgang",
+  "header.levels": "{done}/{total} niveaus",
+  "header.dayStreak": "dagen op rij",
+  "header.achievements": "prestaties",
+  "header.search": "Zoeken",
+
+  "palette.placeholder": "Ga naar een niveau of pagina…",
+  "palette.noResults": "Geen resultaten",
+  "palette.certificate": "Certificaat",
+
+  "levelNav.prev": "Vorige",
+  "levelNav.next": "Volgende",
+  "levelNav.count": "Niveau {n} van {total}",
+
+  "account.signOut": "Uitloggen",
+  "account.settings": "Instellingen",
+  "account.viewCertificate": "Bekijk je certificaat",
+
+  "common.cancel": "Annuleren",
+  "common.save": "Wijzigingen opslaan",
+  "common.saving": "Opslaan…",
+
+  "settings.title": "Instellingen",
+  "settings.subtitle": "Beheer je profiel en voorkeuren.",
+
+  "settings.profile.title": "Profiel",
+  "settings.profile.desc": "Je naam en avatar in de app.",
+  "settings.profile.name": "Weergavenaam",
+  "settings.profile.email": "E-mail",
+  "settings.profile.emailHint": "Je e-mail kan niet worden gewijzigd.",
+  "settings.profile.avatarHint": "Klik op je avatar om een afbeelding te kiezen. Opslaan komt binnenkort.",
+
+  "settings.prefs.title": "Voorkeuren",
+  "settings.prefs.desc": "Thema en taal.",
+  "settings.prefs.theme": "Thema",
+  "settings.prefs.themeLight": "Licht",
+  "settings.prefs.themeDark": "Donker",
+  "settings.prefs.themeSystem": "Systeem",
+  "settings.prefs.language": "Taal",
+
+  "settings.security.title": "Beveiliging",
+  "settings.security.desc": "Wijzig je wachtwoord.",
+  "settings.security.current": "Huidig wachtwoord",
+  "settings.security.new": "Nieuw wachtwoord",
+  "settings.security.update": "Wachtwoord bijwerken",
+  "settings.security.updated": "Wachtwoord bijgewerkt",
+
+  "settings.danger.title": "Gevarenzone",
+  "settings.danger.resetTitle": "Voortgang resetten",
+  "settings.danger.resetDesc": "Wis alle voltooide niveaus, reeks en prestaties.",
+  "settings.danger.resetBtn": "Voortgang resetten",
+  "settings.danger.resetConfirmTitle": "Al je voortgang resetten?",
+  "settings.danger.resetConfirmDesc": "Dit wist je voltooide niveaus, reeks en prestaties. Dit kan niet ongedaan worden gemaakt.",
+  "settings.danger.deleteTitle": "Account verwijderen",
+  "settings.danger.deleteDesc": "Verwijder je account en al je gegevens permanent.",
+  "settings.danger.deleteBtn": "Account verwijderen",
+  "settings.danger.deleteConfirmTitle": "Je account verwijderen?",
+  "settings.danger.deleteConfirmDesc": "Dit verwijdert je account, voortgang, projecten en klassen permanent. Dit kan niet ongedaan worden gemaakt.",
+
+  "onboarding.title": "Welkom bij ESPHome Learn 👋",
+  "onboarding.subtitle":
+    "Je leert echte slimme apparaten bouwen via 22 begeleide niveaus. Dit is het traject:",
+  "onboarding.s1Title": "Visueel begrijpen",
+  "onboarding.s1Desc": "Sleep-en-neerzetflows laten zien hoe slimme apparaten werken — geen code om te beginnen.",
+  "onboarding.s2Title": "Onthul de code",
+  "onboarding.s2Desc": "Zie de echte ESPHome-YAML waarmee elk blok overeenkomt.",
+  "onboarding.s3Title": "Bouw het zelf",
+  "onboarding.s3Desc": "Schrijf volledige configuraties, debug daarna en verbind met Home Assistant.",
+  "onboarding.s4Title": "Exporteren naar ESPHome",
+  "onboarding.s4Desc": "Breng je configuratie naar echte hardware wanneer je er klaar voor bent.",
+  "onboarding.explore": "Zelf verkennen",
+  "onboarding.start": "Start niveau 1",
+
+  "certificate.lockedTitle": "Je certificaat is bijna klaar",
+  "certificate.lockedDesc": "Voltooi alle {total} niveaus om het te ontgrendelen — je bent bij {completed}/{total}.",
+  "certificate.keepLearning": "Verder leren",
+  "certificate.back": "Terug naar de app",
+  "certificate.print": "Afdrukken / Opslaan als pdf",
+  "certificate.heading": "Certificaat van voltooiing",
+  "certificate.certifies": "Dit certificeert dat",
+  "certificate.body":
+    "alle {total} niveaus van het ESPHome Learn-lesprogramma met succes heeft voltooid — van visuele flows en YAML tot workflows op echte hardware en gevorderde onderwerpen.",
+  "certificate.date": "Datum",
+  "certificate.org": "ESPHome Learn",
+  "certificate.kit": "Starterkit",
+
+  "notFound.title": "Knooppunt niet gevonden",
+  "notFound.desc": "Het lijkt erop dat deze verbinding verbroken is. De pagina die je zoekt bestaat niet of is verplaatst.",
+  "notFound.goBack": "Terug",
+  "notFound.home": "Startpagina",
+
+  "settings.toast.profileSaved": "Profiel bijgewerkt",
+  "settings.toast.progressReset": "Voortgang gereset",
+  "settings.toast.accountDeleted": "Je account is verwijderd",
+}

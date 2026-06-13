@@ -11,9 +11,22 @@ import {
 import { Progress } from "@/components/ui/progress"
 import { ACHIEVEMENTS } from "@/lib/achievements"
 import { signOut, useSession } from "@/lib/auth-client"
+import { useTranslation } from "@/lib/i18n"
+import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { useQueryClient } from "@tanstack/react-query"
-import { ChevronRight, Flame, GraduationCap, Home, LogOut, Moon, Sun, Trophy, User } from "lucide-react"
+import {
+  ChevronRight,
+  Flame,
+  GraduationCap,
+  Home,
+  LogOut,
+  Moon,
+  Settings,
+  Sun,
+  Trophy,
+  User,
+} from "lucide-react"
 import { useTheme } from "next-themes"
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 
@@ -26,37 +39,32 @@ const PHASE_META: Record<number, { color: string }> = {
   6: { color: "text-pink-400" },
 }
 
-const LEVEL_TITLES: Record<string, string> = {
-  "1.1": "What is a smart device?", "1.2": "Meet your board",
-  "1.3": "Your first flow", "1.4": "Adding timing",
-  "2.1": "The YAML behind the magic", "2.2": "Understanding the structure",
-  "2.3": "Spot the difference", "2.4": "Reading a complete config",
-  "3.1": "Change the names", "3.2": "Change the pins",
-  "3.3": "Change the behavior", "3.4": "Add a delay", "3.5": "Conditions",
-  "4.1": "Fill in the blanks", "4.2": "Add a component",
-  "4.3": "Create an automation", "4.4": "Write a complete config",
-  "5.1": "Debug with logs", "5.2": "Integration with Home Assistant",
-  "6.1": "Lambdas", "6.2": "Custom components", "6.3": "I2C and SPI devices",
-}
-
 function Breadcrumb() {
   const location = useLocation()
   const params = useParams<{ levelId?: string }>()
+  const { t } = useTranslation()
+  const { levelTitle, phaseLabel } = useCurriculumLabels()
   const path = location.pathname
 
   type Crumb = { label: string; to?: string; color?: string }
-  const crumbs: Crumb[] = [{ label: "Home", to: "/app" }]
+  const crumbs: Crumb[] = [{ label: t("nav.dashboard"), to: "/app" }]
 
   if (path === "/app/workspace") {
-    crumbs.push({ label: "Workspace" })
+    crumbs.push({ label: t("nav.workspace") })
   } else if (path.startsWith("/app/workspace/builder")) {
-    crumbs.push({ label: "Workspace", to: "/app/workspace" })
-    crumbs.push({ label: "Builder" })
+    crumbs.push({ label: t("nav.workspace"), to: "/app/workspace" })
+    crumbs.push({ label: t("nav.builder") })
+  } else if (path === "/app/classes") {
+    crumbs.push({ label: t("nav.classes") })
+  } else if (path === "/app/glossary") {
+    crumbs.push({ label: t("nav.glossary") })
+  } else if (path === "/app/settings") {
+    crumbs.push({ label: t("nav.settings") })
   } else if (params.levelId) {
     const phaseNum = parseInt(params.levelId.split(".")[0])
     const phase = PHASE_META[phaseNum]
-    crumbs.push({ label: `Phase ${phaseNum}`, color: phase?.color })
-    crumbs.push({ label: LEVEL_TITLES[params.levelId] ?? params.levelId })
+    crumbs.push({ label: phaseLabel(phaseNum), color: phase?.color })
+    crumbs.push({ label: levelTitle(params.levelId) })
   }
 
   if (crumbs.length <= 1) return null
@@ -81,7 +89,9 @@ function Breadcrumb() {
                 {isFirst ? <Home className="h-3.5 w-3.5" /> : crumb.label}
               </Link>
             ) : (
-              <span className={`font-medium ${isLast ? "text-foreground" : (crumb.color ?? "text-muted-foreground")}`}>
+              <span
+                className={`font-medium ${isLast ? "text-foreground" : (crumb.color ?? "text-muted-foreground")}`}
+              >
                 {crumb.label}
               </span>
             )}
@@ -96,6 +106,7 @@ export function Header() {
   const { completedLevels, streak, achievements } = useProgressStore()
   const clearProgress = useProgressStore((s) => s.clear)
   const { theme, setTheme } = useTheme()
+  const { t } = useTranslation()
   const { data: session } = useSession()
   const queryClient = useQueryClient()
   const navigate = useNavigate()
@@ -112,14 +123,16 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-border/50 bg-background/80 px-6 backdrop-blur-sm">
-      <div><Breadcrumb /></div>
+      <div>
+        <Breadcrumb />
+      </div>
 
       <div className="flex items-center gap-4">
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium">Your Progress</span>
+            <span className="text-sm font-medium">{t("header.yourProgress")}</span>
             <Badge variant="secondary" className="text-xs">
-              {completedLevels.length}/{totalLevels} levels
+              {t("header.levels", { done: completedLevels.length, total: totalLevels })}
             </Badge>
           </div>
           <Progress value={progressPercent} className="h-2 w-36" />
@@ -128,7 +141,7 @@ export function Header() {
         <div className="flex items-center gap-2 rounded-lg bg-orange-500/10 px-3 py-1.5">
           <Flame className="h-4 w-4 text-orange-500" />
           <span className="text-sm font-semibold text-orange-500">{streak}</span>
-          <span className="text-xs text-muted-foreground">day streak</span>
+          <span className="text-xs text-muted-foreground">{t("header.dayStreak")}</span>
         </div>
 
         <DropdownMenu>
@@ -136,7 +149,7 @@ export function Header() {
             <button className="flex items-center gap-2 rounded-lg bg-amber-500/10 px-3 py-1.5 transition-colors hover:bg-amber-500/20">
               <Trophy className="h-4 w-4 text-amber-500" />
               <span className="text-sm font-semibold text-amber-500">{achievements.length}</span>
-              <span className="text-xs text-muted-foreground">achievements</span>
+              <span className="text-xs text-muted-foreground">{t("header.achievements")}</span>
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-72">
@@ -170,7 +183,7 @@ export function Header() {
                 <DropdownMenuItem asChild>
                   <Link to="/app/certificate" className="cursor-pointer">
                     <GraduationCap className="h-4 w-4" />
-                    View your certificate
+                    {t("account.viewCertificate")}
                   </Link>
                 </DropdownMenuItem>
               </>
@@ -178,7 +191,12 @@ export function Header() {
           </DropdownMenuContent>
         </DropdownMenu>
 
-        <Button variant="ghost" size="icon" className="h-9 w-9" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-9 w-9"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        >
           <Sun className="h-4 w-4 rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
@@ -201,9 +219,15 @@ export function Header() {
               </span>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
+            <DropdownMenuItem asChild>
+              <Link to="/app/settings" className="cursor-pointer">
+                <Settings className="h-4 w-4" />
+                {t("account.settings")}
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem onSelect={handleSignOut} className="text-red-400 focus:text-red-400">
               <LogOut className="h-4 w-4" />
-              Sign out
+              {t("account.signOut")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

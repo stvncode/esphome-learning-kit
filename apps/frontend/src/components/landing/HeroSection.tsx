@@ -3,6 +3,7 @@ import { AnimatedFlowDemo } from "./AnimatedFlowDemo"
 import { ArrowRight, Code2, Cpu, Droplets, Wrench } from "lucide-react"
 import { motion, MotionValue } from "framer-motion"
 import { Link } from "react-router-dom"
+import { useLandingT } from "./landing.i18n"
 
 interface HeroSectionProps {
   opacity: MotionValue<number>
@@ -10,6 +11,7 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ opacity, y }: HeroSectionProps) {
+  const t = useLandingT()
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden pt-16">
       {/* Background */}
@@ -38,39 +40,38 @@ export function HeroSection({ opacity, y }: HeroSectionProps) {
           >
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/40 px-4 py-1.5 text-sm text-muted-foreground">
               <span className="flex h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-              ESP32-C6 Starter Kit
+              {t("hero.badge")}
             </div>
 
             <div className="space-y-4">
               <h1 className="text-3xl font-bold leading-[1.1] tracking-tight text-foreground sm:text-4xl md:text-5xl">
-                Build smart devices.{" "}
+                {t("hero.title1")}{" "}
                 <span className="bg-gradient-to-r from-blue-500 via-cyan-500 to-indigo-500 bg-clip-text text-transparent">
-                  Without the guesswork.
+                  {t("hero.title2")}
                 </span>
               </h1>
               <p className="max-w-md text-lg leading-relaxed text-muted-foreground">
-                Learn ESPHome through 22 guided levels. Start by dragging visual flows, watch the
-                YAML generate live, then export it to flash with ESPHome on real hardware.
+                {t("hero.subtitle")}
               </p>
             </div>
 
             <div className="flex gap-3">
               <Button asChild size="lg" className="h-12 gap-2 px-6">
                 <Link to="/signup">
-                  Get started free
+                  {t("hero.ctaPrimary")}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline" className="h-12 gap-2 px-6">
-                <Link to="/signin">Sign in</Link>
+                <Link to="/signin">{t("hero.ctaSecondary")}</Link>
               </Button>
             </div>
 
             <div className="flex gap-8 border-t border-border pt-6">
               {[
-                { value: "22", label: "Guided levels" },
-                { value: "6", label: "Phases" },
-                { value: "Workspace", label: "Builder + YAML editor" },
+                { value: "22", label: t("hero.statLevels") },
+                { value: "6", label: t("hero.statPhases") },
+                { value: "Workspace", label: t("hero.statWorkspace") },
               ].map((s) => (
                 <div key={s.label}>
                   <p className="text-2xl font-bold text-foreground">{s.value}</p>
@@ -148,7 +149,7 @@ export function HeroSection({ opacity, y }: HeroSectionProps) {
               </div>
               <div>
                 <p className="text-xs font-medium text-foreground">AHT20 Sensor</p>
-                <p className="text-[10px] text-muted-foreground">Temperature · Humidity</p>
+                <p className="text-[10px] text-muted-foreground">{t("hero.sensorSub")}</p>
               </div>
             </motion.div>
 
@@ -163,7 +164,7 @@ export function HeroSection({ opacity, y }: HeroSectionProps) {
               </div>
               <div>
                 <p className="text-xs font-medium text-foreground">ESP32-C6</p>
-                <p className="text-[10px] text-muted-foreground">Ready for ESPHome</p>
+                <p className="text-[10px] text-muted-foreground">{t("hero.chipReady")}</p>
               </div>
             </motion.div>
           </motion.div>

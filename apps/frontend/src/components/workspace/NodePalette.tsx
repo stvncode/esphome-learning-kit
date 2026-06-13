@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Search, X } from "lucide-react"
 import { forwardRef } from "react"
 import type { ComponentItem } from "./types"
+import { useWorkspaceT } from "./workspace.i18n"
 
 interface NodePaletteProps {
   x: number
@@ -23,6 +24,7 @@ export const NodePalette = forwardRef<HTMLDivElement, NodePaletteProps>(function
   { x, y, title, subtitle, search, onSearchChange, filtered, categories, onSelect, onClose, footer },
   ref,
 ) {
+  const t = useWorkspaceT()
   const top = Math.max(8, Math.min(y, window.innerHeight - 480))
   const left = Math.max(8, Math.min(x, window.innerWidth - 240))
   return (
@@ -54,7 +56,7 @@ export const NodePalette = forwardRef<HTMLDivElement, NodePaletteProps>(function
             autoFocus
             value={search}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search…"
+            placeholder={t("palette.search")}
             className="min-w-0 flex-1 bg-transparent text-xs outline-none placeholder:text-muted-foreground"
           />
         </div>
@@ -62,7 +64,7 @@ export const NodePalette = forwardRef<HTMLDivElement, NodePaletteProps>(function
       <ScrollArea className="max-h-[130px] overflow-y-auto">
         <div className="p-1.5">
           {filtered.length === 0 ? (
-            <p className="py-4 text-center text-xs text-muted-foreground">No results</p>
+            <p className="py-4 text-center text-xs text-muted-foreground">{t("palette.noResults")}</p>
           ) : (
             categories.map((cat) => {
               const items = filtered.filter((n) => n.category === cat)

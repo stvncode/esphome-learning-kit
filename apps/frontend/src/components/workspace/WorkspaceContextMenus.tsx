@@ -6,6 +6,7 @@ import { createPortal } from "react-dom"
 import { CANVAS_CATEGORIES, LOGIC_CATEGORIES } from "./constants"
 import { NodePalette } from "./NodePalette"
 import type { ComponentItem, ConnectMenu, NodeMenu } from "./types"
+import { useWorkspaceT } from "./workspace.i18n"
 
 interface WorkspaceContextMenusProps {
   connectMenu: ConnectMenu | null
@@ -48,6 +49,7 @@ export function WorkspaceContextMenus({
   onDuplicateNode,
   onDeleteNode,
 }: WorkspaceContextMenusProps) {
+  const t = useWorkspaceT()
   return createPortal(
     <AnimatePresence>
       <>
@@ -56,10 +58,8 @@ export function WorkspaceContextMenus({
             ref={connectMenuRef}
             x={connectMenu.screenX}
             y={connectMenu.screenY}
-            title={connectMenu.menuType === "canvas" ? "Add to canvas" : "Add node"}
-            subtitle={
-              connectMenu.menuType === "canvas" ? "Right-click • no connection" : undefined
-            }
+            title={connectMenu.menuType === "canvas" ? t("menu.addCanvas") : t("menu.addNode")}
+            subtitle={connectMenu.menuType === "canvas" ? t("menu.canvasSub") : undefined}
             search={connectMenuSearch}
             onSearchChange={onConnectMenuSearchChange}
             filtered={connectMenu.menuType === "canvas" ? filteredCanvasNodes : filteredConnectNodes}
@@ -73,7 +73,7 @@ export function WorkspaceContextMenus({
             ref={nodeMenuRef}
             x={nodeMenu.screenX}
             y={nodeMenu.screenY}
-            title="Add connected node"
+            title={t("menu.addConnected")}
             subtitle={String(selectedNode.data.label ?? selectedNode.type)}
             search={nodeMenuSearch}
             onSearchChange={onNodeMenuSearchChange}
@@ -91,14 +91,14 @@ export function WorkspaceContextMenus({
                   }}
                 >
                   <Copy className="h-3.5 w-3.5 text-muted-foreground" />
-                  Duplicate node
+                  {t("menu.duplicateNode")}
                 </button>
                 <button
                   className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-xs text-red-400 transition-colors hover:bg-destructive/10"
                   onClick={onDeleteNode}
                 >
                   <Trash2 className="h-3.5 w-3.5" />
-                  Delete node
+                  {t("menu.deleteNode")}
                 </button>
               </div>
             }

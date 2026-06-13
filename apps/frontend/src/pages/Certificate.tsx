@@ -2,12 +2,15 @@ import { Button } from "@/components/ui/button"
 import { TOTAL_LEVELS } from "@/lib/achievements"
 import { getProgress } from "@/lib/api"
 import { useSession } from "@/lib/auth-client"
+import { useLocaleStore, useTranslation } from "@/lib/i18n"
 import { useQuery } from "@tanstack/react-query"
 import { ArrowLeft, Cpu, Loader2, Printer } from "lucide-react"
 import { Link } from "react-router-dom"
 
 export function Certificate() {
   const { data: session } = useSession()
+  const { t } = useTranslation()
+  const locale = useLocaleStore((s) => s.locale)
   const { data: progress, isLoading } = useQuery({ queryKey: ["progress"], queryFn: getProgress })
 
   if (isLoading) {
@@ -22,7 +25,7 @@ export function Certificate() {
   const graduated = completed >= TOTAL_LEVELS
   const earnedAt = progress?.achievements.find((a) => a.id === "graduate")?.unlockedAt
   const dateLabel = earnedAt
-    ? new Date(earnedAt).toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
+    ? new Date(earnedAt).toLocaleDateString(locale, { year: "numeric", month: "long", day: "numeric" })
     : ""
 
   if (!graduated) {
@@ -30,13 +33,13 @@ export function Certificate() {
       <div className="flex min-h-svh flex-col items-center justify-center gap-4 bg-background p-6 text-center">
         <Cpu className="h-10 w-10 text-muted-foreground/40" />
         <div>
-          <h1 className="text-xl font-semibold">Your certificate is almost ready</h1>
+          <h1 className="text-xl font-semibold">{t("certificate.lockedTitle")}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Complete all {TOTAL_LEVELS} levels to unlock it — you're at {completed}/{TOTAL_LEVELS}.
+            {t("certificate.lockedDesc", { total: TOTAL_LEVELS, completed })}
           </p>
         </div>
         <Button asChild variant="outline">
-          <Link to="/app">Keep learning</Link>
+          <Link to="/app">{t("certificate.keepLearning")}</Link>
         </Button>
       </div>
     )
@@ -50,11 +53,11 @@ export function Certificate() {
           className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to app
+          {t("certificate.back")}
         </Link>
         <Button onClick={() => window.print()} className="gap-2">
           <Printer className="h-4 w-4" />
-          Print / Save PDF
+          {t("certificate.print")}
         </Button>
       </div>
 
@@ -67,26 +70,25 @@ export function Certificate() {
             </div>
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-500">
-                Certificate of Completion
+                {t("certificate.heading")}
               </p>
-              <h1 className="mt-4 text-lg text-muted-foreground">This certifies that</h1>
+              <h1 className="mt-4 text-lg text-muted-foreground">{t("certificate.certifies")}</h1>
               <p className="mt-2 text-3xl font-bold text-foreground">
                 {session?.user?.name ?? "ESPHome Learner"}
               </p>
             </div>
             <p className="mx-auto max-w-md text-sm leading-relaxed text-muted-foreground">
-              has successfully completed all {TOTAL_LEVELS} levels of the ESPHome Learn curriculum —
-              from visual flows and YAML through real-hardware workflows and advanced topics.
+              {t("certificate.body", { total: TOTAL_LEVELS })}
             </p>
             <div className="flex items-center justify-center gap-8 pt-4 text-sm">
               <div>
                 <p className="font-semibold text-foreground">{dateLabel || "—"}</p>
-                <p className="text-xs text-muted-foreground">Date</p>
+                <p className="text-xs text-muted-foreground">{t("certificate.date")}</p>
               </div>
               <div className="h-8 w-px bg-border" />
               <div>
-                <p className="font-semibold text-foreground">ESPHome Learn</p>
-                <p className="text-xs text-muted-foreground">Starter Kit</p>
+                <p className="font-semibold text-foreground">{t("certificate.org")}</p>
+                <p className="text-xs text-muted-foreground">{t("certificate.kit")}</p>
               </div>
             </div>
           </div>

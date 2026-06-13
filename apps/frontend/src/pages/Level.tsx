@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { LEVEL_ORDER, levelIndex, levelMeta, TOTAL_LEVELS } from "@/lib/curriculum"
+import { useTranslation } from "@/lib/i18n"
+import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
 import { lazy, Suspense, useEffect, type ComponentType } from "react"
@@ -32,6 +34,8 @@ const levelComponents: Record<string, ComponentType> = {
 }
 
 function LevelNav({ levelId }: { levelId: string }) {
+  const { t } = useTranslation()
+  const { levelTitle } = useCurriculumLabels()
   const idx = levelIndex(levelId)
   if (idx === -1) return null
   const prev = LEVEL_ORDER[idx - 1]
@@ -43,31 +47,31 @@ function LevelNav({ levelId }: { levelId: string }) {
         {prev ? (
           <Link to={`/app/level/${prev.id}`}>
             <ChevronLeft className="h-4 w-4" />
-            <span className="hidden truncate sm:inline">{prev.title}</span>
-            <span className="sm:hidden">Prev</span>
+            <span className="hidden truncate sm:inline">{levelTitle(prev.id)}</span>
+            <span className="sm:hidden">{t("levelNav.prev")}</span>
           </Link>
         ) : (
           <span className="opacity-40">
             <ChevronLeft className="h-4 w-4" />
-            Prev
+            {t("levelNav.prev")}
           </span>
         )}
       </Button>
 
       <span className="shrink-0 text-xs font-medium text-muted-foreground">
-        Level {idx + 1} of {TOTAL_LEVELS}
+        {t("levelNav.count", { n: idx + 1, total: TOTAL_LEVELS })}
       </span>
 
       <Button asChild variant="ghost" size="sm" disabled={!next} className="gap-1">
         {next ? (
           <Link to={`/app/level/${next.id}`}>
-            <span className="hidden truncate sm:inline">{next.title}</span>
-            <span className="sm:hidden">Next</span>
+            <span className="hidden truncate sm:inline">{levelTitle(next.id)}</span>
+            <span className="sm:hidden">{t("levelNav.next")}</span>
             <ChevronRight className="h-4 w-4" />
           </Link>
         ) : (
           <span className="opacity-40">
-            Next
+            {t("levelNav.next")}
             <ChevronRight className="h-4 w-4" />
           </span>
         )}

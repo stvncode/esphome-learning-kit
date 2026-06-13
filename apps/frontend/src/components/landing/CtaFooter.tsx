@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
 import { ArrowRight, Cpu } from "lucide-react"
 import { Link } from "react-router-dom"
+import { useLandingT } from "./landing.i18n"
 
 export function CtaFooter() {
+  const t = useLandingT()
   return (
     <>
       {/* CTA */}
@@ -16,13 +18,13 @@ export function CtaFooter() {
             className="space-y-8"
           >
             <div className="space-y-4">
-              <h2 className="text-4xl font-bold text-foreground">Ready to build your first smart device?</h2>
-              <p className="text-lg text-muted-foreground">Start for free. No hardware required to begin learning.</p>
+              <h2 className="text-4xl font-bold text-foreground">{t("cta.title")}</h2>
+              <p className="text-lg text-muted-foreground">{t("cta.subtitle")}</p>
             </div>
             <div className="flex justify-center">
               <Button asChild size="lg" className="h-12 gap-2 px-8">
                 <Link to="/signup">
-                  Start learning — it's free
+                  {t("cta.button")}
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               </Button>
@@ -40,10 +42,10 @@ export function CtaFooter() {
             </div>
             <span className="text-sm font-semibold text-foreground">ESPHome Learn</span>
           </div>
-          <p className="text-xs text-muted-foreground">Built for makers and home automation enthusiasts.</p>
+          <p className="text-xs text-muted-foreground">{t("footer.tagline")}</p>
           <div className="flex gap-6">
-            <Link to="/signin" className="text-xs text-muted-foreground transition-colors hover:text-foreground">Sign In</Link>
-            <Link to="/signup" className="text-xs text-muted-foreground transition-colors hover:text-foreground">Sign Up</Link>
+            <Link to="/signin" className="text-xs text-muted-foreground transition-colors hover:text-foreground">{t("footer.signIn")}</Link>
+            <Link to="/signup" className="text-xs text-muted-foreground transition-colors hover:text-foreground">{t("footer.signUp")}</Link>
           </div>
         </div>
       </footer>

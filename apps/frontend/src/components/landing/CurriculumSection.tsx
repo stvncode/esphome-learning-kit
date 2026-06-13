@@ -1,16 +1,18 @@
 import { motion } from "framer-motion"
 import { Code2, Hammer, Lightbulb, Pencil, Sparkles, Wifi } from "lucide-react"
+import { useLandingT } from "./landing.i18n"
 
 const PHASES = [
-  { id: 1, title: "Visual Understanding",   icon: Lightbulb, color: "from-amber-500 to-orange-500",  levels: 4 },
-  { id: 2, title: "Revealing the Code",     icon: Code2,     color: "from-blue-500 to-cyan-500",     levels: 4 },
-  { id: 3, title: "Guided Editing",         icon: Pencil,    color: "from-green-500 to-emerald-500", levels: 5 },
-  { id: 4, title: "Building from Scratch",  icon: Hammer,    color: "from-purple-500 to-pink-500",   levels: 4 },
-  { id: 5, title: "Real Hardware",          icon: Wifi,      color: "from-cyan-500 to-teal-500",     levels: 2 },
-  { id: 6, title: "Advanced Topics",        icon: Sparkles,  color: "from-pink-500 to-rose-500",     levels: 3 },
+  { id: 1, titleKey: "curriculum.phase1" as const, icon: Lightbulb, color: "from-amber-500 to-orange-500",  levels: 4 },
+  { id: 2, titleKey: "curriculum.phase2" as const, icon: Code2,     color: "from-blue-500 to-cyan-500",     levels: 4 },
+  { id: 3, titleKey: "curriculum.phase3" as const, icon: Pencil,    color: "from-green-500 to-emerald-500", levels: 5 },
+  { id: 4, titleKey: "curriculum.phase4" as const, icon: Hammer,    color: "from-purple-500 to-pink-500",   levels: 4 },
+  { id: 5, titleKey: "curriculum.phase5" as const, icon: Wifi,      color: "from-cyan-500 to-teal-500",     levels: 2 },
+  { id: 6, titleKey: "curriculum.phase6" as const, icon: Sparkles,  color: "from-pink-500 to-rose-500",     levels: 3 },
 ]
 
 export function CurriculumSection() {
+  const t = useLandingT()
   return (
     <section id="curriculum" className="border-t border-border bg-muted/20 py-24">
       <div className="mx-auto max-w-6xl px-6">
@@ -21,10 +23,10 @@ export function CurriculumSection() {
           className="mb-12 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"
         >
           <div>
-            <p className="mb-2 text-sm font-medium text-primary">Curriculum</p>
-            <h2 className="text-3xl font-bold text-foreground">6 phases. 22 levels.</h2>
+            <p className="mb-2 text-sm font-medium text-primary">{t("curriculum.eyebrow")}</p>
+            <h2 className="text-3xl font-bold text-foreground">{t("curriculum.title")}</h2>
           </div>
-          <span className="text-sm text-muted-foreground">From first click to advanced config</span>
+          <span className="text-sm text-muted-foreground">{t("curriculum.tagline")}</span>
         </motion.div>
 
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
@@ -41,8 +43,8 @@ export function CurriculumSection() {
                 <phase.icon className="h-5 w-5 text-white" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium">{phase.title}</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">{phase.levels} levels</p>
+                <p className="truncate text-sm font-medium">{t(phase.titleKey)}</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">{t("curriculum.levels", { n: phase.levels })}</p>
               </div>
               <span className="font-mono text-xs text-muted-foreground/60">0{phase.id}</span>
             </motion.div>

@@ -1,27 +1,28 @@
 import { motion } from "framer-motion"
 import { Code2, Wifi, Wrench } from "lucide-react"
+import { useLandingT } from "./landing.i18n"
 
 const FEATURES = [
   {
     icon: Wrench,
-    title: "Visual Builder",
-    desc: "Drag components onto the canvas, connect them with flows. No code needed to start — just intuition.",
+    titleKey: "features.visualTitle" as const,
+    descKey: "features.visualDesc" as const,
     gradient: "from-blue-500/10 to-cyan-500/10",
     iconColor: "text-blue-500",
     border: "border-blue-500/20",
   },
   {
     icon: Code2,
-    title: "Live YAML",
-    desc: "Every node and connection you create instantly generates valid ESPHome YAML. Watch it build as you design.",
+    titleKey: "features.yamlTitle" as const,
+    descKey: "features.yamlDesc" as const,
     gradient: "from-indigo-500/10 to-purple-500/10",
     iconColor: "text-indigo-500",
     border: "border-indigo-500/20",
   },
   {
     icon: Wifi,
-    title: "Real Hardware",
-    desc: "Export your config and flash it with ESPHome — your device shows up in Home Assistant. From learning to production in minutes.",
+    titleKey: "features.hwTitle" as const,
+    descKey: "features.hwDesc" as const,
     gradient: "from-green-500/10 to-emerald-500/10",
     iconColor: "text-green-500",
     border: "border-green-500/20",
@@ -29,6 +30,7 @@ const FEATURES = [
 ]
 
 export function FeaturesSection() {
+  const t = useLandingT()
   return (
     <section id="features" className="border-t border-border bg-muted/20 py-24">
       <div className="mx-auto max-w-6xl px-6">
@@ -39,14 +41,14 @@ export function FeaturesSection() {
           transition={{ duration: 0.5 }}
           className="mb-16 text-center"
         >
-          <p className="mb-3 text-sm font-medium text-primary">Why ESPHome Learn</p>
-          <h2 className="text-3xl font-bold text-foreground">Everything you need, in one place</h2>
+          <p className="mb-3 text-sm font-medium text-primary">{t("features.eyebrow")}</p>
+          <h2 className="text-3xl font-bold text-foreground">{t("features.title")}</h2>
         </motion.div>
 
         <div className="grid gap-6 md:grid-cols-3">
           {FEATURES.map((f, i) => (
             <motion.div
-              key={f.title}
+              key={f.titleKey}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -56,8 +58,8 @@ export function FeaturesSection() {
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-background/60">
                   <f.icon className={`h-5 w-5 ${f.iconColor}`} />
                 </div>
-                <h3 className="text-lg font-semibold text-foreground">{f.title}</h3>
-                <p className="text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
+                <h3 className="text-lg font-semibold text-foreground">{t(f.titleKey)}</h3>
+                <p className="text-sm leading-relaxed text-muted-foreground">{t(f.descKey)}</p>
               </div>
             </motion.div>
           ))}

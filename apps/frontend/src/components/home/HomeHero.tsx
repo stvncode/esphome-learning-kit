@@ -1,16 +1,21 @@
+import { CountUp } from "@/components/CountUp"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { resumeLevel } from "@/lib/curriculum"
+import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { motion } from "framer-motion"
 import { GraduationCap, Play, Wrench } from "lucide-react"
 import { Link } from "react-router-dom"
 import { HomeFlowDemo } from "./HomeFlowDemo"
+import { useHomeT } from "./home.i18n"
 
 export function HomeHero() {
   const { completedLevels, currentLevel } = useProgressStore()
   const resume = resumeLevel(completedLevels, currentLevel)
   const started = completedLevels.length > 0
+  const t = useHomeT()
+  const { levelTitle } = useCurriculumLabels()
 
   return (
     <section className="grid grid-cols-1 gap-8 items-center lg:grid-cols-2 lg:gap-10">
@@ -22,19 +27,18 @@ export function HomeHero() {
       >
         <div className="space-y-1">
           <Badge className="mb-3 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 text-cyan-400 border-cyan-500/30">
-            ESP32 Starter Kit Guide
+            {t("hero.badge")}
           </Badge>
           <h1 className="text-4xl font-bold tracking-tight leading-tight">
-            Learn ESPHome,
+            {t("hero.title1")}
             <br />
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-              visually.
+              {t("hero.title2")}
             </span>
           </h1>
         </div>
         <p className="text-muted-foreground leading-relaxed max-w-md">
-          Go from zero to real hardware. Start with drag-and-drop flows, discover the
-          YAML behind them, then write complete configs to flash with ESPHome.
+          {t("hero.subtitle")}
         </p>
         <div className="space-y-2">
           <div className="flex gap-3">
@@ -42,39 +46,41 @@ export function HomeHero() {
               <Button asChild size="lg" className="gap-2">
                 <Link to={`/app/level/${resume.id}`}>
                   <Play className="h-4 w-4" />
-                  {started ? "Continue learning" : "Start Learning"}
+                  {started ? t("hero.continue") : t("hero.start")}
                 </Link>
               </Button>
             ) : (
               <Button asChild size="lg" className="gap-2">
                 <Link to="/app/certificate">
                   <GraduationCap className="h-4 w-4" />
-                  View your certificate
+                  {t("hero.certificate")}
                 </Link>
               </Button>
             )}
             <Button asChild size="lg" variant="outline" className="gap-2">
               <Link to="/app/workspace">
                 <Wrench className="h-4 w-4" />
-                Open Workspace
+                {t("hero.workspace")}
               </Link>
             </Button>
           </div>
           {resume && started && (
             <p className="text-xs text-muted-foreground">
-              Up next — Level {resume.id}: <span className="text-foreground/80">{resume.title}</span>
+              {t("hero.upNext", { id: resume.id, title: levelTitle(resume.id) })}
             </p>
           )}
         </div>
 
         <div className="flex gap-6 pt-2">
           {[
-            { label: "Phases", value: "6" },
-            { label: "Levels", value: "22" },
-            { label: "Your Progress", value: `${Math.round((completedLevels.length / 22) * 100)}%` },
+            { label: t("hero.statPhases"), value: 6, suffix: "" },
+            { label: t("hero.statLevels"), value: 22, suffix: "" },
+            { label: t("hero.statProgress"), value: Math.round((completedLevels.length / 22) * 100), suffix: "%" },
           ].map((s) => (
             <div key={s.label}>
-              <p className="text-2xl font-bold">{s.value}</p>
+              <p className="text-2xl font-bold">
+                <CountUp value={s.value} suffix={s.suffix} />
+              </p>
               <p className="text-xs text-muted-foreground">{s.label}</p>
             </div>
           ))}
@@ -89,13 +95,13 @@ export function HomeHero() {
       >
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
           <span className="flex h-2 w-2 rounded-full bg-green-400 animate-pulse" />
-          Live preview — ESP32-C6 Starter Kit
+          {t("hero.livePreview")}
         </div>
         <div className="overflow-x-auto">
           <HomeFlowDemo />
         </div>
         <p className="text-xs text-muted-foreground text-center">
-          Visual flows translate directly to ESPHome YAML — no guesswork.
+          {t("hero.previewCaption")}
         </p>
       </motion.div>
     </section>

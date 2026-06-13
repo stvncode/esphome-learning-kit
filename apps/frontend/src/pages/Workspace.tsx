@@ -21,6 +21,7 @@ import type {
 import { useSimulation } from "@/components/workspace/useSimulation"
 import { WorkspaceContextMenus } from "@/components/workspace/WorkspaceContextMenus"
 import { WorkspaceHeader, type WorkspaceView } from "@/components/workspace/WorkspaceHeader"
+import { useWorkspaceT } from "@/components/workspace/workspace.i18n"
 import { putProject } from "@/lib/api"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import type { Edge, EdgeMouseHandler, Node, NodeMouseHandler } from "@xyflow/react"
@@ -43,6 +44,7 @@ interface WorkspaceInitState {
 export function Workspace() {
   const location = useLocation()
   const init: WorkspaceInitState = (location.state as WorkspaceInitState) ?? {}
+  const t = useWorkspaceT()
 
   const [nodes, setNodes] = useState<Node[]>(init.nodes ?? [])
   const [edges, setEdges] = useState<Edge[]>(init.edges ?? [])
@@ -261,7 +263,7 @@ export function Workspace() {
         ])
       }
       setConnectMenu(null)
-      toast.success(`Added "${option.label}"`)
+      toast.success(t("toast.added", { label: option.label }))
     },
     [connectMenu, nodes, edges, pushToHistory],
   )
@@ -290,7 +292,7 @@ export function Workspace() {
         },
       ])
       setNodeMenu(null)
-      toast.success(`Added "${option.label}"`)
+      toast.success(t("toast.added", { label: option.label }))
     },
     [nodeMenu, nodes, edges, pushToHistory],
   )
@@ -317,7 +319,7 @@ export function Workspace() {
       data: { ...selectedNode.data },
     }
     setNodes((prev) => [...prev, dup])
-    toast.success("Node duplicated")
+    toast.success(t("toast.nodeDuplicated"))
   }, [selectedNode, nodes, edges, pushToHistory])
 
   const handleDeleteNode = useCallback(() => {
@@ -329,7 +331,7 @@ export function Workspace() {
     setNodes((prev) => prev.filter((n) => n.id !== selectedNodeId))
     setSelectedNodeId(null)
     setNodeMenu(null)
-    toast.success("Node removed")
+    toast.success(t("toast.nodeRemoved"))
   }, [selectedNodeId, nodes, edges, pushToHistory])
 
   const handleDeleteEdge = useCallback(() => {
@@ -337,14 +339,14 @@ export function Workspace() {
     pushToHistory(nodes, edges)
     setEdges((prev) => prev.filter((e) => e.id !== selectedEdgeId))
     setSelectedEdgeId(null)
-    toast.success("Connection removed")
+    toast.success(t("toast.connectionRemoved"))
   }, [selectedEdgeId, nodes, edges, pushToHistory])
 
   // ── YAML export / save ─────────────────────────────────────────────────────
   const copyYaml = useCallback(() => {
     navigator.clipboard.writeText(yaml)
     setCopied(true)
-    toast.success("YAML copied!")
+    toast.success(t("toast.copied"))
     setTimeout(() => setCopied(false), 2000)
   }, [yaml])
 
@@ -356,16 +358,16 @@ export function Workspace() {
     a.download = `${(deviceName || "my-device").toLowerCase().replace(/\s+/g, "-")}.yaml`
     a.click()
     URL.revokeObjectURL(url)
-    toast.success("YAML downloaded!")
+    toast.success(t("toast.downloaded"))
   }, [yaml, deviceName])
 
   const saveMutation = useMutation({
     mutationFn: putProject,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["projects", "workspace"] })
-      toast.success("Project saved!")
+      toast.success(t("toast.saved"))
     },
-    onError: () => toast.error("Failed to save project"),
+    onError: () => toast.error(t("toast.saveFailed")),
   })
 
   const saveProject = useCallback(() => {
@@ -386,7 +388,7 @@ export function Workspace() {
 
   const addAutomation = useCallback((data: Omit<Automation, "id">) => {
     setAutomations((prev) => [...prev, { ...data, id: `auto-${Date.now()}` }])
-    toast.success("Automation added")
+    toast.success(t("toast.automationAdded"))
   }, [])
 
   const removeAutomation = useCallback(
@@ -491,15 +493,15 @@ export function Workspace() {
             <TabsList className="w-full shrink-0 justify-between">
               <TabsTrigger value="generic" className="flex-1 gap-1">
                 <Settings className="h-3.5 w-3.5" />
-                Generic
+                {t("tab.generic")}
               </TabsTrigger>
               <TabsTrigger value="components" className="flex-1 gap-1">
                 <Boxes className="h-3.5 w-3.5" />
-                Components
+                {t("tab.components")}
               </TabsTrigger>
               <TabsTrigger value="automations" className="flex-1 gap-1">
                 <GitBranch className="h-3.5 w-3.5" />
-                Automations
+                {t("tab.automations")}
               </TabsTrigger>
             </TabsList>
             <DeviceSettingsTab
@@ -543,11 +545,11 @@ export function Workspace() {
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div>
                     <p className="text-2xl font-bold">{nodes.length}</p>
-                    <p className="text-xs text-muted-foreground">Nodes</p>
+                    <p className="text-xs text-muted-foreground">{t("stats.nodes")}</p>
                   </div>
                   <div>
                     <p className="text-2xl font-bold">{edges.length}</p>
-                    <p className="text-xs text-muted-foreground">Connections</p>
+                    <p className="text-xs text-muted-foreground">{t("stats.connections")}</p>
                   </div>
                 </div>
               </CardContent>

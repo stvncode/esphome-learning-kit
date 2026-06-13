@@ -3,10 +3,18 @@ import { Cpu, Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import { useLandingT } from "./landing.i18n"
+
+const NAV = [
+  { key: "header.features" as const, href: "#features" },
+  { key: "header.builder" as const, href: "#builder" },
+  { key: "header.curriculum" as const, href: "#curriculum" },
+]
 
 export function LandingHeader() {
   const [scrolled, setScrolled] = useState(false)
   const { theme, setTheme } = useTheme()
+  const t = useLandingT()
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20)
@@ -29,13 +37,13 @@ export function LandingHeader() {
         </div>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {["Features", "Builder", "Curriculum"].map((item) => (
+          {NAV.map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase()}`}
+              key={item.key}
+              href={item.href}
               className="text-sm text-muted-foreground transition-colors hover:text-foreground"
             >
-              {item}
+              {t(item.key)}
             </a>
           ))}
         </nav>
@@ -51,10 +59,10 @@ export function LandingHeader() {
             <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
           </Button>
           <Button variant="ghost" asChild className="hidden sm:inline-flex">
-            <Link to="/signin">Sign In</Link>
+            <Link to="/signin">{t("header.signIn")}</Link>
           </Button>
           <Button asChild>
-            <Link to="/signup">Get Started</Link>
+            <Link to="/signup">{t("header.getStarted")}</Link>
           </Button>
         </div>
       </div>

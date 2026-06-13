@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { Check, Code2, Copy, Download, Play, Redo2, Save, Square, Undo2, Workflow } from "lucide-react"
+import { useWorkspaceT } from "./workspace.i18n"
 
 export type WorkspaceView = "builder" | "yaml"
 
@@ -43,11 +44,12 @@ export function WorkspaceHeader({
   onDownloadYaml,
   onViewChange,
 }: WorkspaceHeaderProps) {
+  const t = useWorkspaceT()
   return (
     <div className="mb-4 flex items-center justify-between">
       <div className="flex items-center gap-3">
         <Badge className="shrink-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400">
-          Workspace
+          {t("header.workspace")}
         </Badge>
         <Input
           value={deviceName}
@@ -69,7 +71,7 @@ export function WorkspaceHeader({
             )}
           >
             <Workflow className="h-3.5 w-3.5" />
-            Builder
+            {t("header.builder")}
           </button>
           <div className="w-px bg-border/60" />
           <button
@@ -82,7 +84,7 @@ export function WorkspaceHeader({
             )}
           >
             <Code2 className="h-3.5 w-3.5" />
-            YAML
+            {t("header.yaml")}
           </button>
         </div>
 
@@ -95,7 +97,7 @@ export function WorkspaceHeader({
                 size="sm"
                 onClick={onUndo}
                 disabled={!canUndo || isSimulating}
-                title="Undo (⌘Z)"
+                title={t("header.undo")}
               >
                 <Undo2 className="h-4 w-4" />
               </Button>
@@ -104,34 +106,34 @@ export function WorkspaceHeader({
                 size="sm"
                 onClick={onRedo}
                 disabled={!canRedo || isSimulating}
-                title="Redo (⌘⇧Z)"
+                title={t("header.redo")}
               >
                 <Redo2 className="h-4 w-4" />
               </Button>
               {isSimulating ? (
                 <Button size="sm" variant="destructive" onClick={onStopSimulation}>
                   <Square className="mr-2 h-4 w-4" />
-                  Stop
+                  {t("header.stop")}
                 </Button>
               ) : (
                 <Button size="sm" onClick={onSimulate} disabled={nodesEmpty}>
                   <Play className="mr-2 h-4 w-4" />
-                  Simulate
+                  {t("header.simulate")}
                 </Button>
               )}
             </>
           )}
           <Button variant="outline" size="sm" onClick={onSave}>
             <Save className="mr-2 h-4 w-4" />
-            Save
+            {t("header.save")}
           </Button>
           <Button size="sm" onClick={onCopyYaml}>
             {copied ? <Check className="mr-2 h-4 w-4" /> : <Copy className="mr-2 h-4 w-4" />}
-            {view === "yaml" ? "Copy" : "Copy YAML"}
+            {view === "yaml" ? t("header.copy") : t("header.copyYaml")}
           </Button>
           <Button size="sm" variant="secondary" onClick={onDownloadYaml}>
             <Download className="mr-2 h-4 w-4" />
-            Export
+            {t("header.export")}
           </Button>
         </div>
       </div>

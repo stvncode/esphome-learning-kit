@@ -14,6 +14,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { ACTION_OPTIONS, TRIGGER_OPTIONS } from "./constants"
 import type { Automation } from "./types"
+import { useWorkspaceT } from "./workspace.i18n"
 
 interface AutomationsTabProps {
   nodes: Node[]
@@ -33,10 +34,11 @@ export function AutomationsTab({
   onRemoveAutomation,
 }: AutomationsTabProps) {
   const [form, setForm] = useState(EMPTY_FORM)
+  const t = useWorkspaceT()
 
   function handleSubmit() {
     if (!form.sourceNodeId || !form.trigger || !form.action || !form.targetNodeId) {
-      toast.error("Fill in all automation fields")
+      toast.error(t("auto.fillAll"))
       return
     }
     onAddAutomation(form)
@@ -47,25 +49,23 @@ export function AutomationsTab({
     <TabsContent value="automations" className="flex flex-col gap-3">
       <Card className="shrink-0 border-border/50 bg-card/50">
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm">Add Automation</CardTitle>
-          <CardDescription className="text-xs">
-            Connect nodes into an automation rule
-          </CardDescription>
+          <CardTitle className="text-sm">{t("auto.add")}</CardTitle>
+          <CardDescription className="text-xs">{t("auto.desc")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="space-y-1.5">
-            <p className="text-xs font-medium text-muted-foreground">Source Node</p>
+            <p className="text-xs font-medium text-muted-foreground">{t("auto.source")}</p>
             <Select
               value={form.sourceNodeId}
               onValueChange={(v) => setForm((p) => ({ ...p, sourceNodeId: v }))}
             >
               <SelectTrigger className="h-8 w-full text-xs">
-                <SelectValue placeholder="Select node…" />
+                <SelectValue placeholder={t("auto.selectNode")} />
               </SelectTrigger>
               <SelectContent>
                 {nodes.length === 0 ? (
                   <SelectItem value="__none__" disabled>
-                    No nodes on canvas
+                    {t("auto.noNodes")}
                   </SelectItem>
                 ) : (
                   nodes.map((n) => (
@@ -78,13 +78,13 @@ export function AutomationsTab({
             </Select>
           </div>
           <div className="space-y-1.5">
-            <p className="text-xs font-medium text-muted-foreground">Trigger</p>
+            <p className="text-xs font-medium text-muted-foreground">{t("auto.trigger")}</p>
             <Select
               value={form.trigger}
               onValueChange={(v) => setForm((p) => ({ ...p, trigger: v }))}
             >
               <SelectTrigger className="h-8 w-full text-xs">
-                <SelectValue placeholder="Select trigger…" />
+                <SelectValue placeholder={t("auto.selectTrigger")} />
               </SelectTrigger>
               <SelectContent>
                 {TRIGGER_OPTIONS.map((opt) => (
@@ -96,13 +96,13 @@ export function AutomationsTab({
             </Select>
           </div>
           <div className="space-y-1.5">
-            <p className="text-xs font-medium text-muted-foreground">Action</p>
+            <p className="text-xs font-medium text-muted-foreground">{t("auto.action")}</p>
             <Select
               value={form.action}
               onValueChange={(v) => setForm((p) => ({ ...p, action: v }))}
             >
               <SelectTrigger className="h-8 w-full text-xs">
-                <SelectValue placeholder="Select action…" />
+                <SelectValue placeholder={t("auto.selectAction")} />
               </SelectTrigger>
               <SelectContent>
                 {ACTION_OPTIONS.map((opt) => (
@@ -114,18 +114,18 @@ export function AutomationsTab({
             </Select>
           </div>
           <div className="space-y-1.5">
-            <p className="text-xs font-medium text-muted-foreground">Target Node</p>
+            <p className="text-xs font-medium text-muted-foreground">{t("auto.target")}</p>
             <Select
               value={form.targetNodeId}
               onValueChange={(v) => setForm((p) => ({ ...p, targetNodeId: v }))}
             >
               <SelectTrigger className="h-8 w-full text-xs">
-                <SelectValue placeholder="Select output…" />
+                <SelectValue placeholder={t("auto.selectOutput")} />
               </SelectTrigger>
               <SelectContent>
                 {outputNodes.length === 0 ? (
                   <SelectItem value="__none__" disabled>
-                    No output nodes
+                    {t("auto.noOutputs")}
                   </SelectItem>
                 ) : (
                   outputNodes.map((n) => (
@@ -139,7 +139,7 @@ export function AutomationsTab({
           </div>
           <Button size="sm" className="w-full" onClick={handleSubmit}>
             <Plus className="mr-2 h-4 w-4" />
-            Add Automation
+            {t("auto.add")}
           </Button>
         </CardContent>
       </Card>
@@ -148,7 +148,7 @@ export function AutomationsTab({
         {automations.length === 0 ? (
           <div className="rounded-lg border border-dashed border-border/50 py-8 text-center">
             <GitBranch className="mx-auto mb-2 h-6 w-6 text-muted-foreground/50" />
-            <p className="text-xs text-muted-foreground">No automations yet</p>
+            <p className="text-xs text-muted-foreground">{t("auto.empty")}</p>
           </div>
         ) : (
           automations.map((auto) => {

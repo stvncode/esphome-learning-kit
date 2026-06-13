@@ -1,3 +1,4 @@
+import { CommandPalette } from "@/components/CommandPalette"
 import { OnboardingDialog } from "@/components/OnboardingDialog"
 import { Button } from "@/components/ui/button"
 import { getProgress } from "@/lib/api"
@@ -44,6 +45,7 @@ export function AppShell() {
 
   return (
     <div className="min-h-svh bg-background text-foreground">
+      <CommandPalette />
       <OnboardingDialog />
       <Sidebar />
       <div className="pl-64">

@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input"
 import type { Edge, Node } from "@xyflow/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Copy, Trash2, X } from "lucide-react"
+import { useWorkspaceT } from "./workspace.i18n"
 
 interface PropertiesPanelProps {
   selectedNode: Node | null
@@ -24,6 +25,7 @@ export function PropertiesPanel({
   onDeleteEdge,
   onClose,
 }: PropertiesPanelProps) {
+  const t = useWorkspaceT()
   return (
     <AnimatePresence>
       {(selectedNode || selectedEdge) && (
@@ -38,7 +40,7 @@ export function PropertiesPanel({
             <CardHeader className="pb-2">
               <div className="flex items-center justify-between">
                 <CardTitle className="text-xs capitalize">
-                  {selectedNode ? `${selectedNode.type} node` : "Connection"}
+                  {selectedNode ? t("props.nodeTitle", { type: selectedNode.type ?? "" }) : t("props.connection")}
                 </CardTitle>
                 <Button size="sm" variant="ghost" className="h-6 w-6 p-0" onClick={onClose}>
                   <X className="h-3 w-3" />
@@ -49,7 +51,7 @@ export function PropertiesPanel({
               {selectedNode && (
                 <>
                   <div className="space-y-1">
-                    <p className="text-[11px] font-medium text-muted-foreground">Label</p>
+                    <p className="text-[11px] font-medium text-muted-foreground">{t("props.label")}</p>
                     <Input
                       value={String(selectedNode.data.label ?? "")}
                       onChange={(e) => onUpdateNodeData("label", e.target.value)}
@@ -58,7 +60,7 @@ export function PropertiesPanel({
                   </div>
                   {selectedNode.data.pin !== undefined && (
                     <div className="space-y-1">
-                      <p className="text-[11px] font-medium text-muted-foreground">GPIO Pin</p>
+                      <p className="text-[11px] font-medium text-muted-foreground">{t("props.gpio")}</p>
                       <Input
                         value={String(selectedNode.data.pin ?? "")}
                         onChange={(e) => onUpdateNodeData("pin", e.target.value)}
@@ -75,7 +77,7 @@ export function PropertiesPanel({
                       onClick={onDuplicateNode}
                     >
                       <Copy className="mr-1.5 h-3 w-3" />
-                      Duplicate
+                      {t("props.duplicate")}
                     </Button>
                     <Button
                       size="sm"
@@ -84,7 +86,7 @@ export function PropertiesPanel({
                       onClick={onDeleteNode}
                     >
                       <Trash2 className="mr-1.5 h-3 w-3" />
-                      Delete
+                      {t("props.delete")}
                     </Button>
                   </div>
                 </>
@@ -97,7 +99,7 @@ export function PropertiesPanel({
                   onClick={onDeleteEdge}
                 >
                   <Trash2 className="mr-1.5 h-3 w-3" />
-                  Delete Connection
+                  {t("props.deleteConnection")}
                 </Button>
               )}
             </CardContent>

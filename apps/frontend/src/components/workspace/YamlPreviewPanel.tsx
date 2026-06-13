@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { AnimatePresence, motion } from "framer-motion"
 import { X } from "lucide-react"
+import { useWorkspaceT } from "./workspace.i18n"
 
 interface YamlPreviewPanelProps {
   show: boolean
@@ -9,6 +10,7 @@ interface YamlPreviewPanelProps {
 }
 
 export function YamlPreviewPanel({ show, yaml, onClose }: YamlPreviewPanelProps) {
+  const t = useWorkspaceT()
   return (
     <AnimatePresence>
       {show && (
@@ -22,7 +24,7 @@ export function YamlPreviewPanel({ show, yaml, onClose }: YamlPreviewPanelProps)
         >
           <div className="flex h-full flex-col bg-gray-950">
             <div className="flex shrink-0 items-center justify-between border-b border-border/30 px-3 py-1.5">
-              <span className="text-xs font-medium text-green-400">YAML Preview</span>
+              <span className="text-xs font-medium text-green-400">{t("yamlPanel.title")}</span>
               <Button size="sm" variant="ghost" className="h-6 w-6 p-0" onClick={onClose}>
                 <X className="h-3.5 w-3.5 text-muted-foreground" />
               </Button>

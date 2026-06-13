@@ -27,6 +27,7 @@ const Classes = lazy(() => import("@/pages/Classes").then((m) => ({ default: m.C
 const Classroom = lazy(() => import("@/pages/Classroom").then((m) => ({ default: m.Classroom })))
 const Certificate = lazy(() => import("@/pages/Certificate").then((m) => ({ default: m.Certificate })))
 const Glossary = lazy(() => import("@/pages/Glossary").then((m) => ({ default: m.Glossary })))
+const Settings = lazy(() => import("@/pages/Settings").then((m) => ({ default: m.Settings })))
 
 function PageFallback() {
   return (
@@ -58,6 +59,7 @@ function App() {
               <Route path="/app/classes" element={<Classes />} />
               <Route path="/app/classes/:id" element={<Classroom />} />
               <Route path="/app/glossary" element={<Glossary />} />
+              <Route path="/app/settings" element={<Settings />} />
             </Route>
             {/* Full-screen (no shell) so it prints cleanly */}
             <Route path="/app/certificate" element={<Certificate />} />

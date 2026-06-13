@@ -18,16 +18,20 @@ import { GraduationCap, Loader2, Plus, Users } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
+import { useClassesT } from "./classes.i18n"
 
 export function Classes() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const role = useRole()
   const isTeacher = role === "teacher"
+  const t = useClassesT()
   const [createOpen, setCreateOpen] = useState(false)
   const [className, setClassName] = useState("")
 
   const { data: classes, isLoading } = useQuery({ queryKey: ["classrooms"], queryFn: listClassrooms })
+
+  const memberCount = (n: number) => t(n === 1 ? "student" : "students", { n })
 
   const createMutation = useMutation({
     mutationFn: () => createClassroom(className.trim()),
@@ -35,7 +39,7 @@ export function Classes() {
       queryClient.invalidateQueries({ queryKey: ["classrooms"] })
       setCreateOpen(false)
       setClassName("")
-      toast.success(`Class "${room.name}" created`)
+      toast.success(t("toastCreated", { name: room.name }))
       navigate(`/app/classes/${room.id}`)
     },
     onError: (e: Error) => toast.error(e.message),
@@ -47,12 +51,10 @@ export function Classes() {
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <GraduationCap className="h-5 w-5 text-cyan-400" />
-            <h1 className="text-2xl font-bold tracking-tight">Classes</h1>
+            <h1 className="text-2xl font-bold tracking-tight">{t("title")}</h1>
           </div>
           <p className="text-sm text-muted-foreground">
-            {isTeacher
-              ? "Create a class and invite students to track their progress together."
-              : "Classes you've been invited to."}
+            {isTeacher ? t("subtitleTeacher") : t("subtitleStudent")}
           </p>
         </div>
         {isTeacher && (
@@ -60,26 +62,24 @@ export function Classes() {
             <DialogTrigger asChild>
               <Button className="gap-2">
                 <Plus className="h-4 w-4" />
-                Create a class
+                {t("create")}
               </Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Create a class</DialogTitle>
-                <DialogDescription>
-                  You'll be the teacher. Invite students by email from inside the class.
-                </DialogDescription>
+                <DialogTitle>{t("create")}</DialogTitle>
+                <DialogDescription>{t("createDesc")}</DialogDescription>
               </DialogHeader>
               <Input
                 value={className}
                 onChange={(e) => setClassName(e.target.value)}
-                placeholder="Period 3 — Intro to IoT"
+                placeholder={t("createPlaceholder")}
                 onKeyDown={(e) => e.key === "Enter" && className.trim() && createMutation.mutate()}
               />
               <DialogFooter>
                 <Button onClick={() => createMutation.mutate()} disabled={!className.trim() || createMutation.isPending}>
                   {createMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
-                  Create
+                  {t("createBtn")}
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -96,9 +96,7 @@ export function Classes() {
           <CardContent className="flex flex-col items-center gap-2 py-12 text-center">
             <Users className="h-8 w-8 text-muted-foreground/50" />
             <p className="text-sm text-muted-foreground">
-              {isTeacher
-                ? "No classes yet. Create one to get started."
-                : "You're not in any classes yet. Ask your teacher for an invite link."}
+              {isTeacher ? t("emptyTeacher") : t("emptyStudent")}
             </p>
           </CardContent>
         </Card>
@@ -110,14 +108,14 @@ export function Classes() {
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
                     <CardTitle className="text-base">{room.name}</CardTitle>
-                    <Badge variant={room.role === "teacher" ? "default" : "secondary"} className="capitalize">
-                      {room.role}
+                    <Badge variant={room.role === "teacher" ? "default" : "secondary"}>
+                      {room.role === "teacher" ? t("roleTeacher") : t("roleStudent")}
                     </Badge>
                   </div>
                   <CardDescription className="flex items-center gap-3 text-xs">
                     <span className="flex items-center gap-1">
                       <Users className="h-3 w-3" />
-                      {room.memberCount} student{room.memberCount !== 1 ? "s" : ""}
+                      {memberCount(room.memberCount)}
                     </span>
                     {room.role === "teacher" && (
                       <span className="font-mono tracking-widest text-foreground/70">{room.code}</span>

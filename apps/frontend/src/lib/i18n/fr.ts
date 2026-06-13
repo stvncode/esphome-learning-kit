@@ -1,0 +1,108 @@
+import type { TranslationKey } from "./en"
+
+export const fr: Record<TranslationKey, string> = {
+  "nav.dashboard": "Tableau de bord",
+  "nav.workspace": "Atelier",
+  "nav.classes": "Classes",
+  "nav.glossary": "Glossaire",
+  "nav.settings": "Paramètres",
+  "nav.builder": "Éditeur",
+  "nav.starterKitGuide": "Guide du kit de démarrage",
+  "nav.helpTitle": "Un terme vous bloque ?",
+  "nav.helpBody": "Ouvrez le glossaire pour des définitions simples.",
+
+  "header.yourProgress": "Votre progression",
+  "header.levels": "{done}/{total} niveaux",
+  "header.dayStreak": "jours d'affilée",
+  "header.achievements": "succès",
+  "header.search": "Rechercher",
+
+  "palette.placeholder": "Aller à un niveau ou une page…",
+  "palette.noResults": "Aucun résultat",
+  "palette.certificate": "Certificat",
+
+  "levelNav.prev": "Préc.",
+  "levelNav.next": "Suiv.",
+  "levelNav.count": "Niveau {n} sur {total}",
+
+  "account.signOut": "Se déconnecter",
+  "account.settings": "Paramètres",
+  "account.viewCertificate": "Voir votre certificat",
+
+  "common.cancel": "Annuler",
+  "common.save": "Enregistrer",
+  "common.saving": "Enregistrement…",
+
+  "settings.title": "Paramètres",
+  "settings.subtitle": "Gérez votre profil et vos préférences.",
+
+  "settings.profile.title": "Profil",
+  "settings.profile.desc": "Votre nom et votre avatar dans l'application.",
+  "settings.profile.name": "Nom affiché",
+  "settings.profile.email": "E-mail",
+  "settings.profile.emailHint": "Votre e-mail ne peut pas être modifié.",
+  "settings.profile.avatarHint": "Cliquez sur votre avatar pour choisir une image. L'enregistrement arrive bientôt.",
+
+  "settings.prefs.title": "Préférences",
+  "settings.prefs.desc": "Thème et langue.",
+  "settings.prefs.theme": "Thème",
+  "settings.prefs.themeLight": "Clair",
+  "settings.prefs.themeDark": "Sombre",
+  "settings.prefs.themeSystem": "Système",
+  "settings.prefs.language": "Langue",
+
+  "settings.security.title": "Sécurité",
+  "settings.security.desc": "Modifiez votre mot de passe.",
+  "settings.security.current": "Mot de passe actuel",
+  "settings.security.new": "Nouveau mot de passe",
+  "settings.security.update": "Mettre à jour le mot de passe",
+  "settings.security.updated": "Mot de passe mis à jour",
+
+  "settings.danger.title": "Zone sensible",
+  "settings.danger.resetTitle": "Réinitialiser la progression",
+  "settings.danger.resetDesc": "Effacer tous les niveaux terminés, la série et les succès.",
+  "settings.danger.resetBtn": "Réinitialiser la progression",
+  "settings.danger.resetConfirmTitle": "Réinitialiser toute votre progression ?",
+  "settings.danger.resetConfirmDesc": "Cela efface vos niveaux terminés, votre série et vos succès. Action irréversible.",
+  "settings.danger.deleteTitle": "Supprimer le compte",
+  "settings.danger.deleteDesc": "Supprimer définitivement votre compte et toutes vos données.",
+  "settings.danger.deleteBtn": "Supprimer le compte",
+  "settings.danger.deleteConfirmTitle": "Supprimer votre compte ?",
+  "settings.danger.deleteConfirmDesc": "Cela supprime définitivement votre compte, votre progression, vos projets et vos classes. Action irréversible.",
+
+  "onboarding.title": "Bienvenue sur ESPHome Learn 👋",
+  "onboarding.subtitle":
+    "Vous apprendrez à créer de vrais objets connectés à travers 22 niveaux guidés. Voici le parcours :",
+  "onboarding.s1Title": "Comprendre visuellement",
+  "onboarding.s1Desc": "Des flux en glisser-déposer montrent comment fonctionnent les objets connectés — sans code pour démarrer.",
+  "onboarding.s2Title": "Révéler le code",
+  "onboarding.s2Desc": "Voyez le vrai YAML ESPHome auquel chaque bloc correspond.",
+  "onboarding.s3Title": "Construisez vous-même",
+  "onboarding.s3Desc": "Rédigez des configurations complètes, puis déboguez et connectez à Home Assistant.",
+  "onboarding.s4Title": "Exporter vers ESPHome",
+  "onboarding.s4Desc": "Transférez votre configuration sur du vrai matériel quand vous êtes prêt.",
+  "onboarding.explore": "Explorer par moi-même",
+  "onboarding.start": "Commencer le niveau 1",
+
+  "certificate.lockedTitle": "Votre certificat est presque prêt",
+  "certificate.lockedDesc": "Terminez les {total} niveaux pour le débloquer — vous en êtes à {completed}/{total}.",
+  "certificate.keepLearning": "Continuer l'apprentissage",
+  "certificate.back": "Retour à l'application",
+  "certificate.print": "Imprimer / Enregistrer en PDF",
+  "certificate.heading": "Certificat de réussite",
+  "certificate.certifies": "Ceci certifie que",
+  "certificate.body":
+    "a terminé avec succès les {total} niveaux du programme ESPHome Learn — des flux visuels et du YAML aux workflows sur matériel réel et aux sujets avancés.",
+  "certificate.date": "Date",
+  "certificate.org": "ESPHome Learn",
+  "certificate.kit": "Kit de démarrage",
+
+  "notFound.title": "Nœud introuvable",
+  "notFound.desc": "On dirait que cette connexion est rompue. La page que vous cherchez n'existe pas ou a été déplacée.",
+  "notFound.goBack": "Retour",
+  "notFound.home": "Page d'accueil",
+
+  "settings.toast.profileSaved": "Profil mis à jour",
+  "settings.toast.progressReset": "Progression réinitialisée",
+  "settings.toast.accountDeleted": "Votre compte a été supprimé",
+}

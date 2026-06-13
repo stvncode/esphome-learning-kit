@@ -2,7 +2,9 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
+import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
 import { useProgressStore } from "@/stores/progressStore"
+import { useHomeT } from "./home.i18n"
 import { motion } from "framer-motion"
 import { Code2, Hammer, Lightbulb, Pencil, Sparkles, Wifi } from "lucide-react"
 import { Link } from "react-router-dom"
@@ -72,6 +74,8 @@ const PHASES = [
 
 export function HomeLearningPath() {
   const { completedLevels } = useProgressStore()
+  const t = useHomeT()
+  const { phaseTitle, phaseDesc, phaseLabel } = useCurriculumLabels()
 
   const getPhaseProgress = (phaseId: number) => {
     const done = completedLevels.filter((l) => l.startsWith(`${phaseId}.`)).length
@@ -89,11 +93,11 @@ export function HomeLearningPath() {
         className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between"
       >
         <div>
-          <h2 className="text-2xl font-semibold">Learning Path</h2>
-          <p className="text-sm text-muted-foreground mt-1">Six phases, each building on the last.</p>
+          <h2 className="text-2xl font-semibold">{t("path.title")}</h2>
+          <p className="text-sm text-muted-foreground mt-1">{t("path.subtitle")}</p>
         </div>
         <Badge variant="outline" className="text-muted-foreground">
-          6 Phases · 22 Levels
+          {t("path.badge")}
         </Badge>
       </motion.div>
 
@@ -117,23 +121,23 @@ export function HomeLearningPath() {
                       <Icon className="h-4 w-4 text-white" />
                     </div>
                     <Badge variant="secondary" className="font-mono text-xs">
-                      Phase {phase.id}
+                      {phaseLabel(phase.id)}
                     </Badge>
                   </div>
-                  <CardTitle className="text-base">{phase.title}</CardTitle>
-                  <CardDescription className="text-xs">{phase.description}</CardDescription>
+                  <CardTitle className="text-base">{phaseTitle(phase.id)}</CardTitle>
+                  <CardDescription className="text-xs">{phaseDesc(phase.id)}</CardDescription>
                 </CardHeader>
                 <CardContent className="relative pt-0 space-y-3">
                   <div>
                     <div className="mb-1 flex justify-between text-xs">
-                      <span className="text-muted-foreground">Progress</span>
+                      <span className="text-muted-foreground">{t("path.progress")}</span>
                       <span className="font-medium">{Math.round(progress)}%</span>
                     </div>
                     <Progress value={progress} className="h-1.5" />
                   </div>
                   <Button asChild className="w-full h-8 text-sm" variant={progress > 0 ? "default" : "outline"}>
                     <Link to={`/app/level/${phase.firstLevel}`}>
-                      {progress > 0 ? "Continue" : "Start Phase"}
+                      {progress > 0 ? t("path.continue") : t("path.start")}
                     </Link>
                   </Button>
                 </CardContent>

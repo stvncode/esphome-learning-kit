@@ -1,28 +1,15 @@
 import { motion } from "framer-motion"
 import { Code2, Cpu, Lightbulb } from "lucide-react"
+import { useLandingT } from "./landing.i18n"
 
 const STEPS = [
-  {
-    n: "01",
-    icon: Lightbulb,
-    title: "Understand visually",
-    desc: "Learn how smart devices work using drag-and-drop blocks. No prior knowledge required.",
-  },
-  {
-    n: "02",
-    icon: Code2,
-    title: "Reveal the code",
-    desc: "See how every visual block maps to real ESPHome YAML. Bridge the gap between concept and code.",
-  },
-  {
-    n: "03",
-    icon: Cpu,
-    title: "Export & deploy",
-    desc: "Export your config and open it in ESPHome to flash your ESP32. Your device shows up in Home Assistant, ready to automate.",
-  },
+  { n: "01", icon: Lightbulb, titleKey: "how.s1Title" as const, descKey: "how.s1Desc" as const },
+  { n: "02", icon: Code2, titleKey: "how.s2Title" as const, descKey: "how.s2Desc" as const },
+  { n: "03", icon: Cpu, titleKey: "how.s3Title" as const, descKey: "how.s3Desc" as const },
 ]
 
 export function HowItWorksSection() {
+  const t = useLandingT()
   return (
     <section className="py-24">
       <div className="mx-auto max-w-6xl px-6">
@@ -32,8 +19,8 @@ export function HowItWorksSection() {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <p className="mb-3 text-sm font-medium text-primary">The path</p>
-          <h2 className="text-3xl font-bold text-foreground">From zero to deployed — step by step</h2>
+          <p className="mb-3 text-sm font-medium text-primary">{t("how.eyebrow")}</p>
+          <h2 className="text-3xl font-bold text-foreground">{t("how.title")}</h2>
         </motion.div>
 
         <div className="relative grid gap-8 md:grid-cols-3">
@@ -53,8 +40,8 @@ export function HowItWorksSection() {
               <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20">
                 <step.icon className="h-6 w-6 text-primary" />
               </div>
-              <h3 className="mb-2 text-lg font-semibold text-foreground">{step.title}</h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">{step.desc}</p>
+              <h3 className="mb-2 text-lg font-semibold text-foreground">{t(step.titleKey)}</h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">{t(step.descKey)}</p>
             </motion.div>
           ))}
         </div>

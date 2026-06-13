@@ -10,6 +10,7 @@ import {
 import { TabsContent } from "@/components/ui/tabs"
 import { Cpu, MapPin, Wifi } from "lucide-react"
 import { BOARD_OPTIONS } from "./constants"
+import { useWorkspaceT } from "./workspace.i18n"
 
 interface DeviceSettingsTabProps {
   deviceName: string
@@ -36,18 +37,19 @@ export function DeviceSettingsTab({
   onWifiSsidChange,
   onWifiPasswordChange,
 }: DeviceSettingsTabProps) {
+  const t = useWorkspaceT()
   return (
     <TabsContent value="generic">
       <Card className="border-border/50 bg-card/50">
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm">Device Settings</CardTitle>
-          <CardDescription className="text-xs">Basic ESPHome configuration</CardDescription>
+          <CardTitle className="text-sm">{t("device.title")}</CardTitle>
+          <CardDescription className="text-xs">{t("device.desc")}</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-1.5">
             <p className="flex items-center gap-1.5 text-xs font-medium">
               <Cpu className="h-3.5 w-3.5 text-muted-foreground" />
-              Device Name
+              {t("device.name")}
             </p>
             <Input
               value={deviceName}
@@ -55,12 +57,12 @@ export function DeviceSettingsTab({
               placeholder="my-device"
               className="h-8 text-sm"
             />
-            <p className="text-[11px] text-muted-foreground">Used as the ESPHome hostname</p>
+            <p className="text-[11px] text-muted-foreground">{t("device.nameHint")}</p>
           </div>
           <div className="space-y-1.5">
             <p className="flex items-center gap-1.5 text-xs font-medium">
               <Cpu className="h-3.5 w-3.5 text-muted-foreground" />
-              Board
+              {t("device.board")}
             </p>
             <Select value={board} onValueChange={onBoardChange}>
               <SelectTrigger className="h-8 w-full text-sm">
@@ -78,32 +80,32 @@ export function DeviceSettingsTab({
           <div className="space-y-1.5">
             <p className="flex items-center gap-1.5 text-xs font-medium">
               <MapPin className="h-3.5 w-3.5 text-muted-foreground" />
-              Area
+              {t("device.area")}
             </p>
             <Input
               value={area}
               onChange={(e) => onAreaChange(e.target.value)}
-              placeholder="Living Room"
+              placeholder={t("device.areaPlaceholder")}
               className="h-8 text-sm"
             />
-            <p className="text-[11px] text-muted-foreground">Shown in Home Assistant</p>
+            <p className="text-[11px] text-muted-foreground">{t("device.areaHint")}</p>
           </div>
           <div className="space-y-3 rounded-lg border border-border/50 p-3">
             <div className="flex items-center gap-1.5 text-xs font-medium">
               <Wifi className="h-3.5 w-3.5 text-muted-foreground" />
-              Wi-Fi
+              {t("device.wifi")}
             </div>
             <div className="space-y-1.5">
-              <p className="text-xs font-medium text-muted-foreground">SSID</p>
+              <p className="text-xs font-medium text-muted-foreground">{t("device.ssid")}</p>
               <Input
                 value={wifiSsid}
                 onChange={(e) => onWifiSsidChange(e.target.value)}
-                placeholder="Network name"
+                placeholder={t("device.ssidPlaceholder")}
                 className="h-8 text-sm"
               />
             </div>
             <div className="space-y-1.5">
-              <p className="text-xs font-medium text-muted-foreground">Password</p>
+              <p className="text-xs font-medium text-muted-foreground">{t("device.password")}</p>
               <Input
                 type="password"
                 value={wifiPassword}

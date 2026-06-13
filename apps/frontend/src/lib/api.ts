@@ -176,3 +176,9 @@ export function acceptInvite(token: string): Promise<Classroom> {
     body: JSON.stringify({ token }),
   })
 }
+
+// ── Account ───────────────────────────────────────────────────────────────────
+
+export function deleteAccount(): Promise<void> {
+  return apiFetch("/api/account", () => undefined, { method: "DELETE" })
+}

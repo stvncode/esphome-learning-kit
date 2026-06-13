@@ -23,6 +23,9 @@ const WorkspaceHome = lazy(() =>
   import("@/pages/WorkspaceHome").then((m) => ({ default: m.WorkspaceHome })),
 )
 const Workspace = lazy(() => import("@/pages/Workspace").then((m) => ({ default: m.Workspace })))
+const Classes = lazy(() => import("@/pages/Classes").then((m) => ({ default: m.Classes })))
+const Classroom = lazy(() => import("@/pages/Classroom").then((m) => ({ default: m.Classroom })))
+const Certificate = lazy(() => import("@/pages/Certificate").then((m) => ({ default: m.Certificate })))
 
 function PageFallback() {
   return (
@@ -51,7 +54,11 @@ function App() {
               <Route path="/app/level/:levelId" element={<Level />} />
               <Route path="/app/workspace" element={<WorkspaceHome />} />
               <Route path="/app/workspace/builder" element={<Workspace />} />
+              <Route path="/app/classes" element={<Classes />} />
+              <Route path="/app/classes/:id" element={<Classroom />} />
             </Route>
+            {/* Full-screen (no shell) so it prints cleanly */}
+            <Route path="/app/certificate" element={<Certificate />} />
           </Route>
 
           {/* 404 */}

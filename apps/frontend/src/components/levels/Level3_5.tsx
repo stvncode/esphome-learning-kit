@@ -14,6 +14,7 @@ import {
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useProgressStore } from "@/stores/progressStore"
+import { useRecordQuizScore } from "@/lib/useQuizScore"
 import { Link } from "react-router-dom"
 
 interface Question {
@@ -102,6 +103,7 @@ export function Level3_5() {
   const [, setLevelComplete] = useState(false)
 
   const { completeLevel, completedLevels } = useProgressStore()
+  const recordQuizScore = useRecordQuizScore()
   const isCompleted = completedLevels.includes("3.5")
 
   const handleAnswer = (questionId: string, answerId: string) => {
@@ -112,10 +114,9 @@ export function Level3_5() {
     setSubmitted(newSubmitted)
 
     if (Object.keys(newSubmitted).length === questions.length) {
-      const allCorrect = questions.every(
-        (q) => newAnswers[q.id] === q.correctId
-      )
-      if (allCorrect) {
+      const correct = questions.filter((q) => newAnswers[q.id] === q.correctId).length
+      recordQuizScore("3.5", correct, questions.length)
+      if (correct === questions.length) {
         setLevelComplete(true)
         completeLevel("3.5")
       }

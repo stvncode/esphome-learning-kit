@@ -12,6 +12,7 @@ import {
   Radio,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useRecordQuizScore } from "@/lib/useQuizScore"
 import { useProgressStore } from "@/stores/progressStore"
 
 const i2cYaml = `i2c:
@@ -136,6 +137,7 @@ export function Level6_3() {
   const [submitted, setSubmitted] = useState<Record<string, boolean>>({})
 
   const { completeLevel, completedLevels } = useProgressStore()
+  const recordQuizScore = useRecordQuizScore()
   const isCompleted = completedLevels.includes("6.3")
 
   const handleAnswer = (questionId: string, answerId: string) => {
@@ -144,11 +146,12 @@ export function Level6_3() {
     const newSubmitted = { ...submitted, [questionId]: true }
     setAnswers(newAnswers)
     setSubmitted(newSubmitted)
-    if (
-      Object.keys(newSubmitted).length === questions.length &&
-      questions.every((q) => newAnswers[q.id] === q.correctId)
-    ) {
-      completeLevel("6.3")
+    if (Object.keys(newSubmitted).length === questions.length) {
+      const correct = questions.filter((q) => newAnswers[q.id] === q.correctId).length
+      recordQuizScore("6.3", correct, questions.length)
+      if (correct === questions.length) {
+        completeLevel("6.3")
+      }
     }
   }
 

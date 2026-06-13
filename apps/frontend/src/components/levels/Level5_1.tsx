@@ -13,6 +13,7 @@ import {
   Terminal,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useRecordQuizScore } from "@/lib/useQuizScore"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -80,6 +81,7 @@ export function Level5_1() {
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
   const { completeLevel, completedLevels } = useProgressStore()
+  const recordQuizScore = useRecordQuizScore()
   const isCompleted = completedLevels.includes("5.1")
 
   const logsFinished = visibleCount >= LOG_LINES.length
@@ -114,6 +116,7 @@ export function Level5_1() {
     if (!selectedAnswer) return
     setSubmitted(true)
     const correct = radioOptions.find((o) => o.id === selectedAnswer)?.correct ?? false
+    recordQuizScore("5.1", correct ? 1 : 0, 1)
     if (correct && !levelComplete) {
       setLevelComplete(true)
       completeLevel("5.1")

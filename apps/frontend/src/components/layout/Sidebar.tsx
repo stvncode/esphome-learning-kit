@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import {
   Cpu,
+  GraduationCap,
   Home,
   Lightbulb,
   Code2,
@@ -115,9 +116,10 @@ export function Sidebar() {
         {/* Home Link */}
         <NavLink
           to="/app"
+          end
           className={({ isActive }) =>
             cn(
-              "mb-2 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
+              "mb-1 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
               isActive
                 ? "bg-accent text-accent-foreground"
                 : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
@@ -134,7 +136,7 @@ export function Sidebar() {
           end={false}
           className={({ isActive }) =>
             cn(
-              "mb-4 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
+              "mb-1 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
               isActive
                 ? "bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400"
                 : "text-muted-foreground hover:bg-gradient-to-r hover:from-emerald-500/10 hover:to-teal-500/10 hover:text-emerald-400"
@@ -143,6 +145,22 @@ export function Sidebar() {
         >
           <Wrench className="h-4 w-4" />
           Workspace
+        </NavLink>
+
+        {/* Classes Link */}
+        <NavLink
+          to="/app/classes"
+          className={({ isActive }) =>
+            cn(
+              "mb-4 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
+              isActive
+                ? "bg-accent text-accent-foreground"
+                : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+            )
+          }
+        >
+          <GraduationCap className="h-4 w-4" />
+          Classes
         </NavLink>
 
         {/* Phase Groups */}

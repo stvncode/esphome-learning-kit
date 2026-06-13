@@ -1,12 +1,20 @@
 import {
+  classroomDetailSchema,
+  classroomListSchema,
+  classroomSchema,
   healthResponseSchema,
   progressSchema,
   projectListSchema,
+  quizScoreListSchema,
+  type Classroom,
+  type ClassroomDetail,
   type HealthResponse,
   type Progress,
   type Project,
   type ProjectKind,
   type ProjectUpsertInput,
+  type QuizScore,
+  type QuizScoreUpsertInput,
 } from "@esphome-learning-kit/types"
 
 /** Base URL of the backend API. */
@@ -32,7 +40,13 @@ async function apiFetch<T>(
   })
 
   if (!res.ok) {
-    throw new Error(`Request to ${path} failed: ${res.status} ${res.statusText}`)
+    // Surface the server's `{ error }` message when present.
+    const message = await res
+      .clone()
+      .json()
+      .then((body) => (body && typeof body.error === "string" ? body.error : null))
+      .catch(() => null)
+    throw new Error(message ?? `Request to ${path} failed: ${res.status} ${res.statusText}`)
   }
 
   return parse(await res.json())
@@ -74,4 +88,49 @@ export function deleteProject(kind: ProjectKind, name: string): Promise<void> {
     () => undefined,
     { method: "DELETE" },
   )
+}
+
+// ── Quiz scores ───────────────────────────────────────────────────────────────
+
+export function listQuizScores(): Promise<QuizScore[]> {
+  return apiFetch("/api/quiz-scores", (data) => quizScoreListSchema.parse(data))
+}
+
+export function putQuizScore(input: QuizScoreUpsertInput): Promise<QuizScore> {
+  return apiFetch("/api/quiz-scores", (data) => quizScoreListSchema.element.parse(data), {
+    method: "PUT",
+    body: JSON.stringify(input),
+  })
+}
+
+// ── Classrooms ──────────────────────────────────────────────────────────────────
+
+export function listClassrooms(): Promise<Classroom[]> {
+  return apiFetch("/api/classrooms", (data) => classroomListSchema.parse(data))
+}
+
+export function getClassroom(id: string): Promise<ClassroomDetail> {
+  return apiFetch(`/api/classrooms/${id}`, (data) => classroomDetailSchema.parse(data))
+}
+
+export function createClassroom(name: string): Promise<Classroom> {
+  return apiFetch("/api/classrooms", (data) => classroomSchema.parse(data), {
+    method: "POST",
+    body: JSON.stringify({ name }),
+  })
+}
+
+export function joinClassroom(code: string): Promise<Classroom> {
+  return apiFetch("/api/classrooms/join", (data) => classroomSchema.parse(data), {
+    method: "POST",
+    body: JSON.stringify({ code }),
+  })
+}
+
+export function deleteClassroom(id: string): Promise<void> {
+  return apiFetch(`/api/classrooms/${id}`, () => undefined, { method: "DELETE" })
+}
+
+export function leaveClassroom(id: string): Promise<void> {
+  return apiFetch(`/api/classrooms/${id}/leave`, () => undefined, { method: "POST" })
 }

@@ -107,3 +107,52 @@ export const project = pgTable(
   },
   (t) => [unique().on(t.userId, t.kind, t.name)],
 );
+
+/** A class created by a teacher; students join via its code. */
+export const classroom = pgTable("classroom", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  code: text("code").notNull().unique(),
+  ownerId: text("owner_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at")
+    .$defaultFn(() => new Date())
+    .notNull(),
+});
+
+/** A student's membership in a classroom. Unique per (classroom, user). */
+export const classroomMember = pgTable(
+  "classroom_member",
+  {
+    id: text("id").primaryKey(),
+    classroomId: text("classroom_id")
+      .notNull()
+      .references(() => classroom.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    joinedAt: timestamp("joined_at")
+      .$defaultFn(() => new Date())
+      .notNull(),
+  },
+  (t) => [unique().on(t.classroomId, t.userId)],
+);
+
+/** A student's best quiz result for a level. Unique per (user, level). */
+export const quizScore = pgTable(
+  "quiz_score",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    levelId: text("level_id").notNull(),
+    score: integer("score").notNull(),
+    total: integer("total").notNull(),
+    updatedAt: timestamp("updated_at")
+      .$defaultFn(() => new Date())
+      .notNull(),
+  },
+  (t) => [unique().on(t.userId, t.levelId)],
+);

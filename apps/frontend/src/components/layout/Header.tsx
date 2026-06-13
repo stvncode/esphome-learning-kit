@@ -13,7 +13,7 @@ import { ACHIEVEMENTS } from "@/lib/achievements"
 import { signOut, useSession } from "@/lib/auth-client"
 import { useProgressStore } from "@/stores/progressStore"
 import { useQueryClient } from "@tanstack/react-query"
-import { ChevronRight, Flame, Home, LogOut, Moon, Sun, Trophy, User } from "lucide-react"
+import { ChevronRight, Flame, GraduationCap, Home, LogOut, Moon, Sun, Trophy, User } from "lucide-react"
 import { useTheme } from "next-themes"
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 
@@ -164,6 +164,17 @@ export function Header() {
                 )
               })}
             </div>
+            {unlockedIds.has("graduate") && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/app/certificate" className="cursor-pointer">
+                    <GraduationCap className="h-4 w-4" />
+                    View your certificate
+                  </Link>
+                </DropdownMenuItem>
+              </>
+            )}
           </DropdownMenuContent>
         </DropdownMenu>
 

@@ -13,6 +13,7 @@ import {
   Zap,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useRecordQuizScore } from "@/lib/useQuizScore"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -139,6 +140,7 @@ export function Level6_1() {
   const [submitted, setSubmitted] = useState<Record<string, boolean>>({})
 
   const { completeLevel, completedLevels } = useProgressStore()
+  const recordQuizScore = useRecordQuizScore()
   const isCompleted = completedLevels.includes("6.1")
   const allStepsRead = openSteps.size === steps.length
 
@@ -154,11 +156,12 @@ export function Level6_1() {
     const newSubmitted = { ...submitted, [questionId]: true }
     setAnswers(newAnswers)
     setSubmitted(newSubmitted)
-    if (
-      Object.keys(newSubmitted).length === questions.length &&
-      questions.every((q) => newAnswers[q.id] === q.correctId)
-    ) {
-      completeLevel("6.1")
+    if (Object.keys(newSubmitted).length === questions.length) {
+      const correct = questions.filter((q) => newAnswers[q.id] === q.correctId).length
+      recordQuizScore("6.1", correct, questions.length)
+      if (correct === questions.length) {
+        completeLevel("6.1")
+      }
     }
   }
 

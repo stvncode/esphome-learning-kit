@@ -30,7 +30,7 @@ app.route("/api", api);
 
 app.get("/", (c) => c.text("backend"));
 
-const port = 3001;
+const port = Number(process.env.PORT) || 3001;
 console.log(`backend listening on http://localhost:${port}`);
 
 export default {

@@ -1,6 +1,7 @@
 import {
   classroomDetailSchema,
   classroomListSchema,
+  classroomMemberDetailSchema,
   classroomSchema,
   healthResponseSchema,
   progressSchema,
@@ -8,6 +9,7 @@ import {
   quizScoreListSchema,
   type Classroom,
   type ClassroomDetail,
+  type ClassroomMemberDetail,
   type HealthResponse,
   type Progress,
   type Project,
@@ -133,4 +135,21 @@ export function deleteClassroom(id: string): Promise<void> {
 
 export function leaveClassroom(id: string): Promise<void> {
   return apiFetch(`/api/classrooms/${id}/leave`, () => undefined, { method: "POST" })
+}
+
+export function renameClassroom(id: string, name: string): Promise<void> {
+  return apiFetch(`/api/classrooms/${id}`, () => undefined, {
+    method: "PATCH",
+    body: JSON.stringify({ name }),
+  })
+}
+
+export function removeClassroomMember(id: string, userId: string): Promise<void> {
+  return apiFetch(`/api/classrooms/${id}/members/${userId}`, () => undefined, { method: "DELETE" })
+}
+
+export function getClassroomMember(id: string, userId: string): Promise<ClassroomMemberDetail> {
+  return apiFetch(`/api/classrooms/${id}/members/${userId}`, (data) =>
+    classroomMemberDetailSchema.parse(data),
+  )
 }

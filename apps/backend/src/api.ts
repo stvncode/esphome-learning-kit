@@ -18,6 +18,7 @@ import {
   quizScore,
   user,
 } from "./db/schema.ts";
+import { buildStandings, generateCode } from "./standings.ts";
 
 type Variables = {
   userId: string;
@@ -186,10 +187,6 @@ api.put("/quiz-scores", async (c) => {
 
 // ── Classrooms ──────────────────────────────────────────────────────────────────
 
-const CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // no ambiguous chars
-const generateCode = () =>
-  Array.from(crypto.getRandomValues(new Uint8Array(6)), (b) => CODE_ALPHABET[b % CODE_ALPHABET.length]).join("");
-
 async function memberCountFor(classroomId: string): Promise<number> {
   const [row] = await db
     .select({ count: sql<number>`count(*)::int` })
@@ -325,28 +322,7 @@ api.get("/classrooms/:id", async (c) => {
     ? await db.select().from(quizScore).where(inArray(quizScore.userId, memberIds))
     : [];
 
-  const progressByUser = new Map(progressRows.map((p) => [p.userId, p]));
-  const quizByUser = new Map<string, { sum: number; n: number }>();
-  for (const q of quizRows) {
-    const agg = quizByUser.get(q.userId) ?? { sum: 0, n: 0 };
-    agg.sum += (q.score / q.total) * 100;
-    agg.n += 1;
-    quizByUser.set(q.userId, agg);
-  }
-
-  const standings = members
-    .map((m) => {
-      const p = progressByUser.get(m.userId);
-      const quiz = quizByUser.get(m.userId);
-      return {
-        userId: m.userId,
-        name: m.name,
-        completedCount: p?.completedLevels.length ?? 0,
-        achievementCount: p?.achievements.length ?? 0,
-        averageQuizScore: quiz ? Math.round(quiz.sum / quiz.n) : null,
-      };
-    })
-    .sort((a, b) => b.completedCount - a.completedCount || b.achievementCount - a.achievementCount);
+  const standings = buildStandings(members, progressRows, quizRows);
 
   return c.json({
     id: room.id,
@@ -375,4 +351,57 @@ api.post("/classrooms/:id/leave", async (c) => {
     .delete(classroomMember)
     .where(and(eq(classroomMember.classroomId, id), eq(classroomMember.userId, userId)));
   return c.json({ success: true });
+});
+
+/** Resolve a class the current user must own, or return the error response. */
+async function requireOwnedClass(c: { get: (k: "userId") => string; req: { param: (k: string) => string } }) {
+  const userId = c.get("userId");
+  const id = c.req.param("id");
+  const [room] = await db.select().from(classroom).where(eq(classroom.id, id));
+  if (!room) return { error: "Class not found" as const, status: 404 as const };
+  if (room.ownerId !== userId) return { error: "Only the teacher can do that" as const, status: 403 as const };
+  return { room };
+}
+
+api.patch("/classrooms/:id", async (c) => {
+  const owned = await requireOwnedClass(c);
+  if ("error" in owned) return c.json({ error: owned.error }, owned.status);
+  const parsed = createClassroomSchema.safeParse(await c.req.json());
+  if (!parsed.success) return c.json({ error: "Invalid name" }, 400);
+  await db.update(classroom).set({ name: parsed.data.name }).where(eq(classroom.id, owned.room.id));
+  return c.json({ success: true });
+});
+
+api.delete("/classrooms/:id/members/:userId", async (c) => {
+  const owned = await requireOwnedClass(c);
+  if ("error" in owned) return c.json({ error: owned.error }, owned.status);
+  const memberId = c.req.param("userId");
+  await db
+    .delete(classroomMember)
+    .where(and(eq(classroomMember.classroomId, owned.room.id), eq(classroomMember.userId, memberId)));
+  return c.json({ success: true });
+});
+
+api.get("/classrooms/:id/members/:userId", async (c) => {
+  const owned = await requireOwnedClass(c);
+  if ("error" in owned) return c.json({ error: owned.error }, owned.status);
+  const memberId = c.req.param("userId");
+
+  const [membership] = await db
+    .select({ name: user.name })
+    .from(classroomMember)
+    .innerJoin(user, eq(user.id, classroomMember.userId))
+    .where(and(eq(classroomMember.classroomId, owned.room.id), eq(classroomMember.userId, memberId)));
+  if (!membership) return c.json({ error: "Not a member of this class" }, 404);
+
+  const [prog] = await db.select().from(progress).where(eq(progress.userId, memberId));
+  const quizzes = await db.select().from(quizScore).where(eq(quizScore.userId, memberId));
+
+  return c.json({
+    userId: memberId,
+    name: membership.name,
+    completedLevels: prog?.completedLevels ?? [],
+    achievementCount: prog?.achievements.length ?? 0,
+    quizScores: quizzes.map((q) => ({ levelId: q.levelId, score: q.score, total: q.total })),
+  });
 });

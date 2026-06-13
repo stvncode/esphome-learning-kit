@@ -132,6 +132,16 @@ export type ClassroomDetail = z.infer<typeof classroomDetailSchema>;
 export const createClassroomSchema = z.object({ name: z.string().min(1).max(80) });
 export const joinClassroomSchema = z.object({ code: z.string().min(1) });
 
+/** A teacher's detailed view of one student in their class. */
+export const classroomMemberDetailSchema = z.object({
+  userId: z.string(),
+  name: z.string(),
+  completedLevels: z.array(z.string()),
+  achievementCount: z.number().int(),
+  quizScores: z.array(quizScoreUpsertSchema),
+});
+export type ClassroomMemberDetail = z.infer<typeof classroomMemberDetailSchema>;
+
 /** Authenticated user as returned by the auth provider. */
 export const userSchema = z.object({
   id: z.string(),

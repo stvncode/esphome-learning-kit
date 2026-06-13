@@ -1,19 +1,35 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { AppShell } from "@/components/layout"
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute"
 import { Home, Level } from "@/pages"
-import { Sandbox } from "@/pages/Sandbox"
-import { Workshop } from "@/pages/Workshop"
+import { Landing } from "@/pages/Landing"
+import { NotFound } from "@/pages/NotFound"
+import { SignIn } from "@/pages/SignIn"
+import { SignUp } from "@/pages/SignUp"
+import { Workspace } from "@/pages/Workspace"
+import { WorkspaceHome } from "@/pages/WorkspaceHome"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<AppShell />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/level/:levelId" element={<Level />} />
-          <Route path="/sandbox" element={<Sandbox />} />
-          <Route path="/workshop" element={<Workshop />} />
+        {/* Public routes — no AppShell */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+
+        {/* App routes — authenticated, with sidebar + header */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AppShell />}>
+            <Route path="/app" element={<Home />} />
+            <Route path="/app/level/:levelId" element={<Level />} />
+            <Route path="/app/workspace" element={<WorkspaceHome />} />
+            <Route path="/app/workspace/builder" element={<Workspace />} />
+          </Route>
         </Route>
+
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )

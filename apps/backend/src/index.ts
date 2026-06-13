@@ -1,15 +1,35 @@
-import type { HealthResponse } from "@esphome-learning-kit/types";
+import { healthResponseSchema } from "@esphome-learning-kit/types";
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { auth } from "./auth.ts";
 
-const server = Bun.serve({
-  port: 3001,
-  fetch(req) {
-    const url = new URL(req.url);
-    if (url.pathname === "/api/health") {
-      const body: HealthResponse = { status: "ok" };
-      return Response.json(body);
-    }
-    return new Response("backend", { status: 200 });
-  },
-});
+const trustedOrigins = process.env.TRUSTED_ORIGINS?.split(",").map((o) => o.trim()) ?? [
+  "http://localhost:5173",
+];
 
-console.log(`backend listening on http://localhost:${server.port}`);
+const app = new Hono();
+
+app.use(
+  "*",
+  cors({
+    origin: trustedOrigins,
+    allowHeaders: ["Content-Type", "Authorization"],
+    allowMethods: ["GET", "POST", "OPTIONS"],
+    credentials: true,
+  }),
+);
+
+// Mount better-auth — handles all /api/auth/** routes.
+app.on(["GET", "POST"], "/api/auth/*", (c) => auth.handler(c.req.raw));
+
+app.get("/api/health", (c) => c.json(healthResponseSchema.parse({ status: "ok" })));
+
+app.get("/", (c) => c.text("backend"));
+
+const port = 3001;
+console.log(`backend listening on http://localhost:${port}`);
+
+export default {
+  port,
+  fetch: app.fetch,
+};

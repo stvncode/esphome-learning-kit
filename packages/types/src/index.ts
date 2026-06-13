@@ -27,6 +27,50 @@ export const signUpSchema = z
   });
 export type SignUpInput = z.infer<typeof signUpSchema>;
 
+/** A single unlocked achievement. */
+export const achievementSchema = z.object({
+  id: z.string(),
+  title: z.string(),
+  description: z.string(),
+  icon: z.string(),
+  unlockedAt: z.string().optional(),
+});
+export type Achievement = z.infer<typeof achievementSchema>;
+
+/** A user's learning progress, persisted server-side. */
+export const progressSchema = z.object({
+  completedLevels: z.array(z.string()),
+  currentLevel: z.string().nullable(),
+  streak: z.number().int(),
+  lastActivityDate: z.string().nullable(),
+  achievements: z.array(achievementSchema),
+});
+export type Progress = z.infer<typeof progressSchema>;
+
+export const projectKindSchema = z.enum(["workspace", "sandbox"]);
+export type ProjectKind = z.infer<typeof projectKindSchema>;
+
+/** A saved builder/sandbox project. `data` holds the kind-specific payload. */
+export const projectSchema = z.object({
+  id: z.string(),
+  kind: projectKindSchema,
+  name: z.string().min(1),
+  data: z.record(z.string(), z.unknown()),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+export type Project = z.infer<typeof projectSchema>;
+
+export const projectListSchema = z.array(projectSchema);
+
+/** Payload to create/update a project (upserted by kind + name). */
+export const projectUpsertSchema = z.object({
+  kind: projectKindSchema,
+  name: z.string().min(1),
+  data: z.record(z.string(), z.unknown()),
+});
+export type ProjectUpsertInput = z.infer<typeof projectUpsertSchema>;
+
 /** Authenticated user as returned by the auth provider. */
 export const userSchema = z.object({
   id: z.string(),

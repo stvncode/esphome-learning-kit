@@ -1,6 +1,6 @@
 {
   "name": "esphome-learning-kit",
-  "type": "package",
+  "type": "module",
   "private": true,
   "workspaces": [
     "apps/*",

@@ -15,6 +15,8 @@ import {
   STARTER_KIT_NODES,
 } from "@/components/workspace/constants"
 import type { SavedProject } from "@/components/workspace/types"
+import { listProjects } from "@/lib/api"
+import { useQuery } from "@tanstack/react-query"
 import { motion } from "framer-motion"
 import { Bell, ChevronRight, Clock, Cpu, Droplets, FolderOpen, Plus, Radio, Sparkles, Wrench } from "lucide-react"
 import { useState } from "react"
@@ -36,14 +38,11 @@ export function WorkspaceHome() {
   const [projectName, setProjectName] = useState("")
   const [board, setBoard] = useState(STARTER_KIT_BOARD)
 
-  const savedProjects: SavedProject[] = (() => {
-    try {
-      const raw = localStorage.getItem("workspace-projects")
-      return raw ? JSON.parse(raw) : []
-    } catch {
-      return []
-    }
-  })()
+  const { data: projects } = useQuery({
+    queryKey: ["projects", "workspace"],
+    queryFn: () => listProjects("workspace"),
+  })
+  const savedProjects: SavedProject[] = (projects ?? []).map((p) => p.data as unknown as SavedProject)
 
   function handleCreate() {
     const name = projectName.trim() || (template === "starter-kit" ? "starter-kit" : "my-device")

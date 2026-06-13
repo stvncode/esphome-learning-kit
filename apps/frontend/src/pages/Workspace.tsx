@@ -21,6 +21,8 @@ import type {
 import { useSimulation } from "@/components/workspace/useSimulation"
 import { WorkspaceContextMenus } from "@/components/workspace/WorkspaceContextMenus"
 import { WorkspaceHeader, type WorkspaceView } from "@/components/workspace/WorkspaceHeader"
+import { putProject } from "@/lib/api"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import type { Edge, EdgeMouseHandler, Node, NodeMouseHandler } from "@xyflow/react"
 import { Boxes, GitBranch, Settings } from "lucide-react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
@@ -50,14 +52,7 @@ export function Workspace() {
   const [wifiPassword, setWifiPassword] = useState(init.wifiPassword ?? "")
   const [area, setArea] = useState(init.area ?? "")
   const [automations, setAutomations] = useState<Automation[]>(init.automations ?? [])
-  const [savedProjects, setSavedProjects] = useState<SavedProject[]>(() => {
-    try {
-      const saved = localStorage.getItem("workspace-projects")
-      return saved ? JSON.parse(saved) : []
-    } catch {
-      return []
-    }
-  })
+  const queryClient = useQueryClient()
   const [copied, setCopied] = useState(false)
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
   const [selectedEdgeId, setSelectedEdgeId] = useState<string | null>(null)
@@ -364,6 +359,15 @@ export function Workspace() {
     toast.success("YAML downloaded!")
   }, [yaml, deviceName])
 
+  const saveMutation = useMutation({
+    mutationFn: putProject,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects", "workspace"] })
+      toast.success("Project saved!")
+    },
+    onError: () => toast.error("Failed to save project"),
+  })
+
   const saveProject = useCallback(() => {
     const project: SavedProject = {
       name: deviceName,
@@ -377,11 +381,8 @@ export function Workspace() {
       automations,
       createdAt: new Date().toISOString(),
     }
-    const updated = [...savedProjects.filter((p) => p.name !== deviceName), project]
-    setSavedProjects(updated)
-    localStorage.setItem("workspace-projects", JSON.stringify(updated))
-    toast.success("Project saved!")
-  }, [deviceName, board, wifiSsid, wifiPassword, area, nodes, edges, automations, savedProjects])
+    saveMutation.mutate({ kind: "workspace", name: deviceName, data: project as unknown as Record<string, unknown> })
+  }, [deviceName, board, wifiSsid, wifiPassword, area, nodes, edges, automations, saveMutation])
 
   const addAutomation = useCallback((data: Omit<Automation, "id">) => {
     setAutomations((prev) => [...prev, { ...data, id: `auto-${Date.now()}` }])

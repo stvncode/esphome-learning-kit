@@ -1,4 +1,13 @@
-import { healthResponseSchema, type HealthResponse } from "@esphome-learning-kit/types"
+import {
+  healthResponseSchema,
+  progressSchema,
+  projectListSchema,
+  type HealthResponse,
+  type Progress,
+  type Project,
+  type ProjectKind,
+  type ProjectUpsertInput,
+} from "@esphome-learning-kit/types"
 
 /** Base URL of the backend API. */
 export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3001"
@@ -31,4 +40,38 @@ async function apiFetch<T>(
 
 export function getHealth(): Promise<HealthResponse> {
   return apiFetch("/api/health", (data) => healthResponseSchema.parse(data))
+}
+
+// ── Progress ──────────────────────────────────────────────────────────────────
+
+export function getProgress(): Promise<Progress> {
+  return apiFetch("/api/progress", (data) => progressSchema.parse(data))
+}
+
+export function putProgress(input: Progress): Promise<Progress> {
+  return apiFetch("/api/progress", (data) => progressSchema.parse(data), {
+    method: "PUT",
+    body: JSON.stringify(input),
+  })
+}
+
+// ── Projects ──────────────────────────────────────────────────────────────────
+
+export function listProjects(kind: ProjectKind): Promise<Project[]> {
+  return apiFetch(`/api/projects?kind=${kind}`, (data) => projectListSchema.parse(data))
+}
+
+export function putProject(input: ProjectUpsertInput): Promise<Project> {
+  return apiFetch("/api/projects", (data) => projectListSchema.element.parse(data), {
+    method: "PUT",
+    body: JSON.stringify(input),
+  })
+}
+
+export function deleteProject(kind: ProjectKind, name: string): Promise<void> {
+  return apiFetch(
+    `/api/projects?kind=${kind}&name=${encodeURIComponent(name)}`,
+    () => undefined,
+    { method: "DELETE" },
+  )
 }

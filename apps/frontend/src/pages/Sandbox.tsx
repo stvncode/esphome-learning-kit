@@ -31,7 +31,9 @@ import {
   Square,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { deleteProject as apiDeleteProject, listProjects, putProject } from "@/lib/api"
 import { FlowCanvas } from "@/components/flow"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import type { Node, Edge } from "@xyflow/react"
 import { toast } from "sonner"
 
@@ -75,10 +77,15 @@ export function Sandbox() {
   const [nodes, setNodes] = useState<Node[]>([])
   const [edges, setEdges] = useState<Edge[]>([])
   const [projectName, setProjectName] = useState("My Project")
-  const [savedProjects, setSavedProjects] = useState<SavedProject[]>(() => {
-    const saved = localStorage.getItem("sandbox-projects")
-    return saved ? JSON.parse(saved) : []
+  const queryClient = useQueryClient()
+  const { data: projects } = useQuery({
+    queryKey: ["projects", "sandbox"],
+    queryFn: () => listProjects("sandbox"),
   })
+  const savedProjects: SavedProject[] = (projects ?? []).map((p) => ({
+    name: p.name,
+    ...(p.data as unknown as Omit<SavedProject, "name">),
+  }))
   const [copied, setCopied] = useState(false)
   const [loadDialogOpen, setLoadDialogOpen] = useState(false)
   const [isSimulating, setIsSimulating] = useState(false)
@@ -181,12 +188,31 @@ export function Sandbox() {
     toast.success("YAML downloaded!")
   }, [generateYaml, projectName])
 
+  const saveMutation = useMutation({
+    mutationFn: putProject,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects", "sandbox"] })
+      toast.success("Project saved!")
+    },
+    onError: () => toast.error("Failed to save project"),
+  })
+
+  const deleteMutation = useMutation({
+    mutationFn: (name: string) => apiDeleteProject("sandbox", name),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["projects", "sandbox"] })
+      toast.success("Project deleted")
+    },
+    onError: () => toast.error("Failed to delete project"),
+  })
+
   const saveProject = useCallback(() => {
-    const project: SavedProject = { name: projectName, nodes, edges, createdAt: new Date().toISOString() }
-    const updated = [...savedProjects.filter((p) => p.name !== projectName), project]
-    setSavedProjects(updated); localStorage.setItem("sandbox-projects", JSON.stringify(updated))
-    toast.success("Project saved!")
-  }, [projectName, nodes, edges, savedProjects])
+    saveMutation.mutate({
+      kind: "sandbox",
+      name: projectName,
+      data: { nodes, edges, createdAt: new Date().toISOString() },
+    })
+  }, [projectName, nodes, edges, saveMutation])
 
   const loadProject = useCallback((project: SavedProject) => {
     setProjectName(project.name); setNodes(project.nodes); setEdges(project.edges); setLoadDialogOpen(false)
@@ -194,10 +220,8 @@ export function Sandbox() {
   }, [])
 
   const deleteProject = useCallback((name: string) => {
-    const updated = savedProjects.filter((p) => p.name !== name)
-    setSavedProjects(updated); localStorage.setItem("sandbox-projects", JSON.stringify(updated))
-    toast.success("Project deleted")
-  }, [savedProjects])
+    deleteMutation.mutate(name)
+  }, [deleteMutation])
 
   return (
     <div className="flex h-[calc(100svh-4rem)] flex-col p-6">

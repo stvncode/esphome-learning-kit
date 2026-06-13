@@ -1,9 +1,11 @@
 import { LoginForm } from "@/components/auth/LoginForm"
 import { ArrowLeft, Cpu } from "lucide-react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
 
 export function SignIn() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const inviteToken = searchParams.get("invite") ?? undefined
 
   return (
     <div className="relative flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
@@ -21,7 +23,10 @@ export function SignIn() {
           </div>
           ESPHome Learn
         </Link>
-        <LoginForm onSwitchToSignup={() => navigate("/signup")} />
+        <LoginForm
+          inviteToken={inviteToken}
+          onSwitchToSignup={() => navigate(inviteToken ? `/signup?invite=${inviteToken}` : "/signup")}
+        />
         <p className="px-6 text-center text-[11px] text-muted-foreground">
           By continuing, you agree to our{" "}
           <a href="#" className="underline underline-offset-2 hover:text-foreground transition-colors">Terms</a>

@@ -16,6 +16,7 @@ export const user = pgTable("user", {
     .$defaultFn(() => false)
     .notNull(),
   image: text("image"),
+  role: text("role").notNull().default("teacher"), // "teacher" | "student"
   createdAt: timestamp("created_at")
     .$defaultFn(() => new Date())
     .notNull(),
@@ -139,6 +140,23 @@ export const classroomMember = pgTable(
   },
   (t) => [unique().on(t.classroomId, t.userId)],
 );
+
+/** A per-email invitation to a classroom. Single-use (consumed on accept). */
+export const classroomInvite = pgTable("classroom_invite", {
+  id: text("id").primaryKey(),
+  classroomId: text("classroom_id")
+    .notNull()
+    .references(() => classroom.id, { onDelete: "cascade" }),
+  email: text("email").notNull(),
+  token: text("token").notNull().unique(),
+  invitedBy: text("invited_by")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at")
+    .$defaultFn(() => new Date())
+    .notNull(),
+  acceptedAt: timestamp("accepted_at"),
+});
 
 /** A student's best quiz result for a level. Unique per (user, level). */
 export const quizScore = pgTable(

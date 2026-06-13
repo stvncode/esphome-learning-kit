@@ -16,13 +16,14 @@ import {
   deleteClassroom,
   getClassroom,
   getClassroomMember,
+  inviteStudents,
   leaveClassroom,
   removeClassroomMember,
   renameClassroom,
 } from "@/lib/api"
 import { levelMeta } from "@/lib/curriculum"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { ArrowLeft, Check, Copy, Loader2, LogOut, Pencil, Trash2, Trophy, UserX } from "lucide-react"
+import { ArrowLeft, Check, Copy, Loader2, LogOut, Mail, Pencil, Trash2, Trophy, UserX } from "lucide-react"
 import { useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
@@ -36,6 +37,8 @@ export function Classroom() {
   const [copied, setCopied] = useState(false)
   const [renameOpen, setRenameOpen] = useState(false)
   const [newName, setNewName] = useState("")
+  const [inviteOpen, setInviteOpen] = useState(false)
+  const [emailsText, setEmailsText] = useState("")
   const [viewing, setViewing] = useState<{ userId: string; name: string } | null>(null)
   const { confirm, dialog: confirmDialog } = useDeleteConfirm()
 
@@ -85,6 +88,20 @@ export function Classroom() {
     onSuccess: () => {
       invalidate()
       toast.success("Student removed")
+    },
+    onError: (e: Error) => toast.error(e.message),
+  })
+
+  const inviteMutation = useMutation({
+    mutationFn: () => {
+      const emails = emailsText.split(/[\s,;]+/).map((e) => e.trim()).filter(Boolean)
+      if (emails.length === 0) throw new Error("Enter at least one email address")
+      return inviteStudents(id!, emails)
+    },
+    onSuccess: ({ invited }) => {
+      setInviteOpen(false)
+      setEmailsText("")
+      toast.success(`Invited ${invited} student${invited !== 1 ? "s" : ""}`)
     },
     onError: (e: Error) => toast.error(e.message),
   })
@@ -154,6 +171,10 @@ export function Classroom() {
           </div>
           {isTeacher ? (
             <div className="flex items-center gap-2">
+              <Button className="gap-2" onClick={() => setInviteOpen(true)}>
+                <Mail className="h-4 w-4" />
+                Invite students
+              </Button>
               <Button variant="outline" className="gap-2 font-mono tracking-widest" onClick={copyCode}>
                 {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
                 {room.code}
@@ -247,6 +268,32 @@ export function Classroom() {
           )}
         </CardContent>
       </Card>
+
+      {/* Invite students dialog */}
+      <Dialog open={inviteOpen} onOpenChange={setInviteOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Invite students</DialogTitle>
+            <DialogDescription>
+              Enter email addresses (separated by commas, spaces, or new lines). Each student gets a
+              link to join {room.name}.
+            </DialogDescription>
+          </DialogHeader>
+          <textarea
+            value={emailsText}
+            onChange={(e) => setEmailsText(e.target.value)}
+            rows={4}
+            placeholder="ada@school.edu, grace@school.edu"
+            className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
+          />
+          <DialogFooter>
+            <Button onClick={() => inviteMutation.mutate()} disabled={!emailsText.trim() || inviteMutation.isPending}>
+              {inviteMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+              Send invites
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Rename dialog */}
       <Dialog open={renameOpen} onOpenChange={setRenameOpen}>

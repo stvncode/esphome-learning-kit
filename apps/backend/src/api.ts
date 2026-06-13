@@ -1,5 +1,7 @@
 import {
+  acceptInviteSchema,
   createClassroomSchema,
+  createInvitesSchema,
   joinClassroomSchema,
   progressSchema,
   projectKindSchema,
@@ -12,16 +14,19 @@ import { auth } from "./auth.ts";
 import { db } from "./db/index.ts";
 import {
   classroom,
+  classroomInvite,
   classroomMember,
   progress,
   project,
   quizScore,
   user,
 } from "./db/schema.ts";
+import { appUrl, sendEmail } from "./email.ts";
 import { buildStandings, generateCode } from "./standings.ts";
 
 type Variables = {
   userId: string;
+  userRole: string;
 };
 
 export const api = new Hono<{ Variables: Variables }>();
@@ -33,6 +38,7 @@ api.use("*", async (c, next) => {
     return c.json({ error: "Unauthorized" }, 401);
   }
   c.set("userId", session.user.id);
+  c.set("userRole", (session.user as { role?: string }).role ?? "teacher");
   await next();
 });
 
@@ -197,6 +203,9 @@ async function memberCountFor(classroomId: string): Promise<number> {
 
 api.post("/classrooms", async (c) => {
   const userId = c.get("userId");
+  if (c.get("userRole") !== "teacher") {
+    return c.json({ error: "Only teachers can create classes" }, 403);
+  }
   const parsed = createClassroomSchema.safeParse(await c.req.json());
   if (!parsed.success) {
     return c.json({ error: "Invalid classroom payload" }, 400);
@@ -403,5 +412,78 @@ api.get("/classrooms/:id/members/:userId", async (c) => {
     completedLevels: prog?.completedLevels ?? [],
     achievementCount: prog?.achievements.length ?? 0,
     quizScores: quizzes.map((q) => ({ levelId: q.levelId, score: q.score, total: q.total })),
+  });
+});
+
+api.post("/classrooms/:id/invites", async (c) => {
+  const owned = await requireOwnedClass(c);
+  if ("error" in owned) return c.json({ error: owned.error }, owned.status);
+  const parsed = createInvitesSchema.safeParse(await c.req.json());
+  if (!parsed.success) return c.json({ error: "Provide 1–50 valid email addresses" }, 400);
+
+  let invited = 0;
+  for (const raw of parsed.data.emails) {
+    const email = raw.trim().toLowerCase();
+    const token = crypto.randomUUID().replace(/-/g, "");
+    await db.insert(classroomInvite).values({
+      id: crypto.randomUUID(),
+      classroomId: owned.room.id,
+      email,
+      token,
+      invitedBy: c.get("userId"),
+      createdAt: new Date(),
+    });
+    const link = `${appUrl()}/signup?invite=${token}`;
+    await sendEmail({
+      to: email,
+      subject: `You're invited to ${owned.room.name} on ESPHome Learn`,
+      html: `<p>You've been invited to join <strong>${owned.room.name}</strong> on ESPHome Learn.</p>
+<p><a href="${link}">Click here to join the class</a>.</p>`,
+      devNote: `Invite link: ${link}`,
+    });
+    invited += 1;
+  }
+  return c.json({ invited });
+});
+
+api.post("/invites/accept", async (c) => {
+  const userId = c.get("userId");
+  const parsed = acceptInviteSchema.safeParse(await c.req.json());
+  if (!parsed.success) return c.json({ error: "Invalid token" }, 400);
+
+  const [invite] = await db
+    .select()
+    .from(classroomInvite)
+    .where(eq(classroomInvite.token, parsed.data.token));
+  if (!invite) return c.json({ error: "Invite not found" }, 404);
+  if (invite.acceptedAt) return c.json({ error: "This invite has already been used" }, 410);
+
+  await db
+    .insert(classroomMember)
+    .values({ id: crypto.randomUUID(), classroomId: invite.classroomId, userId, joinedAt: new Date() })
+    .onConflictDoNothing();
+
+  // Brand-new accounts (own no classes) become students; existing teachers keep their role.
+  const owns = await db
+    .select({ id: classroom.id })
+    .from(classroom)
+    .where(eq(classroom.ownerId, userId));
+  if (owns.length === 0) {
+    await db.update(user).set({ role: "student" }).where(eq(user.id, userId));
+  }
+
+  await db
+    .update(classroomInvite)
+    .set({ acceptedAt: new Date() })
+    .where(eq(classroomInvite.id, invite.id));
+
+  const [room] = await db.select().from(classroom).where(eq(classroom.id, invite.classroomId));
+  return c.json({
+    id: room.id,
+    name: room.name,
+    code: room.code,
+    role: "student" as const,
+    memberCount: await memberCountFor(room.id),
+    createdAt: room.createdAt.toISOString(),
   });
 });

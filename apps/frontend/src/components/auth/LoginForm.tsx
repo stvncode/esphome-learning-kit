@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { acceptInvite } from "@/lib/api"
 import { signIn } from "@/lib/auth-client"
 import { signInSchema } from "@esphome-learning-kit/types"
 import { useMutation } from "@tanstack/react-query"
@@ -12,9 +13,11 @@ import { toast } from "sonner"
 
 interface LoginFormProps extends React.ComponentProps<"div"> {
   onSwitchToSignup?: () => void
+  /** When present, the user is enrolled in the invited class after signing in. */
+  inviteToken?: string
 }
 
-export function LoginForm({ onSwitchToSignup }: LoginFormProps) {
+export function LoginForm({ onSwitchToSignup, inviteToken }: LoginFormProps) {
   const navigate = useNavigate()
   const location = useLocation()
   const [email, setEmail] = useState("")
@@ -27,10 +30,16 @@ export function LoginForm({ onSwitchToSignup }: LoginFormProps) {
       const credentials = signInSchema.parse({ email, password })
       const { error } = await signIn.email(credentials)
       if (error) throw new Error(error.message ?? "Unable to sign in")
+      if (inviteToken) await acceptInvite(inviteToken)
     },
     onSuccess: () => {
-      toast.success("Welcome back!")
-      navigate(redirectTo, { replace: true })
+      if (inviteToken) {
+        toast.success("You've joined the class!")
+        navigate("/app/classes", { replace: true })
+      } else {
+        toast.success("Welcome back!")
+        navigate(redirectTo, { replace: true })
+      }
     },
     onError: (error: Error) => toast.error(error.message),
   })

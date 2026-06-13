@@ -6,3 +6,11 @@ export const authClient = createAuthClient({
 })
 
 export const { signIn, signUp, signOut, useSession } = authClient
+
+export type UserRole = "teacher" | "student"
+
+/** The current user's global role (teacher can create classes; student cannot). */
+export function useRole(): UserRole | undefined {
+  const { data } = useSession()
+  return (data?.user as { role?: UserRole } | undefined)?.role
+}

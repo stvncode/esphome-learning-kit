@@ -1,9 +1,46 @@
 import { SignupForm } from "@/components/auth/SignupForm"
-import { ArrowLeft, Cpu } from "lucide-react"
-import { Link, useNavigate } from "react-router-dom"
+import { acceptInvite, getInviteInfo } from "@/lib/api"
+import { useSession } from "@/lib/auth-client"
+import { useQuery } from "@tanstack/react-query"
+import { ArrowLeft, Cpu, GraduationCap, Loader2 } from "lucide-react"
+import { useEffect, useRef } from "react"
+import { Link, useNavigate, useSearchParams } from "react-router-dom"
+import { toast } from "sonner"
 
 export function SignUp() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const inviteToken = searchParams.get("invite") ?? undefined
+  const { data: session, isPending: sessionPending } = useSession()
+  const accepting = useRef(false)
+
+  // Look up the invite so we can show the class name and lock the email.
+  const { data: invite, isLoading: inviteLoading } = useQuery({
+    queryKey: ["invite", inviteToken],
+    queryFn: () => getInviteInfo(inviteToken!),
+    enabled: !!inviteToken,
+    retry: false,
+  })
+
+  // Already signed in + has an invite → just join the class (existing-user auto-join).
+  useEffect(() => {
+    if (!inviteToken || sessionPending || !session || accepting.current) return
+    accepting.current = true
+    acceptInvite(inviteToken)
+      .then(() => {
+        toast.success("You've joined the class!")
+        navigate("/app/classes", { replace: true })
+      })
+      .catch((e: Error) => toast.error(e.message))
+  }, [inviteToken, session, sessionPending, navigate])
+
+  if (inviteToken && (sessionPending || session)) {
+    return (
+      <div className="flex min-h-svh items-center justify-center bg-background">
+        <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+      </div>
+    )
+  }
 
   return (
     <div className="relative flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
@@ -21,7 +58,29 @@ export function SignUp() {
           </div>
           ESPHome Learn
         </Link>
-        <SignupForm onSwitchToLogin={() => navigate("/signin")} />
+
+        {inviteToken && invite && (
+          <div className="flex items-center gap-3 rounded-lg border border-cyan-500/30 bg-cyan-500/5 px-4 py-3">
+            <GraduationCap className="h-5 w-5 shrink-0 text-cyan-400" />
+            <p className="text-sm text-muted-foreground">
+              You've been invited to join <span className="font-medium text-foreground">{invite.classroomName}</span>.
+              Create your account to get started.
+            </p>
+          </div>
+        )}
+        {inviteToken && !invite && !inviteLoading && (
+          <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-sm text-muted-foreground">
+            This invite link is invalid or has already been used. You can still create an account below.
+          </div>
+        )}
+
+        <SignupForm
+          onSwitchToLogin={() =>
+            navigate(inviteToken ? `/signin?invite=${inviteToken}` : "/signin")
+          }
+          inviteToken={inviteToken}
+          lockedEmail={invite?.email}
+        />
         <p className="px-6 text-center text-[11px] text-muted-foreground">
           By continuing, you agree to our{" "}
           <a href="#" className="underline underline-offset-2 hover:text-foreground transition-colors">Terms</a>

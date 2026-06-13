@@ -132,6 +132,20 @@ export type ClassroomDetail = z.infer<typeof classroomDetailSchema>;
 export const createClassroomSchema = z.object({ name: z.string().min(1).max(80) });
 export const joinClassroomSchema = z.object({ code: z.string().min(1) });
 
+/** Public info shown on the signup page for an invite token. */
+export const inviteInfoSchema = z.object({
+  classroomName: z.string(),
+  email: z.email(),
+});
+export type InviteInfo = z.infer<typeof inviteInfoSchema>;
+
+/** Teacher payload to invite students by email. */
+export const createInvitesSchema = z.object({
+  emails: z.array(z.email()).min(1).max(50),
+});
+
+export const acceptInviteSchema = z.object({ token: z.string().min(1) });
+
 /** A teacher's detailed view of one student in their class. */
 export const classroomMemberDetailSchema = z.object({
   userId: z.string(),

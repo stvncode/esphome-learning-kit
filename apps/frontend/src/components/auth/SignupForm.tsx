@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { acceptInvite } from "@/lib/api"
 import { signUp } from "@/lib/auth-client"
 import { signUpSchema } from "@esphome-learning-kit/types"
 import { useMutation } from "@tanstack/react-query"
@@ -12,12 +13,16 @@ import { toast } from "sonner"
 
 interface SignupFormProps extends React.ComponentProps<"div"> {
   onSwitchToLogin?: () => void
+  /** When present, the new account is enrolled in the invited class as a student. */
+  inviteToken?: string
+  /** Pre-filled, read-only email (from an invite). */
+  lockedEmail?: string
 }
 
-export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
+export function SignupForm({ onSwitchToLogin, inviteToken, lockedEmail }: SignupFormProps) {
   const navigate = useNavigate()
   const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState(lockedEmail ?? "")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
@@ -30,10 +35,16 @@ export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
         password: payload.password,
       })
       if (error) throw new Error(error.message ?? "Unable to create account")
+      if (inviteToken) await acceptInvite(inviteToken)
     },
     onSuccess: () => {
-      toast.success("Account created!")
-      navigate("/app", { replace: true })
+      if (inviteToken) {
+        toast.success("Account created — you've joined the class!")
+        navigate("/app/classes", { replace: true })
+      } else {
+        toast.success("Account created!")
+        navigate("/app", { replace: true })
+      }
     },
     onError: (error: Error) => toast.error(error.message),
   })
@@ -71,6 +82,7 @@ export function SignupForm({ onSwitchToLogin }: SignupFormProps) {
                 placeholder="m@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                readOnly={!!lockedEmail}
                 required
               />
             </Field>

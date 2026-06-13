@@ -4,12 +4,14 @@ import {
   classroomMemberDetailSchema,
   classroomSchema,
   healthResponseSchema,
+  inviteInfoSchema,
   progressSchema,
   projectListSchema,
   quizScoreListSchema,
   type Classroom,
   type ClassroomDetail,
   type ClassroomMemberDetail,
+  type InviteInfo,
   type HealthResponse,
   type Progress,
   type Project,
@@ -152,4 +154,25 @@ export function getClassroomMember(id: string, userId: string): Promise<Classroo
   return apiFetch(`/api/classrooms/${id}/members/${userId}`, (data) =>
     classroomMemberDetailSchema.parse(data),
   )
+}
+
+// ── Invites ───────────────────────────────────────────────────────────────────
+
+export function getInviteInfo(token: string): Promise<InviteInfo> {
+  return apiFetch(`/api/invites/${token}`, (data) => inviteInfoSchema.parse(data))
+}
+
+export function inviteStudents(classId: string, emails: string[]): Promise<{ invited: number }> {
+  return apiFetch(
+    `/api/classrooms/${classId}/invites`,
+    (data) => data as { invited: number },
+    { method: "POST", body: JSON.stringify({ emails }) },
+  )
+}
+
+export function acceptInvite(token: string): Promise<Classroom> {
+  return apiFetch("/api/invites/accept", (data) => classroomSchema.parse(data), {
+    method: "POST",
+    body: JSON.stringify({ token }),
+  })
 }

@@ -1,10 +1,21 @@
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Progress } from "@/components/ui/progress"
+import { ACHIEVEMENTS } from "@/lib/achievements"
+import { signOut, useSession } from "@/lib/auth-client"
 import { useProgressStore } from "@/stores/progressStore"
-import { ChevronRight, Flame, Home, Moon, Sun, Trophy } from "lucide-react"
+import { useQueryClient } from "@tanstack/react-query"
+import { ChevronRight, Flame, Home, LogOut, Moon, Sun, Trophy, User } from "lucide-react"
 import { useTheme } from "next-themes"
-import { Link, useLocation, useParams } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 
 const PHASE_META: Record<number, { color: string }> = {
   1: { color: "text-amber-400" },
@@ -83,9 +94,21 @@ function Breadcrumb() {
 
 export function Header() {
   const { completedLevels, streak, achievements } = useProgressStore()
+  const clearProgress = useProgressStore((s) => s.clear)
   const { theme, setTheme } = useTheme()
-  const totalLevels = 23
+  const { data: session } = useSession()
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+  const totalLevels = 22
   const progressPercent = (completedLevels.length / totalLevels) * 100
+  const unlockedIds = new Set(achievements.map((a) => a.id))
+
+  const handleSignOut = async () => {
+    await signOut()
+    clearProgress()
+    queryClient.clear()
+    navigate("/")
+  }
 
   return (
     <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-border/50 bg-background/80 px-6 backdrop-blur-sm">
@@ -108,17 +131,71 @@ export function Header() {
           <span className="text-xs text-muted-foreground">day streak</span>
         </div>
 
-        <div className="flex items-center gap-2 rounded-lg bg-amber-500/10 px-3 py-1.5">
-          <Trophy className="h-4 w-4 text-amber-500" />
-          <span className="text-sm font-semibold text-amber-500">{achievements.length}</span>
-          <span className="text-xs text-muted-foreground">achievements</span>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="flex items-center gap-2 rounded-lg bg-amber-500/10 px-3 py-1.5 transition-colors hover:bg-amber-500/20">
+              <Trophy className="h-4 w-4 text-amber-500" />
+              <span className="text-sm font-semibold text-amber-500">{achievements.length}</span>
+              <span className="text-xs text-muted-foreground">achievements</span>
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-72">
+            <DropdownMenuLabel>
+              Achievements
+              <span className="ml-1 font-normal text-muted-foreground">
+                {achievements.length}/{ACHIEVEMENTS.length}
+              </span>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <div className="max-h-80 overflow-y-auto">
+              {ACHIEVEMENTS.map((def) => {
+                const unlocked = unlockedIds.has(def.id)
+                return (
+                  <div
+                    key={def.id}
+                    className={`flex items-start gap-3 px-2 py-1.5 ${unlocked ? "" : "opacity-40"}`}
+                  >
+                    <span className="text-lg leading-none">{unlocked ? def.icon : "🔒"}</span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium leading-tight">{def.title}</p>
+                      <p className="text-xs text-muted-foreground">{def.description}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <Button variant="ghost" size="icon" className="h-9 w-9" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
           <Sun className="h-4 w-4 rotate-0 scale-100 transition-transform dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-transform dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
         </Button>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 text-xs font-semibold text-white">
+                {session?.user?.name?.[0]?.toUpperCase() ?? <User className="h-4 w-4" />}
+              </span>
+              <span className="sr-only">Account menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel className="flex flex-col">
+              <span className="truncate">{session?.user?.name ?? "Account"}</span>
+              <span className="truncate text-xs font-normal text-muted-foreground">
+                {session?.user?.email}
+              </span>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onSelect={handleSignOut} className="text-red-400 focus:text-red-400">
+              <LogOut className="h-4 w-4" />
+              Sign out
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   )

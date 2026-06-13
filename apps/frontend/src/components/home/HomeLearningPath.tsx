@@ -93,7 +93,7 @@ export function HomeLearningPath() {
           <p className="text-sm text-muted-foreground mt-1">Six phases, each building on the last.</p>
         </div>
         <Badge variant="outline" className="text-muted-foreground">
-          6 Phases · 23 Levels
+          6 Phases · 22 Levels
         </Badge>
       </motion.div>
 

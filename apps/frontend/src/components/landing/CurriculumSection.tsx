@@ -22,7 +22,7 @@ export function CurriculumSection() {
         >
           <div>
             <p className="mb-2 text-sm font-medium text-primary">Curriculum</p>
-            <h2 className="text-3xl font-bold text-foreground">6 phases. 23 levels.</h2>
+            <h2 className="text-3xl font-bold text-foreground">6 phases. 22 levels.</h2>
           </div>
           <span className="text-sm text-muted-foreground">From first click to advanced config</span>
         </motion.div>

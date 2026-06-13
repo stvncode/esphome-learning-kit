@@ -7,6 +7,13 @@ if (!databaseUrl) {
   throw new Error("DATABASE_URL is not set");
 }
 
-const pool = new Pool({ connectionString: databaseUrl });
+// `sslmode=require|prefer|verify-ca` is already treated as `verify-full` by pg;
+// state it explicitly to silence the upcoming-semantics deprecation warning.
+const connectionString = databaseUrl.replace(
+  /sslmode=(require|prefer|verify-ca)\b/,
+  "sslmode=verify-full",
+);
+
+const pool = new Pool({ connectionString });
 
 export const db = drizzle(pool, { schema });

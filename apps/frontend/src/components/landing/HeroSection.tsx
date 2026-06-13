@@ -49,7 +49,7 @@ export function HeroSection({ opacity, y }: HeroSectionProps) {
                 </span>
               </h1>
               <p className="max-w-md text-lg leading-relaxed text-muted-foreground">
-                Learn ESPHome through 23 guided levels. Start by dragging visual flows, watch the
+                Learn ESPHome through 22 guided levels. Start by dragging visual flows, watch the
                 YAML generate live, then export it to flash with ESPHome on real hardware.
               </p>
             </div>
@@ -68,7 +68,7 @@ export function HeroSection({ opacity, y }: HeroSectionProps) {
 
             <div className="flex gap-8 border-t border-border pt-6">
               {[
-                { value: "23", label: "Guided levels" },
+                { value: "22", label: "Guided levels" },
                 { value: "6", label: "Phases" },
                 { value: "Workspace", label: "Builder + YAML editor" },
               ].map((s) => (

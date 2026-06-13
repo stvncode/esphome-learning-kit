@@ -11,4 +11,18 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Split large, stable vendors into their own long-cached chunks.
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          motion: ["framer-motion"],
+          editor: ["@monaco-editor/react"],
+          auth: ["better-auth"],
+          validation: ["zod"],
+        },
+      },
+    },
+  },
 })

@@ -7,7 +7,7 @@ import { signInSchema } from "@esphome-learning-kit/types"
 import { useMutation } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
 import { useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
 interface LoginFormProps extends React.ComponentProps<"div"> {
@@ -63,12 +63,12 @@ export function LoginForm({ onSwitchToSignup }: LoginFormProps) {
             <Field>
               <div className="flex items-center justify-between">
                 <FieldLabel htmlFor="login-password">Password</FieldLabel>
-                <a
-                  href="#"
+                <Link
+                  to="/forgot-password"
                   className="text-xs text-muted-foreground underline underline-offset-2 hover:text-foreground transition-colors"
                 >
                   Forgot password?
-                </a>
+                </Link>
               </div>
               <Input
                 id="login-password"

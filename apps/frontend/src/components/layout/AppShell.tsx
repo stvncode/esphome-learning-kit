@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import { getProgress } from "@/lib/api"
 import { useProgressStore } from "@/stores/progressStore"
 import { useQuery } from "@tanstack/react-query"
@@ -11,11 +12,26 @@ export function AppShell() {
   const hydrate = useProgressStore((s) => s.hydrate)
   const loaded = useProgressStore((s) => s.loaded)
 
-  const { data } = useQuery({ queryKey: ["progress"], queryFn: getProgress })
+  const { data, isError, refetch, isFetching } = useQuery({
+    queryKey: ["progress"],
+    queryFn: getProgress,
+  })
 
   useEffect(() => {
     if (data) hydrate(data)
   }, [data, hydrate])
+
+  if (!loaded && isError) {
+    return (
+      <div className="flex min-h-svh flex-col items-center justify-center gap-4 bg-background text-center">
+        <p className="text-sm text-muted-foreground">Couldn't load your progress.</p>
+        <Button variant="outline" size="sm" onClick={() => refetch()} disabled={isFetching}>
+          {isFetching && <Loader2 className="h-4 w-4 animate-spin" />}
+          Try again
+        </Button>
+      </div>
+    )
+  }
 
   if (!loaded) {
     return (

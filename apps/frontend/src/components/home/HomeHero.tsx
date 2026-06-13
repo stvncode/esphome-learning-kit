@@ -51,8 +51,8 @@ export function HomeHero() {
         <div className="flex gap-6 pt-2">
           {[
             { label: "Phases", value: "6" },
-            { label: "Levels", value: "23" },
-            { label: "Your Progress", value: `${Math.round((completedLevels.length / 23) * 100)}%` },
+            { label: "Levels", value: "22" },
+            { label: "Your Progress", value: `${Math.round((completedLevels.length / 22) * 100)}%` },
           ].map((s) => (
             <div key={s.label}>
               <p className="text-2xl font-bold">{s.value}</p>

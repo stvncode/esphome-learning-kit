@@ -1,5 +1,7 @@
+import { newlyEarned } from "@/lib/achievements"
 import { putProgress } from "@/lib/api"
 import type { Achievement, Progress } from "@esphome-learning-kit/types"
+import { toast } from "sonner"
 import { create } from "zustand"
 
 export type { Achievement } from "@esphome-learning-kit/types"
@@ -19,6 +21,16 @@ interface ProgressState {
   setCurrentLevel: (levelId: string) => void
   unlockAchievement: (achievement: Achievement) => void
   resetProgress: () => void
+  /** Wipe in-memory state on sign-out — does NOT touch server progress. */
+  clear: () => void
+}
+
+const EMPTY = {
+  completedLevels: [] as string[],
+  currentLevel: null,
+  streak: 1,
+  lastActivityDate: null,
+  achievements: [] as Achievement[],
 }
 
 const snapshot = (s: ProgressState): Progress => ({
@@ -34,7 +46,8 @@ export const useProgressStore = create<ProgressState>()((set, get) => {
   const sync = () => {
     if (!get().loaded) return
     void putProgress(snapshot(get())).catch(() => {
-      // Best-effort: local state remains authoritative until the next mutation.
+      // Local state stays authoritative; warn once (deduped by toast id).
+      toast.error("Couldn't save your progress — it may not persist.", { id: "progress-sync" })
     })
   }
 
@@ -72,7 +85,25 @@ export const useProgressStore = create<ProgressState>()((set, get) => {
 
     completeLevel: (levelId) => {
       if (get().completedLevels.includes(levelId)) return
-      set((s) => ({ completedLevels: [...s.completedLevels, levelId], ...computeStreak() }))
+
+      const streakPatch = computeStreak()
+      const completedLevels = [...get().completedLevels, levelId]
+      const streak = streakPatch.streak ?? get().streak
+
+      const unlockedIds = new Set(get().achievements.map((a) => a.id))
+      const earned = newlyEarned({ completedLevels, streak }, unlockedIds).map((a) => ({
+        ...a,
+        unlockedAt: new Date().toISOString(),
+      }))
+
+      set((s) => ({
+        completedLevels,
+        ...streakPatch,
+        achievements: [...s.achievements, ...earned],
+      }))
+      earned.forEach((a) =>
+        toast.success(`Achievement unlocked: ${a.title}`, { description: a.description, icon: a.icon }),
+      )
       sync()
     },
 
@@ -90,14 +121,10 @@ export const useProgressStore = create<ProgressState>()((set, get) => {
     },
 
     resetProgress: () => {
-      set({
-        completedLevels: [],
-        currentLevel: null,
-        streak: 1,
-        lastActivityDate: null,
-        achievements: [],
-      })
+      set({ ...EMPTY })
       sync()
     },
+
+    clear: () => set({ ...EMPTY, loaded: false }),
   }
 })

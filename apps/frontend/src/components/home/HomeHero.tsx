@@ -1,13 +1,16 @@
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { resumeLevel } from "@/lib/curriculum"
 import { useProgressStore } from "@/stores/progressStore"
 import { motion } from "framer-motion"
-import { Play, Wrench } from "lucide-react"
+import { GraduationCap, Play, Wrench } from "lucide-react"
 import { Link } from "react-router-dom"
 import { HomeFlowDemo } from "./HomeFlowDemo"
 
 export function HomeHero() {
-  const { completedLevels } = useProgressStore()
+  const { completedLevels, currentLevel } = useProgressStore()
+  const resume = resumeLevel(completedLevels, currentLevel)
+  const started = completedLevels.length > 0
 
   return (
     <section className="grid grid-cols-1 gap-8 items-center lg:grid-cols-2 lg:gap-10">
@@ -33,19 +36,35 @@ export function HomeHero() {
           Go from zero to real hardware. Start with drag-and-drop flows, discover the
           YAML behind them, then write complete configs to flash with ESPHome.
         </p>
-        <div className="flex gap-3">
-          <Button asChild size="lg" className="gap-2">
-            <Link to="/app/level/1.1">
-              <Play className="h-4 w-4" />
-              Start Learning
-            </Link>
-          </Button>
-          <Button asChild size="lg" variant="outline" className="gap-2">
-            <Link to="/app/workspace">
-              <Wrench className="h-4 w-4" />
-              Open Workspace
-            </Link>
-          </Button>
+        <div className="space-y-2">
+          <div className="flex gap-3">
+            {resume ? (
+              <Button asChild size="lg" className="gap-2">
+                <Link to={`/app/level/${resume.id}`}>
+                  <Play className="h-4 w-4" />
+                  {started ? "Continue learning" : "Start Learning"}
+                </Link>
+              </Button>
+            ) : (
+              <Button asChild size="lg" className="gap-2">
+                <Link to="/app/certificate">
+                  <GraduationCap className="h-4 w-4" />
+                  View your certificate
+                </Link>
+              </Button>
+            )}
+            <Button asChild size="lg" variant="outline" className="gap-2">
+              <Link to="/app/workspace">
+                <Wrench className="h-4 w-4" />
+                Open Workspace
+              </Link>
+            </Button>
+          </div>
+          {resume && started && (
+            <p className="text-xs text-muted-foreground">
+              Up next — Level {resume.id}: <span className="text-foreground/80">{resume.title}</span>
+            </p>
+          )}
         </div>
 
         <div className="flex gap-6 pt-2">

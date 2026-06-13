@@ -43,6 +43,7 @@ const DEFAULT_PROGRESS = {
   streak: 1,
   lastActivityDate: null,
   achievements: [],
+  onboarded: false,
 };
 
 api.get("/progress", async (c) => {
@@ -57,6 +58,7 @@ api.get("/progress", async (c) => {
     streak: row.streak,
     lastActivityDate: row.lastActivityDate,
     achievements: row.achievements,
+    onboarded: row.onboarded,
   });
 });
 

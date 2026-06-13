@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import {
+  BookOpen,
   Cpu,
   GraduationCap,
   Home,
@@ -174,12 +175,18 @@ export function Sidebar() {
 
       {/* Footer */}
       <div className="shrink-0 border-t border-border/50 p-4">
-        <div className="rounded-lg bg-gradient-to-r from-blue-500/10 to-cyan-500/10 p-3">
-          <p className="text-xs font-medium text-foreground">Need help?</p>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Check the ESPHome docs or join our community.
+        <NavLink
+          to="/app/glossary"
+          className="block rounded-lg bg-gradient-to-r from-blue-500/10 to-cyan-500/10 p-3 transition-colors hover:from-blue-500/20 hover:to-cyan-500/20"
+        >
+          <p className="flex items-center gap-1.5 text-xs font-medium text-foreground">
+            <BookOpen className="h-3.5 w-3.5" />
+            Stuck on a term?
           </p>
-        </div>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Open the glossary for plain-language definitions.
+          </p>
+        </NavLink>
       </div>
     </aside>
   )

@@ -36,6 +36,7 @@ describe("progressStore", () => {
       streak: 5,
       lastActivityDate: "Sat Jun 13 2026",
       achievements: [],
+      onboarded: false,
     })
     const s = useProgressStore.getState()
     expect(s.loaded).toBe(true)
@@ -44,7 +45,7 @@ describe("progressStore", () => {
 
   test("completeLevel after hydration persists and is idempotent", () => {
     const { hydrate } = useProgressStore.getState()
-    hydrate({ completedLevels: [], currentLevel: null, streak: 1, lastActivityDate: null, achievements: [] })
+    hydrate({ completedLevels: [], currentLevel: null, streak: 1, lastActivityDate: null, achievements: [], onboarded: false })
 
     useProgressStore.getState().completeLevel("1.1")
     expect(useProgressStore.getState().completedLevels).toEqual(["1.1"])
@@ -58,7 +59,7 @@ describe("progressStore", () => {
 
   test("completeLevel unlocks the first-steps achievement", () => {
     const { hydrate } = useProgressStore.getState()
-    hydrate({ completedLevels: [], currentLevel: null, streak: 1, lastActivityDate: null, achievements: [] })
+    hydrate({ completedLevels: [], currentLevel: null, streak: 1, lastActivityDate: null, achievements: [], onboarded: false })
 
     useProgressStore.getState().completeLevel("1.1")
     const ids = useProgressStore.getState().achievements.map((a) => a.id)
@@ -67,7 +68,7 @@ describe("progressStore", () => {
 
   test("clear wipes local state without syncing", () => {
     const { hydrate } = useProgressStore.getState()
-    hydrate({ completedLevels: ["1.1"], currentLevel: null, streak: 3, lastActivityDate: null, achievements: [] })
+    hydrate({ completedLevels: ["1.1"], currentLevel: null, streak: 3, lastActivityDate: null, achievements: [], onboarded: false })
     putProgress.mockClear()
 
     useProgressStore.getState().clear()

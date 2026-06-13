@@ -82,6 +82,7 @@ export const progress = pgTable("progress", {
   streak: integer("streak").notNull().default(1),
   lastActivityDate: text("last_activity_date"),
   achievements: jsonb("achievements").$type<Achievement[]>().notNull().default([]),
+  onboarded: boolean("onboarded").notNull().default(false),
   updatedAt: timestamp("updated_at")
     .$defaultFn(() => new Date())
     .notNull(),

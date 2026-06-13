@@ -44,6 +44,7 @@ export const progressSchema = z.object({
   streak: z.number().int(),
   lastActivityDate: z.string().nullable(),
   achievements: z.array(achievementSchema),
+  onboarded: z.boolean().default(false),
 });
 export type Progress = z.infer<typeof progressSchema>;
 

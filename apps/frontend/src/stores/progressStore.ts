@@ -12,6 +12,7 @@ interface ProgressState {
   streak: number
   lastActivityDate: string | null
   achievements: Achievement[]
+  onboarded: boolean
   /** True once server progress has been loaded into the store. */
   loaded: boolean
 
@@ -20,6 +21,7 @@ interface ProgressState {
   completeLevel: (levelId: string) => void
   setCurrentLevel: (levelId: string) => void
   unlockAchievement: (achievement: Achievement) => void
+  completeOnboarding: () => void
   resetProgress: () => void
   /** Wipe in-memory state on sign-out — does NOT touch server progress. */
   clear: () => void
@@ -31,6 +33,7 @@ const EMPTY = {
   streak: 1,
   lastActivityDate: null,
   achievements: [] as Achievement[],
+  onboarded: false,
 }
 
 const snapshot = (s: ProgressState): Progress => ({
@@ -39,6 +42,7 @@ const snapshot = (s: ProgressState): Progress => ({
   streak: s.streak,
   lastActivityDate: s.lastActivityDate,
   achievements: s.achievements,
+  onboarded: s.onboarded,
 })
 
 export const useProgressStore = create<ProgressState>()((set, get) => {
@@ -71,6 +75,7 @@ export const useProgressStore = create<ProgressState>()((set, get) => {
     streak: 1,
     lastActivityDate: null,
     achievements: [],
+    onboarded: false,
     loaded: false,
 
     hydrate: (progress) =>
@@ -80,6 +85,7 @@ export const useProgressStore = create<ProgressState>()((set, get) => {
         streak: progress.streak,
         lastActivityDate: progress.lastActivityDate,
         achievements: progress.achievements,
+        onboarded: progress.onboarded,
         loaded: true,
       }),
 
@@ -117,6 +123,12 @@ export const useProgressStore = create<ProgressState>()((set, get) => {
       set((s) => ({
         achievements: [...s.achievements, { ...achievement, unlockedAt: new Date().toISOString() }],
       }))
+      sync()
+    },
+
+    completeOnboarding: () => {
+      if (get().onboarded) return
+      set({ onboarded: true })
       sync()
     },
 

@@ -1,3 +1,4 @@
+import { AuthBackground } from "@/components/auth/AuthBackground"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
@@ -36,15 +37,16 @@ export function ResetPassword() {
   }
 
   return (
-    <div className="relative flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
+    <div className="relative flex min-h-svh flex-col items-center justify-center gap-6 overflow-hidden bg-background p-6 md:p-10">
+      <AuthBackground />
       <Link
         to="/signin"
-        className="absolute left-6 top-6 flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+        className="absolute left-6 top-6 z-10 flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to sign in
       </Link>
-      <div className="flex w-full max-w-sm flex-col gap-6">
+      <div className="relative z-10 flex w-full max-w-sm flex-col gap-6">
         <Link to="/" className="flex items-center gap-2 self-center font-medium text-foreground">
           <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-cyan-400">
             <Cpu className="h-3.5 w-3.5 text-white" />

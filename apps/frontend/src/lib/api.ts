@@ -21,8 +21,8 @@ import {
   type QuizScoreUpsertInput,
 } from "@esphome-learning-kit/types"
 
-/** Base URL of the backend API. */
-export const API_URL = import.meta.env.VITE_API_URL ?? "http://localhost:3001"
+/** Base URL of the backend API (trailing slashes stripped so paths never double up). */
+export const API_URL = (import.meta.env.VITE_API_URL ?? "http://localhost:3001").replace(/\/+$/, "")
 
 /**
  * Fetch JSON from the backend and validate it with the provided parser.

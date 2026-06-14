@@ -1,14 +1,15 @@
 import { CommandPalette } from "@/components/CommandPalette"
 import { OnboardingDialog } from "@/components/OnboardingDialog"
 import { Button } from "@/components/ui/button"
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { getProgress } from "@/lib/api"
 import { useProgressStore } from "@/stores/progressStore"
 import { useQuery } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
 import { useEffect } from "react"
 import { Outlet } from "react-router-dom"
+import { AppSidebar } from "./AppSidebar"
 import { Header } from "./Header"
-import { Sidebar } from "./Sidebar"
 
 export function AppShell() {
   const hydrate = useProgressStore((s) => s.hydrate)
@@ -44,16 +45,16 @@ export function AppShell() {
   }
 
   return (
-    <div className="min-h-svh bg-background text-foreground">
+    <SidebarProvider>
       <CommandPalette />
       <OnboardingDialog />
-      <Sidebar />
-      <div className="pl-64">
+      <AppSidebar variant="inset" />
+      <SidebarInset>
         <Header />
-        <main className="min-h-[calc(100svh-4rem)]">
+        <div className="flex flex-1 flex-col">
           <Outlet />
-        </main>
-      </div>
-    </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   )
 }

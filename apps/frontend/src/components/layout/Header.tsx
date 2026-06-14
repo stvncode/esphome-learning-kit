@@ -12,6 +12,8 @@ import { Progress } from "@/components/ui/progress"
 import { ACHIEVEMENTS } from "@/lib/achievements"
 import { signOut, useSession } from "@/lib/auth-client"
 import { useCurriculumLabels, useTranslation } from "@/lib/i18n"
+import { Separator } from "@/components/ui/separator"
+import { SidebarTrigger } from "@/components/ui/sidebar"
 import { useProgressStore } from "@/stores/progressStore"
 import { useQueryClient } from "@tanstack/react-query"
 import {
@@ -121,8 +123,11 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-border/50 bg-background/80 px-6 backdrop-blur-sm">
-      <div>
+    <header className="z-10 flex h-16 shrink-0 items-center justify-between gap-2 border-b border-border/50 px-4">
+      <div className="flex items-center gap-2">
+        {/* Toggles the icon rail on desktop, opens the drawer on mobile */}
+        <SidebarTrigger className="-ml-1" />
+        <Separator orientation="vertical" className="mr-1 h-5" />
         <Breadcrumb />
       </div>
 

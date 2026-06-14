@@ -3,7 +3,7 @@ import { SignupForm } from "@/components/auth/SignupForm"
 import { acceptInvite, getInviteInfo } from "@/lib/api"
 import { useSession } from "@/lib/auth-client"
 import { useQuery } from "@tanstack/react-query"
-import { ArrowLeft, Cpu, GraduationCap, Loader2 } from "lucide-react"
+import { ArrowLeft, GraduationCap, Loader2 } from "lucide-react"
 import { useEffect, useRef } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
@@ -55,24 +55,24 @@ export function SignUp() {
       </Link>
       <div className="relative z-10 flex w-full max-w-sm flex-col gap-6">
         <Link to="/" className="flex items-center gap-2 self-center font-medium text-foreground">
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-cyan-400">
-            <Cpu className="h-3.5 w-3.5 text-white" />
-          </div>
-          ESPHome Learn
+          <img src="/esp32.png" className="h-10 w-10" />
+          ESPHome Learning
         </Link>
 
         {inviteToken && invite && (
           <div className="flex items-center gap-3 rounded-lg border border-cyan-500/30 bg-cyan-500/5 px-4 py-3">
             <GraduationCap className="h-5 w-5 shrink-0 text-cyan-400" />
             <p className="text-sm text-muted-foreground">
-              You've been invited to join <span className="font-medium text-foreground">{invite.classroomName}</span>.
-              Create your account to get started.
+              You've been invited to join{" "}
+              <span className="font-medium text-foreground">{invite.classroomName}</span>. Create
+              your account to get started.
             </p>
           </div>
         )}
         {inviteToken && !invite && !inviteLoading && (
           <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-sm text-muted-foreground">
-            This invite link is invalid or has already been used. You can still create an account below.
+            This invite link is invalid or has already been used. You can still create an account
+            below.
           </div>
         )}
 
@@ -85,9 +85,20 @@ export function SignUp() {
         />
         <p className="px-6 text-center text-[11px] text-muted-foreground">
           By continuing, you agree to our{" "}
-          <a href="#" className="underline underline-offset-2 hover:text-foreground transition-colors">Terms</a>
-          {" "}and{" "}
-          <a href="#" className="underline underline-offset-2 hover:text-foreground transition-colors">Privacy Policy</a>.
+          <a
+            href="#"
+            className="underline underline-offset-2 hover:text-foreground transition-colors"
+          >
+            Terms
+          </a>{" "}
+          and{" "}
+          <a
+            href="#"
+            className="underline underline-offset-2 hover:text-foreground transition-colors"
+          >
+            Privacy Policy
+          </a>
+          .
         </p>
       </div>
     </div>

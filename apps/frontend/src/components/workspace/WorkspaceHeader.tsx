@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { Check, Code2, Copy, Download, Play, Redo2, Save, Square, Undo2, Workflow } from "lucide-react"
-import { useWorkspaceT } from "./workspace.i18n"
+import { useWorkspaceT } from "@/lib/i18n"
 
 export type WorkspaceView = "builder" | "yaml"
 

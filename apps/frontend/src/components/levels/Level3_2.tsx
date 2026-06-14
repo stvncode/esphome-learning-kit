@@ -13,6 +13,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -41,6 +42,7 @@ output:
 type EditField = "button_pin" | "light_pin"
 
 export function Level3_2() {
+  const t = useLevelT("3_2")
   const [buttonPin, setButtonPin] = useState("GPIO4")
   const [lightPin, setLightPin] = useState("GPIO5")
   const [yaml, setYaml] = useState(initialYaml)
@@ -82,17 +84,17 @@ export function Level3_2() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-green-500/20 text-green-400">Phase 3</Badge>
-          <Badge variant="outline">Level 3.2</Badge>
+          <Badge className="bg-green-500/20 text-green-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Change the Pins</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          Reassign the hardware connections by updating the GPIO pin numbers.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -103,10 +105,9 @@ export function Level3_2() {
             <Lightbulb className="h-5 w-5 text-green-400" />
           </div>
           <div>
-            <p className="font-medium text-foreground">What are GPIO pins?</p>
+            <p className="font-medium text-foreground">{t("tip.title")}</p>
             <p className="text-sm text-muted-foreground">
-              GPIO (General Purpose Input/Output) pins are the physical connectors on your ESP board.
-              Changing the pin number in the config tells ESPHome to use a different physical connection.
+              {t("tip.body")}
             </p>
           </div>
         </CardContent>
@@ -118,15 +119,15 @@ export function Level3_2() {
           <div className="flex items-start gap-3">
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-400" />
             <div>
-              <p className="font-medium">Your task:</p>
+              <p className="font-medium">{t("task.title")}</p>
               <ul className="mt-2 space-y-1 text-sm text-muted-foreground">
                 <li className={cn("flex items-center gap-2", buttonPinValid && "line-through text-green-400")}>
                   {buttonPinValid ? <CheckCircle2 className="h-3.5 w-3.5 text-green-500" /> : <span className="h-3.5 w-3.5" />}
-                  Change the button pin from GPIO4 to <code className="rounded bg-muted px-1 font-mono text-xs">GPIO14</code>
+                  {t("task.buttonPin")} <code className="rounded bg-muted px-1 font-mono text-xs">GPIO14</code>
                 </li>
                 <li className={cn("flex items-center gap-2", lightPinValid && "line-through text-green-400")}>
                   {lightPinValid ? <CheckCircle2 className="h-3.5 w-3.5 text-green-500" /> : <span className="h-3.5 w-3.5" />}
-                  Change the light output pin from GPIO5 to <code className="rounded bg-muted px-1 font-mono text-xs">GPIO2</code>
+                  {t("task.lightPin")} <code className="rounded bg-muted px-1 font-mono text-xs">GPIO2</code>
                 </li>
               </ul>
             </div>
@@ -140,24 +141,24 @@ export function Level3_2() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Pencil className="h-4 w-4 text-green-400" />
-              <CardTitle className="text-lg">Edit Pins</CardTitle>
+              <CardTitle className="text-lg">{t("edit.title")}</CardTitle>
             </div>
             <CardDescription>
-              Update the pin assignments below
+              {t("edit.desc")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Button Pin */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium">Button Pin</label>
+                <label className="text-sm font-medium">{t("edit.buttonLabel")}</label>
                 {buttonPinValid ? (
                   <Badge className="bg-green-500/20 text-green-400">
-                    <CheckCircle2 className="mr-1 h-3 w-3" /> Correct
+                    <CheckCircle2 className="mr-1 h-3 w-3" /> {t("edit.correct")}
                   </Badge>
                 ) : (
                   <span className="text-xs text-muted-foreground">
-                    Target: <code className="font-mono">GPIO14</code>
+                    {t("edit.target")} <code className="font-mono">GPIO14</code>
                   </span>
                 )}
               </div>
@@ -182,7 +183,7 @@ export function Level3_2() {
               {!buttonPinValid && buttonPin !== "GPIO4" && buttonPin !== "" && (
                 <p className="flex items-center gap-1 text-xs text-amber-500">
                   <AlertCircle className="h-3 w-3" />
-                  Not quite — the target is GPIO14
+                  {t("edit.notQuiteButton")}
                 </p>
               )}
             </div>
@@ -190,14 +191,14 @@ export function Level3_2() {
             {/* Light Pin */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium">Light Output Pin</label>
+                <label className="text-sm font-medium">{t("edit.lightLabel")}</label>
                 {lightPinValid ? (
                   <Badge className="bg-green-500/20 text-green-400">
-                    <CheckCircle2 className="mr-1 h-3 w-3" /> Correct
+                    <CheckCircle2 className="mr-1 h-3 w-3" /> {t("edit.correct")}
                   </Badge>
                 ) : (
                   <span className="text-xs text-muted-foreground">
-                    Target: <code className="font-mono">GPIO2</code>
+                    {t("edit.target")} <code className="font-mono">GPIO2</code>
                   </span>
                 )}
               </div>
@@ -222,7 +223,7 @@ export function Level3_2() {
               {!lightPinValid && lightPin !== "GPIO5" && lightPin !== "" && (
                 <p className="flex items-center gap-1 text-xs text-amber-500">
                   <AlertCircle className="h-3 w-3" />
-                  Not quite — the target is GPIO2
+                  {t("edit.notQuiteLight")}
                 </p>
               )}
             </div>
@@ -232,14 +233,14 @@ export function Level3_2() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Sparkles className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm font-medium">Challenge</span>
+                  <span className="text-sm font-medium">{t("challenge.title")}</span>
                 </div>
                 {challengeComplete && (
-                  <Badge className="bg-green-500/20 text-green-400">Complete!</Badge>
+                  <Badge className="bg-green-500/20 text-green-400">{t("challenge.complete")}</Badge>
                 )}
               </div>
               <p className="mt-2 text-xs text-muted-foreground">
-                Set button to GPIO14 and light output to GPIO2
+                {t("challenge.desc")}
               </p>
             </div>
 
@@ -251,7 +252,7 @@ export function Level3_2() {
                 >
                   <Button asChild className="w-full">
                     <Link to="/app/level/3.3">
-                      Continue to Level 3.3
+                      {t("buttons.continue")}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -266,10 +267,10 @@ export function Level3_2() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Code2 className="h-4 w-4 text-muted-foreground" />
-              <CardTitle className="text-lg">Live Preview</CardTitle>
+              <CardTitle className="text-lg">{t("preview.title")}</CardTitle>
             </div>
             <CardDescription>
-              Watch pin changes update in real-time
+              {t("preview.desc")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -309,11 +310,11 @@ export function Level3_2() {
             <div className="mt-4 flex flex-wrap gap-3 text-xs">
               <div className="flex items-center gap-1.5">
                 <div className="h-2 w-2 rounded-full bg-blue-400" />
-                <span className="text-muted-foreground">Blue = currently editing</span>
+                <span className="text-muted-foreground">{t("preview.legendBlue")}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="h-2 w-2 rounded-full bg-green-400" />
-                <span className="text-muted-foreground">Green = correct value</span>
+                <span className="text-muted-foreground">{t("preview.legendGreen")}</span>
               </div>
             </div>
           </CardContent>

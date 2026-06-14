@@ -13,6 +13,7 @@ import {
   AlertCircle,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -27,38 +28,38 @@ interface Blank {
 const blanks: Blank[] = [
   {
     id: "device_name",
-    label: "Device Name",
+    label: "blanks.deviceName.label",
     answer: "my-esp-device",
-    placeholder: "e.g. my-esp-device",
-    hint: "Lowercase, hyphens allowed, no spaces",
+    placeholder: "blanks.deviceName.placeholder",
+    hint: "blanks.deviceName.hint",
   },
   {
     id: "button_pin",
-    label: "Button GPIO Pin",
+    label: "blanks.buttonPin.label",
     answer: "GPIO4",
-    placeholder: "e.g. GPIO4",
-    hint: "Format: GPIO followed by a number",
+    placeholder: "blanks.buttonPin.placeholder",
+    hint: "blanks.buttonPin.hint",
   },
   {
     id: "light_pin",
-    label: "Light GPIO Pin",
+    label: "blanks.lightPin.label",
     answer: "GPIO5",
-    placeholder: "e.g. GPIO5",
-    hint: "A different pin from the button",
+    placeholder: "blanks.lightPin.placeholder",
+    hint: "blanks.lightPin.hint",
   },
   {
     id: "trigger",
-    label: "Trigger Type",
+    label: "blanks.trigger.label",
     answer: "on_press",
-    placeholder: "e.g. on_press",
-    hint: "The event that fires when the button is pushed down",
+    placeholder: "blanks.trigger.placeholder",
+    hint: "blanks.trigger.hint",
   },
   {
     id: "action",
-    label: "Action",
+    label: "blanks.action.label",
     answer: "light.turn_on",
-    placeholder: "e.g. light.turn_on",
-    hint: "The service call that activates the light",
+    placeholder: "blanks.action.placeholder",
+    hint: "blanks.action.hint",
   },
 ]
 
@@ -88,6 +89,7 @@ export function Level4_1() {
     action: "",
   })
   const [challengeComplete, setChallengeComplete] = useState(false)
+  const t = useLevelT("4_1")
 
   const { completeLevel, completedLevels } = useProgressStore()
   const isCompleted = completedLevels.includes("4.1")
@@ -151,17 +153,17 @@ export function Level4_1() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-purple-500/20 text-purple-400">Phase 4</Badge>
-          <Badge variant="outline">Level 4.1</Badge>
+          <Badge className="bg-purple-500/20 text-purple-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Fill in the Blanks</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          Complete the ESPHome config by filling in the 5 missing values.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -171,10 +173,9 @@ export function Level4_1() {
           <div className="flex items-start gap-3">
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-400" />
             <div>
-              <p className="font-medium">Your task:</p>
+              <p className="font-medium">{t("task.title")}</p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Five key values have been removed from a working ESPHome config. Fill each one in
-                correctly and watch the YAML come to life on the right.
+                {t("task.body")}
               </p>
             </div>
           </div>
@@ -187,9 +188,9 @@ export function Level4_1() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Pencil className="h-4 w-4 text-purple-400" />
-              <CardTitle className="text-lg">Fill the Blanks</CardTitle>
+              <CardTitle className="text-lg">{t("form.title")}</CardTitle>
             </div>
-            <CardDescription>Enter each missing value exactly as it should appear</CardDescription>
+            <CardDescription>{t("form.desc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
             {blanks.map((blank) => {
@@ -197,14 +198,14 @@ export function Level4_1() {
               return (
                 <div key={blank.id} className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <label className="text-sm font-medium">{blank.label}</label>
+                    <label className="text-sm font-medium">{t(blank.label as Parameters<typeof t>[0])}</label>
                     {status === "correct" && (
                       <Badge className="bg-green-500/20 text-green-400">
-                        <CheckCircle2 className="mr-1 h-3 w-3" /> Correct
+                        <CheckCircle2 className="mr-1 h-3 w-3" /> {t("status.correct")}
                       </Badge>
                     )}
                     {status === "wrong" && (
-                      <Badge className="bg-red-500/20 text-red-400">Try again</Badge>
+                      <Badge className="bg-red-500/20 text-red-400">{t("status.wrong")}</Badge>
                     )}
                   </div>
                   <Input
@@ -212,14 +213,14 @@ export function Level4_1() {
                     onChange={(e) =>
                       setValues((prev) => ({ ...prev, [blank.id]: e.target.value }))
                     }
-                    placeholder={blank.placeholder}
+                    placeholder={t(blank.placeholder as Parameters<typeof t>[0])}
                     className={cn(
                       "font-mono",
                       status === "correct" && "border-green-500/50 focus-visible:ring-green-500",
                       status === "wrong" && "border-red-500/50 focus-visible:ring-red-500"
                     )}
                   />
-                  <p className="text-xs text-muted-foreground">{blank.hint}</p>
+                  <p className="text-xs text-muted-foreground">{t(blank.hint as Parameters<typeof t>[0])}</p>
                 </div>
               )
             })}
@@ -229,10 +230,13 @@ export function Level4_1() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Sparkles className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm font-medium">Progress</span>
+                  <span className="text-sm font-medium">{t("progress.label")}</span>
                 </div>
                 <span className="text-sm text-muted-foreground">
-                  {blanks.filter((b) => getStatus(b.id) === "correct").length} / {blanks.length}
+                  {t("progress.score", {
+                    n: blanks.filter((b) => getStatus(b.id) === "correct").length,
+                    total: blanks.length,
+                  })}
                 </span>
               </div>
               <div className="mt-2 h-1.5 w-full rounded-full bg-border/50">
@@ -251,7 +255,7 @@ export function Level4_1() {
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
                   <Button asChild className="w-full">
                     <Link to="/app/level/4.2">
-                      Continue to Level 4.2
+                      {t("buttons.continue")}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -266,9 +270,9 @@ export function Level4_1() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Code2 className="h-4 w-4 text-muted-foreground" />
-              <CardTitle className="text-lg">Live Preview</CardTitle>
+              <CardTitle className="text-lg">{t("preview.title")}</CardTitle>
             </div>
-            <CardDescription>Blanks fill in as you type</CardDescription>
+            <CardDescription>{t("preview.desc")}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="rounded-lg border border-border/50 bg-gray-100 dark:bg-gray-950 p-4 overflow-auto max-h-[520px]">

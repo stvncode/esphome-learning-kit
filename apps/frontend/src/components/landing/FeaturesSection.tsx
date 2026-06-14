@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { Code2, Wifi, Wrench } from "lucide-react"
-import { useLandingT } from "./landing.i18n"
+import { useLandingT } from "@/lib/i18n"
 
 const FEATURES = [
   {

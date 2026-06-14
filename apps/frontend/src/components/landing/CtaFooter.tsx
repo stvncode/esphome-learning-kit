@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-import { ArrowRight, Cpu } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { Link } from "react-router-dom"
-import { useLandingT } from "./landing.i18n"
+import { useLandingT } from "@/lib/i18n"
 
 export function CtaFooter() {
   const t = useLandingT()
@@ -37,15 +37,23 @@ export function CtaFooter() {
       <footer className="border-t border-border py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 text-center sm:flex-row sm:justify-between sm:text-left">
           <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-cyan-400">
-              <Cpu className="h-3.5 w-3.5 text-white" />
-            </div>
-            <span className="text-sm font-semibold text-foreground">ESPHome Learn</span>
+            <img src="/esp32.png" className="h-10 w-10" />
+            <span className="text-sm font-semibold text-foreground">ESPHome Learning</span>
           </div>
           <p className="text-xs text-muted-foreground">{t("footer.tagline")}</p>
           <div className="flex gap-6">
-            <Link to="/signin" className="text-xs text-muted-foreground transition-colors hover:text-foreground">{t("footer.signIn")}</Link>
-            <Link to="/signup" className="text-xs text-muted-foreground transition-colors hover:text-foreground">{t("footer.signUp")}</Link>
+            <Link
+              to="/signin"
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {t("footer.signIn")}
+            </Link>
+            <Link
+              to="/signup"
+              className="text-xs text-muted-foreground transition-colors hover:text-foreground"
+            >
+              {t("footer.signUp")}
+            </Link>
           </div>
         </div>
       </footer>

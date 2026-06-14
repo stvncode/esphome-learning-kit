@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button"
-import { Cpu, Moon, Sun } from "lucide-react"
+import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
-import { useLandingT } from "./landing.i18n"
+import { useLandingT } from "@/lib/i18n"
 
 const NAV = [
   { key: "header.features" as const, href: "#features" },
@@ -30,10 +30,8 @@ export function LandingHeader() {
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400">
-            <Cpu className="h-4 w-4 text-white" />
-          </div>
-          <span className="font-semibold text-foreground">ESPHome Learn</span>
+          <img src="/esp32.png" className="h-10 w-10" />
+          <span className="font-semibold text-foreground">ESPHome Learning</span>
         </div>
 
         <nav className="hidden items-center gap-8 md:flex">

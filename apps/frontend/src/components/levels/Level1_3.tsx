@@ -17,6 +17,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 import { FlowCanvas } from "@/components/flow"
@@ -37,7 +38,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "button",
     type: "button",
-    label: "Button",
+    label: "components.button",
     icon: CircleDot,
     color: "text-blue-400",
     bgColor: "bg-blue-500/20",
@@ -47,7 +48,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "light",
     type: "light",
-    label: "Light",
+    label: "components.light",
     icon: Lightbulb,
     color: "text-amber-400",
     bgColor: "bg-amber-500/20",
@@ -57,7 +58,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "on_press",
     type: "trigger",
-    label: "When Pressed",
+    label: "components.whenPressed",
     icon: MousePointerClick,
     color: "text-cyan-400",
     bgColor: "bg-cyan-500/20",
@@ -67,7 +68,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "on_release",
     type: "trigger",
-    label: "When Released",
+    label: "components.whenReleased",
     icon: MousePointerClick,
     color: "text-teal-400",
     bgColor: "bg-teal-500/20",
@@ -77,7 +78,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "turn_on",
     type: "action",
-    label: "Turn On",
+    label: "components.turnOn",
     icon: Power,
     color: "text-green-400",
     bgColor: "bg-green-500/20",
@@ -87,7 +88,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "turn_off",
     type: "action",
-    label: "Turn Off",
+    label: "components.turnOff",
     icon: PowerOff,
     color: "text-red-400",
     bgColor: "bg-red-500/20",
@@ -97,7 +98,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "toggle",
     type: "action",
-    label: "Toggle",
+    label: "components.toggle",
     icon: ToggleLeft,
     color: "text-purple-400",
     bgColor: "bg-purple-500/20",
@@ -110,6 +111,7 @@ const initialNodes: Node[] = []
 const initialEdges: Edge[] = []
 
 export function Level1_3() {
+  const t = useLevelT("1_3")
   const [nodes, setNodes] = useState<Node[]>(initialNodes)
   const [edges, setEdges] = useState<Edge[]>(initialEdges)
   const [isSimulating, setIsSimulating] = useState(false)
@@ -247,23 +249,23 @@ export function Level1_3() {
       <div className="mb-4 flex items-start justify-between">
         <div>
           <div className="mb-2 flex items-center gap-2">
-            <Badge className="bg-amber-500/20 text-amber-400">Phase 1</Badge>
-            <Badge variant="outline">Level 1.3</Badge>
+            <Badge className="bg-amber-500/20 text-amber-400">{t("header.phase")}</Badge>
+            <Badge variant="outline">{t("header.level")}</Badge>
             {isCompleted && (
               <Badge className="bg-green-500/20 text-green-400">
-                <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+                <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
               </Badge>
             )}
           </div>
-          <h1 className="text-2xl font-bold">Your First Flow</h1>
+          <h1 className="text-2xl font-bold">{t("header.title")}</h1>
           <p className="text-muted-foreground">
-            Build visual logic by connecting nodes together.
+            {t("header.subtitle")}
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={resetCanvas}>
             <RotateCcw className="mr-2 h-4 w-4" />
-            Reset
+            {t("buttons.reset")}
           </Button>
           <Button
             size="sm"
@@ -271,7 +273,7 @@ export function Level1_3() {
             disabled={isSimulating || nodes.length < 2}
           >
             <Play className="mr-2 h-4 w-4" />
-            {isSimulating ? "Simulating..." : "Simulate"}
+            {isSimulating ? t("buttons.simulating") : t("buttons.simulate")}
           </Button>
         </div>
       </div>
@@ -303,7 +305,7 @@ export function Level1_3() {
                   <CardHeader className="pb-2">
                     <div className="flex items-center justify-between">
                       <CardTitle className="text-sm text-blue-400">
-                        How it works
+                        {t("instructions.title")}
                       </CardTitle>
                       <Button
                         variant="ghost"
@@ -317,11 +319,11 @@ export function Level1_3() {
                   </CardHeader>
                   <CardContent className="text-sm text-muted-foreground">
                     <ol className="list-inside list-decimal space-y-1">
-                      <li>Click components below to add them to the canvas</li>
-                      <li>Drag nodes to position them</li>
-                      <li>Connect nodes by dragging from one handle to another</li>
-                      <li>Click a line to select it, then press <kbd className="rounded bg-muted px-1 py-0.5 text-xs">Delete</kbd> to remove</li>
-                      <li>Click "Simulate" to see your flow in action</li>
+                      <li>{t("instructions.step1")}</li>
+                      <li>{t("instructions.step2")}</li>
+                      <li>{t("instructions.step3")}</li>
+                      <li>{t("instructions.step4a")} <kbd className="rounded bg-muted px-1 py-0.5 text-xs">Delete</kbd> {t("instructions.step4b")}</li>
+                      <li>{t("instructions.step5")}</li>
                     </ol>
                   </CardContent>
                 </Card>
@@ -332,16 +334,16 @@ export function Level1_3() {
           {/* Components Panel */}
           <Card className="flex-1 border-border/50 bg-card/50">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Components</CardTitle>
+              <CardTitle className="text-sm">{t("components.title")}</CardTitle>
               <CardDescription className="text-xs">
-                Click to add to canvas
+                {t("components.subtitle")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {["Input", "Trigger", "Action", "Output"].map((category) => (
                 <div key={category}>
                   <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    {category}
+                    {t(`categories.${category}` as Parameters<typeof t>[0])}
                   </p>
                   <div className="space-y-2">
                     {availableComponents
@@ -364,7 +366,7 @@ export function Level1_3() {
                             >
                               <Icon className={cn("h-4 w-4", comp.color)} />
                             </div>
-                            <span className="text-sm">{comp.label}</span>
+                            <span className="text-sm">{t(comp.label as Parameters<typeof t>[0])}</span>
                           </motion.button>
                         )
                       })}
@@ -380,17 +382,16 @@ export function Level1_3() {
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2 text-sm">
                   <Sparkles className="h-4 w-4 text-amber-400" />
-                  Challenge
+                  {t("challenge.title")}
                 </CardTitle>
                 {challengeComplete && (
                   <Badge className="bg-green-500/20 text-green-400">
-                    <CheckCircle2 className="mr-1 h-3 w-3" /> Complete!
+                    <CheckCircle2 className="mr-1 h-3 w-3" /> {t("challenge.complete")}
                   </Badge>
                 )}
               </div>
               <CardDescription className="text-xs">
-                Create a flow where pressing the button turns the light on, and
-                releasing it turns the light off.
+                {t("challenge.description")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -408,7 +409,7 @@ export function Level1_3() {
                   ) : (
                     <CircleDot className="h-3 w-3" />
                   )}
-                  Add a Button
+                  {t("challenge.addButton")}
                 </div>
                 <div
                   className={cn(
@@ -423,7 +424,7 @@ export function Level1_3() {
                   ) : (
                     <CircleDot className="h-3 w-3" />
                   )}
-                  Add a Light
+                  {t("challenge.addLight")}
                 </div>
                 <div
                   className={cn(
@@ -448,7 +449,7 @@ export function Level1_3() {
                   ) : (
                     <CircleDot className="h-3 w-3" />
                   )}
-                  When Pressed → Turn On
+                  {t("challenge.pressTurnOn")}
                 </div>
                 <div
                   className={cn(
@@ -473,7 +474,7 @@ export function Level1_3() {
                   ) : (
                     <CircleDot className="h-3 w-3" />
                   )}
-                  When Released → Turn Off
+                  {t("challenge.releaseTurnOff")}
                 </div>
                 <div
                   className={cn(
@@ -488,7 +489,7 @@ export function Level1_3() {
                   ) : (
                     <CircleDot className="h-3 w-3" />
                   )}
-                  Connect all nodes ({edges.length}/6)
+                  {t("challenge.connectNodes", { n: edges.length, total: 6 })}
                 </div>
               </div>
 
@@ -499,7 +500,7 @@ export function Level1_3() {
                 >
                   <Button asChild className="w-full" size="sm">
                     <Link to="/app/level/1.4">
-                      Continue to Level 1.4
+                      {t("buttons.continue")}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -519,7 +520,7 @@ export function Level1_3() {
                 <Card className="border-purple-500/30 bg-purple-500/5">
                   <CardContent className="py-4">
                     <p className="mb-2 text-sm font-medium text-purple-400">
-                      Simulating...
+                      {t("buttons.simulating")}
                     </p>
                     <div className="space-y-1 text-xs text-muted-foreground">
                       <p
@@ -527,28 +528,28 @@ export function Level1_3() {
                           simulationStep >= 1 && "text-blue-400 font-medium"
                         )}
                       >
-                        1. Button pressed
+                        {t("simulation.step1")}
                       </p>
                       <p
                         className={cn(
                           simulationStep >= 2 && "text-amber-400 font-medium"
                         )}
                       >
-                        2. Light turns on
+                        {t("simulation.step2")}
                       </p>
                       <p
                         className={cn(
                           simulationStep >= 3 && "text-blue-400 font-medium"
                         )}
                       >
-                        3. Button released
+                        {t("simulation.step3")}
                       </p>
                       <p
                         className={cn(
                           simulationStep >= 4 && "text-gray-400 font-medium"
                         )}
                       >
-                        4. Light turns off
+                        {t("simulation.step4")}
                       </p>
                     </div>
                   </CardContent>

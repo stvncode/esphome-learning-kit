@@ -1,6 +1,5 @@
 import { LEVEL_ORDER } from "@/lib/curriculum"
-import { useTranslation } from "@/lib/i18n"
-import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
+import { useCurriculumLabels, useTranslation, type TranslationKey } from "@/lib/i18n"
 import { useUIStore } from "@/stores/uiStore"
 import { AnimatePresence, motion } from "framer-motion"
 import {
@@ -15,7 +14,6 @@ import {
 } from "lucide-react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import type { TranslationKey } from "@/lib/i18n"
 
 interface CommandItem {
   id: string

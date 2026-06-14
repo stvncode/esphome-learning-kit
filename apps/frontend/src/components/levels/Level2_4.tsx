@@ -14,6 +14,7 @@ import {
   Zap,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -30,8 +31,8 @@ interface ConfigSection {
 const configSections: ConfigSection[] = [
   {
     id: "device",
-    title: "Device Name",
-    description: "Identifies your device on the network",
+    title: "sections.device.title",
+    description: "sections.device.desc",
     icon: Code2,
     iconColor: "text-blue-400",
     iconBg: "bg-blue-500/20",
@@ -43,8 +44,8 @@ const configSections: ConfigSection[] = [
   },
   {
     id: "wifi",
-    title: "WiFi",
-    description: "Network credentials so the device can connect",
+    title: "sections.wifi.title",
+    description: "sections.wifi.desc",
     icon: Wifi,
     iconColor: "text-cyan-400",
     iconBg: "bg-cyan-500/20",
@@ -58,8 +59,8 @@ const configSections: ConfigSection[] = [
   },
   {
     id: "button",
-    title: "Button",
-    description: "A physical push button connected to GPIO4",
+    title: "sections.button.title",
+    description: "sections.button.desc",
     icon: CircleDot,
     iconColor: "text-purple-400",
     iconBg: "bg-purple-500/20",
@@ -75,8 +76,8 @@ const configSections: ConfigSection[] = [
   },
   {
     id: "light",
-    title: "Light & Automation",
-    description: "An LED output and the automation that controls it",
+    title: "sections.light.title",
+    description: "sections.light.desc",
     icon: Lightbulb,
     iconColor: "text-amber-400",
     iconBg: "bg-amber-500/20",
@@ -95,8 +96,8 @@ const configSections: ConfigSection[] = [
   },
   {
     id: "automation",
-    title: "Advanced Automation",
-    description: "Toggle behavior with a 5-second auto-off",
+    title: "sections.automation.title",
+    description: "sections.automation.desc",
     icon: Zap,
     iconColor: "text-green-400",
     iconBg: "bg-green-500/20",
@@ -126,6 +127,7 @@ const getLineColor = (line: string) => {
 }
 
 export function Level2_4() {
+  const t = useLevelT("2_4")
   const [openSections, setOpenSections] = useState<Set<string>>(new Set())
   const [levelComplete, setLevelComplete] = useState(false)
 
@@ -154,17 +156,17 @@ export function Level2_4() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-blue-500/20 text-blue-400">Phase 2</Badge>
-          <Badge variant="outline">Level 2.4</Badge>
+          <Badge className="bg-blue-500/20 text-blue-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Reading a Complete Config</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          Explore a full ESPHome configuration section by section.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -198,15 +200,15 @@ export function Level2_4() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="font-medium">{section.title}</span>
+                      <span className="font-medium">{t(section.title as Parameters<typeof t>[0])}</span>
                       {isRead && (
                         <Badge className="bg-green-500/20 text-green-400 text-xs">
-                          <CheckCircle2 className="mr-1 h-2.5 w-2.5" /> Read
+                          <CheckCircle2 className="mr-1 h-2.5 w-2.5" /> {t("badges.read")}
                         </Badge>
                       )}
                     </div>
                     <p className="text-xs text-muted-foreground truncate">
-                      {section.description}
+                      {t(section.description as Parameters<typeof t>[0])}
                     </p>
                   </div>
                   <motion.div
@@ -241,7 +243,7 @@ export function Level2_4() {
                       </div>
                       <div className="px-4 pb-4 pt-3">
                         <p className="text-xs text-muted-foreground">
-                          {section.description}
+                          {t(section.description as Parameters<typeof t>[0])}
                         </p>
                       </div>
                     </motion.div>
@@ -256,9 +258,9 @@ export function Level2_4() {
         <div className="space-y-4">
           <Card className="border-border/50 bg-card/50 sticky top-4">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Reading Checklist</CardTitle>
+              <CardTitle className="text-sm">{t("checklist.title")}</CardTitle>
               <CardDescription className="text-xs">
-                Open every section to complete the level
+                {t("checklist.desc")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -291,7 +293,7 @@ export function Level2_4() {
                         isRead ? "text-green-400" : "text-muted-foreground"
                       )}
                     >
-                      {section.title}
+                      {t(section.title as Parameters<typeof t>[0])}
                     </span>
                   </div>
                 )
@@ -299,7 +301,7 @@ export function Level2_4() {
 
               <div className="mt-4 rounded-lg border border-border/50 bg-muted/20 p-3">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground">Progress</span>
+                  <span className="text-muted-foreground">{t("checklist.progress")}</span>
                   <span className="font-medium">
                     {openSections.size} / {configSections.length}
                   </span>
@@ -321,7 +323,7 @@ export function Level2_4() {
                   >
                     <Button asChild className="w-full">
                       <Link to="/app/level/3.1">
-                        Continue to Phase 3
+                        {t("buttons.continue")}
                         <ChevronRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>

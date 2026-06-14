@@ -10,7 +10,7 @@ import {
 import { TabsContent } from "@/components/ui/tabs"
 import { Cpu, MapPin, Wifi } from "lucide-react"
 import { BOARD_OPTIONS } from "./constants"
-import { useWorkspaceT } from "./workspace.i18n"
+import { useWorkspaceT } from "@/lib/i18n"
 
 interface DeviceSettingsTabProps {
   deviceName: string

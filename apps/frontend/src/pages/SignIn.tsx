@@ -1,6 +1,6 @@
 import { AuthBackground } from "@/components/auth/AuthBackground"
 import { LoginForm } from "@/components/auth/LoginForm"
-import { ArrowLeft, Cpu } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 
 export function SignIn() {
@@ -20,20 +20,31 @@ export function SignIn() {
       </Link>
       <div className="relative z-10 flex w-full max-w-sm flex-col gap-6">
         <Link to="/" className="flex items-center gap-2 self-center font-medium text-foreground">
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-cyan-400">
-            <Cpu className="h-3.5 w-3.5 text-white" />
-          </div>
-          ESPHome Learn
+          <img src="/esp32.png" className="h-10 w-10" />
+          ESPHome Learning
         </Link>
         <LoginForm
           inviteToken={inviteToken}
-          onSwitchToSignup={() => navigate(inviteToken ? `/signup?invite=${inviteToken}` : "/signup")}
+          onSwitchToSignup={() =>
+            navigate(inviteToken ? `/signup?invite=${inviteToken}` : "/signup")
+          }
         />
         <p className="px-6 text-center text-[11px] text-muted-foreground">
           By continuing, you agree to our{" "}
-          <a href="#" className="underline underline-offset-2 hover:text-foreground transition-colors">Terms</a>
-          {" "}and{" "}
-          <a href="#" className="underline underline-offset-2 hover:text-foreground transition-colors">Privacy Policy</a>.
+          <a
+            href="#"
+            className="underline underline-offset-2 hover:text-foreground transition-colors"
+          >
+            Terms
+          </a>{" "}
+          and{" "}
+          <a
+            href="#"
+            className="underline underline-offset-2 hover:text-foreground transition-colors"
+          >
+            Privacy Policy
+          </a>
+          .
         </p>
       </div>
     </div>

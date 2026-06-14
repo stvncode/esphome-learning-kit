@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import type { Edge, Node } from "@xyflow/react"
 import { AnimatePresence, motion } from "framer-motion"
 import { Copy, Trash2, X } from "lucide-react"
-import { useWorkspaceT } from "./workspace.i18n"
+import { useWorkspaceT } from "@/lib/i18n"
 
 interface PropertiesPanelProps {
   selectedNode: Node | null

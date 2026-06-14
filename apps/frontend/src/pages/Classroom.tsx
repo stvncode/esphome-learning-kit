@@ -21,14 +21,13 @@ import {
   removeClassroomMember,
   renameClassroom,
 } from "@/lib/api"
-import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
+import { useCurriculumLabels, useClassesT } from "@/lib/i18n"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowLeft, Check, Copy, Loader2, LogOut, Mail, Pencil, Trash2, Trophy, UserX } from "lucide-react"
 import { useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
-import { useClassesT } from "./classes.i18n"
 
 const MEDALS = ["🥇", "🥈", "🥉"]
 

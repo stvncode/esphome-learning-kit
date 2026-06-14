@@ -15,6 +15,7 @@ import {
   Plus,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -41,6 +42,7 @@ output:
 }
 
 export function Level3_4() {
+  const t = useLevelT("3_4")
   const [insertedLine, setInsertedLine] = useState("")
   const [yaml, setYaml] = useState(buildYaml(""))
   const [hasDelay, setHasDelay] = useState(false)
@@ -75,17 +77,17 @@ export function Level3_4() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-green-500/20 text-green-400">Phase 3</Badge>
-          <Badge variant="outline">Level 3.4</Badge>
+          <Badge className="bg-green-500/20 text-green-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Add a Delay</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          Make the light auto-turn-off 5 seconds after turning on.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -96,13 +98,12 @@ export function Level3_4() {
             <Timer className="h-5 w-5 text-green-400" />
           </div>
           <div>
-            <p className="font-medium text-foreground">How delay works</p>
+            <p className="font-medium text-foreground">{t("explanation.title")}</p>
             <p className="text-sm text-muted-foreground">
-              ESPHome actions run in sequence. By inserting{" "}
+              {t("explanation.part1")}{" "}
               <code className="rounded bg-muted px-1 font-mono text-xs">delay: 5s</code>{" "}
-              between <code className="rounded bg-muted px-1 font-mono text-xs">light.turn_on</code> and{" "}
-              <code className="rounded bg-muted px-1 font-mono text-xs">light.turn_off</code>, the device
-              waits 5 seconds before executing the turn_off action.
+              {t("explanation.part2")} <code className="rounded bg-muted px-1 font-mono text-xs">light.turn_on</code> {t("explanation.part3")}{" "}
+              <code className="rounded bg-muted px-1 font-mono text-xs">light.turn_off</code>{t("explanation.part4")}
             </p>
           </div>
         </CardContent>
@@ -114,20 +115,20 @@ export function Level3_4() {
           <div className="flex items-start gap-3">
             <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-400" />
             <div>
-              <p className="font-medium">Your task:</p>
+              <p className="font-medium">{t("task.title")}</p>
               <p className="mt-1 text-sm text-muted-foreground">
-                Insert a <code className="rounded bg-muted px-1 font-mono text-xs">delay: 5s</code>{" "}
-                action between <code className="rounded bg-muted px-1 font-mono text-xs">light.turn_on</code>{" "}
-                and <code className="rounded bg-muted px-1 font-mono text-xs">light.turn_off</code>.
+                {t("task.part1")} <code className="rounded bg-muted px-1 font-mono text-xs">delay: 5s</code>{" "}
+                {t("task.part2")} <code className="rounded bg-muted px-1 font-mono text-xs">light.turn_on</code>{" "}
+                {t("task.part3")} <code className="rounded bg-muted px-1 font-mono text-xs">light.turn_off</code>{t("task.part4")}
               </p>
               <div className="mt-3 space-y-1 text-xs">
                 <div className={cn("flex items-center gap-2", hasDelay && "text-green-400")}>
                   {hasDelay ? <CheckCircle2 className="h-3.5 w-3.5 text-green-500" /> : <Plus className="h-3.5 w-3.5 text-muted-foreground" />}
-                  <span>Add <code className="font-mono">delay: 5s</code></span>
+                  <span>{t("task.checkAdd")} <code className="font-mono">delay: 5s</code></span>
                 </div>
                 <div className={cn("flex items-center gap-2", hasTurnOff && "text-green-400")}>
                   {hasTurnOff ? <CheckCircle2 className="h-3.5 w-3.5 text-green-500" /> : <Plus className="h-3.5 w-3.5 text-muted-foreground" />}
-                  <span><code className="font-mono">light.turn_off</code> present after delay</span>
+                  <span><code className="font-mono">light.turn_off</code> {t("task.checkTurnOff")}</span>
                 </div>
               </div>
             </div>
@@ -141,16 +142,16 @@ export function Level3_4() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Pencil className="h-4 w-4 text-green-400" />
-              <CardTitle className="text-lg">Insert the Delay</CardTitle>
+              <CardTitle className="text-lg">{t("edit.title")}</CardTitle>
             </div>
             <CardDescription>
-              Type the line to insert between turn_on and turn_off
+              {t("edit.description")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Visual sequence */}
             <div className="space-y-2">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Automation sequence</p>
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">{t("edit.sequenceLabel")}</p>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 rounded-lg border border-green-500/30 bg-green-500/5 p-3">
                   <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0" />
@@ -167,7 +168,7 @@ export function Level3_4() {
                         : "border-border/50 bg-muted/10"
                     )}
                   >
-                    <span className="text-xs text-muted-foreground">insert here →</span>
+                    <span className="text-xs text-muted-foreground">{t("edit.insertHere")}</span>
                     <input
                       value={insertedLine}
                       onChange={(e) => setInsertedLine(e.target.value)}
@@ -195,7 +196,7 @@ export function Level3_4() {
             {!hasDelay && insertedLine.trim() && (
               <p className="flex items-center gap-1 text-xs text-amber-500">
                 <AlertCircle className="h-3 w-3" />
-                Try <code className="font-mono">delay: 5s</code>
+                {t("edit.tryHint")} <code className="font-mono">delay: 5s</code>
               </p>
             )}
 
@@ -204,8 +205,8 @@ export function Level3_4() {
               <CardContent className="flex items-start gap-3 py-3">
                 <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" />
                 <p className="text-xs text-muted-foreground">
-                  The value after <code className="font-mono">delay:</code> is a duration — <code className="font-mono">5s</code> means 5 seconds,
-                  <code className="font-mono">500ms</code> would be half a second.
+                  {t("hint.part1")} <code className="font-mono">delay:</code> {t("hint.part2")} <code className="font-mono">5s</code> {t("hint.part3")}
+                  <code className="font-mono">500ms</code> {t("hint.part4")}
                 </p>
               </CardContent>
             </Card>
@@ -215,14 +216,14 @@ export function Level3_4() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Sparkles className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm font-medium">Challenge</span>
+                  <span className="text-sm font-medium">{t("challenge.title")}</span>
                 </div>
                 {challengeComplete && (
-                  <Badge className="bg-green-500/20 text-green-400">Complete!</Badge>
+                  <Badge className="bg-green-500/20 text-green-400">{t("challenge.complete")}</Badge>
                 )}
               </div>
               <p className="mt-2 text-xs text-muted-foreground">
-                Insert <code className="font-mono">delay: 5s</code> between turn_on and turn_off
+                {t("challenge.part1")} <code className="font-mono">delay: 5s</code> {t("challenge.part2")}
               </p>
             </div>
 
@@ -234,7 +235,7 @@ export function Level3_4() {
                 >
                   <Button asChild className="w-full">
                     <Link to="/app/level/3.5">
-                      Continue to Level 3.5
+                      {t("buttons.continue")}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -249,10 +250,10 @@ export function Level3_4() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Code2 className="h-4 w-4 text-muted-foreground" />
-              <CardTitle className="text-lg">Live Preview</CardTitle>
+              <CardTitle className="text-lg">{t("preview.title")}</CardTitle>
             </div>
             <CardDescription>
-              See the delay appear in the automation sequence
+              {t("preview.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>

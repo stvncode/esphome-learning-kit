@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Search, X } from "lucide-react"
 import { forwardRef } from "react"
 import type { ComponentItem } from "./types"
-import { useWorkspaceT } from "./workspace.i18n"
+import { useWorkspaceT } from "@/lib/i18n"
 
 interface NodePaletteProps {
   x: number

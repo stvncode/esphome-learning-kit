@@ -11,6 +11,7 @@ import {
   XCircle,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -46,7 +47,7 @@ const diffLines: DiffLine[] = [
     rightContent: "    pin: GPIO14",
     isDifferent: true,
     diffId: "pin",
-    explanation: "Different pin number — GPIO4 vs GPIO14",
+    explanation: "diffs.pin",
   },
   {
     lineNum: 4,
@@ -54,7 +55,7 @@ const diffLines: DiffLine[] = [
     rightContent: '    name: "Door Button"',
     isDifferent: true,
     diffId: "name",
-    explanation: "Different name — \"My Button\" vs \"Door Button\"",
+    explanation: "diffs.name",
   },
   {
     lineNum: 5,
@@ -86,7 +87,7 @@ const diffLines: DiffLine[] = [
     rightContent: "",
     isDifferent: true,
     diffId: "missing_handler",
-    explanation: "Missing line — the turn_off action is absent in Config B",
+    explanation: "diffs.missingHandler",
   },
   {
     lineNum: 9,
@@ -133,6 +134,7 @@ const diffLines: DiffLine[] = [
 const TOTAL_DIFFS = 3
 
 export function Level2_3() {
+  const t = useLevelT("2_3")
   const [foundDiffs, setFoundDiffs] = useState<Set<string>>(new Set())
   const [wrongClicks, setWrongClicks] = useState<Set<number>>(new Set())
   const [levelComplete, setLevelComplete] = useState(false)
@@ -185,17 +187,17 @@ export function Level2_3() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-blue-500/20 text-blue-400">Phase 2</Badge>
-          <Badge variant="outline">Level 2.3</Badge>
+          <Badge className="bg-blue-500/20 text-blue-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Spot the Difference</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          Two configs, three differences. Click the lines that don't match.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -203,7 +205,7 @@ export function Level2_3() {
       <div className="mb-6 flex items-center gap-3">
         <Eye className="h-4 w-4 text-muted-foreground" />
         <span className="text-sm text-muted-foreground">
-          Differences found:
+          {t("progress.found")}
         </span>
         <div className="flex gap-2">
           {Array.from({ length: TOTAL_DIFFS }).map((_, i) => (
@@ -228,10 +230,10 @@ export function Level2_3() {
         <CardHeader>
           <div className="flex items-center gap-2">
             <Code2 className="h-5 w-5 text-blue-400" />
-            <CardTitle>Config Comparison</CardTitle>
+            <CardTitle>{t("comparison.title")}</CardTitle>
           </div>
           <CardDescription>
-            Click on any line you think is different between Config A and Config B
+            {t("comparison.desc")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -240,7 +242,7 @@ export function Level2_3() {
             <div>
               <div className="mb-2 flex items-center gap-2">
                 <Badge variant="outline" className="text-xs">Config A</Badge>
-                <span className="text-xs text-muted-foreground">Original</span>
+                <span className="text-xs text-muted-foreground">{t("comparison.original")}</span>
               </div>
               <div className="rounded-lg border border-border/50 bg-gray-100 dark:bg-gray-950 p-3">
                 <pre className="font-mono text-sm">
@@ -289,7 +291,7 @@ export function Level2_3() {
             <div>
               <div className="mb-2 flex items-center gap-2">
                 <Badge variant="outline" className="text-xs">Config B</Badge>
-                <span className="text-xs text-muted-foreground">Modified</span>
+                <span className="text-xs text-muted-foreground">{t("comparison.modified")}</span>
               </div>
               <div className="rounded-lg border border-border/50 bg-gray-100 dark:bg-gray-950 p-3">
                 <pre className="font-mono text-sm">
@@ -332,7 +334,7 @@ export function Level2_3() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-6 space-y-2"
           >
-            <h3 className="text-sm font-medium text-muted-foreground">Found differences:</h3>
+            <h3 className="text-sm font-medium text-muted-foreground">{t("foundList.title")}</h3>
             {diffLines
               .filter((l) => l.diffId && foundDiffs.has(l.diffId))
               .map((l) => (
@@ -344,8 +346,8 @@ export function Level2_3() {
                 >
                   <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-green-500" />
                   <div>
-                    <p className="text-sm font-medium text-green-400">Line {l.lineNum}</p>
-                    <p className="text-xs text-muted-foreground">{l.explanation}</p>
+                    <p className="text-sm font-medium text-green-400">{t("foundList.line", { n: l.lineNum })}</p>
+                    <p className="text-xs text-muted-foreground">{t(l.explanation as Parameters<typeof t>[0])}</p>
                   </div>
                 </motion.div>
               ))}
@@ -366,13 +368,13 @@ export function Level2_3() {
                 <CheckCircle2 className="h-8 w-8 text-green-500" />
               </div>
             </div>
-            <h3 className="mb-2 text-xl font-bold">All differences found!</h3>
+            <h3 className="mb-2 text-xl font-bold">{t("complete.title")}</h3>
             <p className="mb-6 text-muted-foreground">
-              You can read YAML configs carefully enough to spot subtle changes.
+              {t("complete.desc")}
             </p>
             <Button asChild>
               <Link to="/app/level/2.4">
-                Continue to Level 2.4
+                {t("complete.continue")}
                 <ChevronRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

@@ -14,6 +14,7 @@ import {
   Lightbulb,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -37,6 +38,7 @@ output:
     id: light_output`
 
 export function Level3_1() {
+  const t = useLevelT("3_1")
   const [yaml, setYaml] = useState(initialYaml)
   const [buttonName, setButtonName] = useState("My Button")
   const [lightName, setLightName] = useState("My Light")
@@ -80,17 +82,17 @@ export function Level3_1() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-green-500/20 text-green-400">Phase 3</Badge>
-          <Badge variant="outline">Level 3.1</Badge>
+          <Badge className="bg-green-500/20 text-green-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Change the Names</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          Your first edit! Change the default names to something meaningful.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -101,10 +103,9 @@ export function Level3_1() {
             <Lightbulb className="h-5 w-5 text-blue-400" />
           </div>
           <div>
-            <p className="font-medium text-foreground">Safe to change</p>
+            <p className="font-medium text-foreground">{t("tip.title")}</p>
             <p className="text-sm text-muted-foreground">
-              Names are just labels for humans — they can be anything you want! They show up in Home Assistant 
-              and help you identify your devices.
+              {t("tip.body")}
             </p>
           </div>
         </CardContent>
@@ -116,34 +117,34 @@ export function Level3_1() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Pencil className="h-4 w-4 text-green-400" />
-              <CardTitle className="text-lg">Edit Names</CardTitle>
+              <CardTitle className="text-lg">{t("editor.title")}</CardTitle>
             </div>
             <CardDescription>
-              Change these default names to something descriptive
+              {t("editor.desc")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Button Name Input */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium">Button Name</label>
+                <label className="text-sm font-medium">{t("buttonInput.label")}</label>
                 {buttonNameValid ? (
                   <Badge className="bg-green-500/20 text-green-400">
-                    <CheckCircle2 className="mr-1 h-3 w-3" /> Valid
+                    <CheckCircle2 className="mr-1 h-3 w-3" /> {t("buttonInput.valid")}
                   </Badge>
                 ) : (
                   <button
                     onClick={() => setShowHint(showHint === "button" ? null : "button")}
                     className="text-xs text-muted-foreground hover:text-foreground"
                   >
-                    Need a hint?
+                    {t("buttonInput.hintLink")}
                   </button>
                 )}
               </div>
               <Input
                 value={buttonName}
                 onChange={(e) => setButtonName(e.target.value)}
-                placeholder="Enter a name for your button"
+                placeholder={t("buttonInput.placeholder")}
                 className={cn(
                   "font-mono",
                   buttonNameValid
@@ -161,14 +162,14 @@ export function Level3_1() {
                     exit={{ opacity: 0, height: 0 }}
                     className="text-xs text-muted-foreground"
                   >
-                    Try something like "Front Door Button" or "Desk Button"
+                    {t("buttonInput.hint")}
                   </motion.p>
                 )}
               </AnimatePresence>
               {buttonName.length > 0 && buttonName.length < 3 && (
                 <p className="flex items-center gap-1 text-xs text-amber-500">
                   <AlertCircle className="h-3 w-3" />
-                  Name must be at least 3 characters
+                  {t("buttonInput.minLength")}
                 </p>
               )}
             </div>
@@ -176,24 +177,24 @@ export function Level3_1() {
             {/* Light Name Input */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium">Light Name</label>
+                <label className="text-sm font-medium">{t("lightInput.label")}</label>
                 {lightNameValid ? (
                   <Badge className="bg-green-500/20 text-green-400">
-                    <CheckCircle2 className="mr-1 h-3 w-3" /> Valid
+                    <CheckCircle2 className="mr-1 h-3 w-3" /> {t("lightInput.valid")}
                   </Badge>
                 ) : (
                   <button
                     onClick={() => setShowHint(showHint === "light" ? null : "light")}
                     className="text-xs text-muted-foreground hover:text-foreground"
                   >
-                    Need a hint?
+                    {t("lightInput.hintLink")}
                   </button>
                 )}
               </div>
               <Input
                 value={lightName}
                 onChange={(e) => setLightName(e.target.value)}
-                placeholder="Enter a name for your light"
+                placeholder={t("lightInput.placeholder")}
                 className={cn(
                   "font-mono",
                   lightNameValid
@@ -211,14 +212,14 @@ export function Level3_1() {
                     exit={{ opacity: 0, height: 0 }}
                     className="text-xs text-muted-foreground"
                   >
-                    Try something like "Living Room Light" or "Status LED"
+                    {t("lightInput.hint")}
                   </motion.p>
                 )}
               </AnimatePresence>
               {lightName.length > 0 && lightName.length < 3 && (
                 <p className="flex items-center gap-1 text-xs text-amber-500">
                   <AlertCircle className="h-3 w-3" />
-                  Name must be at least 3 characters
+                  {t("lightInput.minLength")}
                 </p>
               )}
             </div>
@@ -228,17 +229,16 @@ export function Level3_1() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Sparkles className="h-4 w-4 text-amber-400" />
-                  <span className="text-sm font-medium">Challenge</span>
+                  <span className="text-sm font-medium">{t("challenge.title")}</span>
                 </div>
                 {challengeComplete && (
                   <Badge className="bg-green-500/20 text-green-400">
-                    Complete!
+                    {t("challenge.complete")}
                   </Badge>
                 )}
               </div>
               <p className="mt-2 text-xs text-muted-foreground">
-                Rename both the button and the light to something meaningful
-                (at least 3 characters, different from defaults)
+                {t("challenge.desc")}
               </p>
             </div>
 
@@ -249,7 +249,7 @@ export function Level3_1() {
               >
                 <Button asChild className="w-full">
                   <Link to="/app/level/3.2">
-                    Continue to Level 3.2
+                    {t("buttons.continue")}
                     <ChevronRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>
@@ -263,10 +263,10 @@ export function Level3_1() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Code2 className="h-4 w-4 text-muted-foreground" />
-              <CardTitle className="text-lg">Live Preview</CardTitle>
+              <CardTitle className="text-lg">{t("preview.title")}</CardTitle>
             </div>
             <CardDescription>
-              Watch your changes update in real-time
+              {t("preview.desc")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -308,11 +308,11 @@ export function Level3_1() {
             <div className="mt-4 flex flex-wrap gap-3 text-xs">
               <div className="flex items-center gap-1.5">
                 <div className="h-2 w-2 rounded-full bg-blue-400" />
-                <span className="text-muted-foreground">Highlighted = editable</span>
+                <span className="text-muted-foreground">{t("preview.legendEditable")}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="h-2 w-2 rounded-full bg-green-400" />
-                <span className="text-muted-foreground">Green = valid change</span>
+                <span className="text-muted-foreground">{t("preview.legendValid")}</span>
               </div>
             </div>
           </CardContent>

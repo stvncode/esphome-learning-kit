@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { Code2, Cpu, Lightbulb } from "lucide-react"
-import { useLandingT } from "./landing.i18n"
+import { useLandingT } from "@/lib/i18n"
 
 const STEPS = [
   { n: "01", icon: Lightbulb, titleKey: "how.s1Title" as const, descKey: "how.s1Desc" as const },

@@ -1,22 +1,20 @@
-import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
-import { useTranslation } from "@/lib/i18n"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { useCurriculumLabels, useTranslation } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import {
   BookOpen,
-  Cpu,
+  Code2,
   GraduationCap,
+  Hammer,
   Home,
   Lightbulb,
-  Code2,
   Pencil,
-  Hammer,
-  Wifi,
   Sparkles,
+  Wifi,
   Wrench,
 } from "lucide-react"
 import { NavLink, useLocation } from "react-router-dom"
-import { ScrollArea } from "@/components/ui/scroll-area"
 
 const phases = [
   {
@@ -105,11 +103,9 @@ export function Sidebar() {
     <aside className="fixed left-0 top-0 z-30 flex h-svh w-64 flex-col border-r border-border/50 bg-sidebar min-h-0">
       {/* Logo */}
       <div className="flex h-16 shrink-0 items-center gap-3 border-b border-border/50 px-4">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-cyan-400">
-          <Cpu className="h-5 w-5 text-white" />
-        </div>
+        <img src="/esp32.png" className="h-10 w-10" />
         <div>
-          <h1 className="font-semibold tracking-tight">ESPHome Learn</h1>
+          <h1 className="font-semibold tracking-tight">ESPHome Learning</h1>
           <p className="text-xs text-muted-foreground">{t("nav.starterKitGuide")}</p>
         </div>
       </div>
@@ -117,62 +113,62 @@ export function Sidebar() {
       {/* Navigation */}
       <ScrollArea className="flex-1 min-h-0 [&>div>div]:!block">
         <div className="px-2 py-4 overflow-hidden">
-        {/* Home Link */}
-        <NavLink
-          to="/app"
-          end
-          className={({ isActive }) =>
-            cn(
-              "mb-1 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
-              isActive
-                ? "bg-accent text-accent-foreground"
-                : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
-            )
-          }
-        >
-          <Home className="h-4 w-4" />
-          {t("nav.dashboard")}
-        </NavLink>
+          {/* Home Link */}
+          <NavLink
+            to="/app"
+            end
+            className={({ isActive }) =>
+              cn(
+                "mb-1 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
+                isActive
+                  ? "bg-accent text-accent-foreground"
+                  : "text-muted-foreground hover:bg-accent/50 hover:text-foreground",
+              )
+            }
+          >
+            <Home className="h-4 w-4" />
+            {t("nav.dashboard")}
+          </NavLink>
 
-        {/* Workspace Link */}
-        <NavLink
-          to="/app/workspace"
-          end={false}
-          className={({ isActive }) =>
-            cn(
-              "mb-1 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
-              isActive
-                ? "bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400"
-                : "text-muted-foreground hover:bg-gradient-to-r hover:from-emerald-500/10 hover:to-teal-500/10 hover:text-emerald-400"
-            )
-          }
-        >
-          <Wrench className="h-4 w-4" />
-          {t("nav.workspace")}
-        </NavLink>
+          {/* Workspace Link */}
+          <NavLink
+            to="/app/workspace"
+            end={false}
+            className={({ isActive }) =>
+              cn(
+                "mb-1 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
+                isActive
+                  ? "bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400"
+                  : "text-muted-foreground hover:bg-gradient-to-r hover:from-emerald-500/10 hover:to-teal-500/10 hover:text-emerald-400",
+              )
+            }
+          >
+            <Wrench className="h-4 w-4" />
+            {t("nav.workspace")}
+          </NavLink>
 
-        {/* Classes Link */}
-        <NavLink
-          to="/app/classes"
-          className={({ isActive }) =>
-            cn(
-              "mb-4 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
-              isActive
-                ? "bg-accent text-accent-foreground"
-                : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
-            )
-          }
-        >
-          <GraduationCap className="h-4 w-4" />
-          {t("nav.classes")}
-        </NavLink>
+          {/* Classes Link */}
+          <NavLink
+            to="/app/classes"
+            className={({ isActive }) =>
+              cn(
+                "mb-4 flex items-center gap-3 rounded-lg px-2 py-2 text-sm font-medium transition-colors",
+                isActive
+                  ? "bg-accent text-accent-foreground"
+                  : "text-muted-foreground hover:bg-accent/50 hover:text-foreground",
+              )
+            }
+          >
+            <GraduationCap className="h-4 w-4" />
+            {t("nav.classes")}
+          </NavLink>
 
-        {/* Phase Groups */}
-        <div className="space-y-4">
-          {phases.map((phase) => (
-            <PhaseGroup key={phase.id} phase={phase} currentPath={location.pathname} />
-          ))}
-        </div>
+          {/* Phase Groups */}
+          <div className="space-y-4">
+            {phases.map((phase) => (
+              <PhaseGroup key={phase.id} phase={phase} currentPath={location.pathname} />
+            ))}
+          </div>
         </div>
       </ScrollArea>
 
@@ -207,7 +203,7 @@ function PhaseGroup({ phase, currentPath }: PhaseGroupProps) {
       <div
         className={cn(
           "flex items-center gap-2 py-2 text-xs font-semibold uppercase tracking-wider",
-          phase.color
+          phase.color,
         )}
       >
         <div className={cn("shrink-0 rounded-md p-1", phase.bgColor)}>
@@ -226,7 +222,7 @@ function PhaseGroup({ phase, currentPath }: PhaseGroupProps) {
                 "group relative flex items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-all overflow-hidden",
                 isActive
                   ? "bg-accent text-accent-foreground"
-                  : "text-muted-foreground hover:bg-accent/50 hover:text-foreground"
+                  : "text-muted-foreground hover:bg-accent/50 hover:text-foreground",
               )}
             >
               {isActive && (

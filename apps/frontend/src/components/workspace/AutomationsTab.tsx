@@ -14,7 +14,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { ACTION_OPTIONS, TRIGGER_OPTIONS } from "./constants"
 import type { Automation } from "./types"
-import { useWorkspaceT } from "./workspace.i18n"
+import { useWorkspaceT } from "@/lib/i18n"
 
 interface AutomationsTabProps {
   nodes: Node[]

@@ -21,7 +21,7 @@ import type {
 import { useSimulation } from "@/components/workspace/useSimulation"
 import { WorkspaceContextMenus } from "@/components/workspace/WorkspaceContextMenus"
 import { WorkspaceHeader, type WorkspaceView } from "@/components/workspace/WorkspaceHeader"
-import { useWorkspaceT } from "@/components/workspace/workspace.i18n"
+import { useWorkspaceT } from "@/lib/i18n"
 import { putProject } from "@/lib/api"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import type { Edge, EdgeMouseHandler, Node, NodeMouseHandler } from "@xyflow/react"

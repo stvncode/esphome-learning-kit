@@ -1,7 +1,7 @@
 import { motion } from "framer-motion"
 import { Bell, Code2, Cpu, Lightbulb, Play, Radio, Settings, Zap } from "lucide-react"
 import { AnimatedFlowDemo } from "./AnimatedFlowDemo"
-import { useLandingT } from "./landing.i18n"
+import { useLandingT } from "@/lib/i18n"
 
 const YAML_LINES = [
   { indent: 0, text: "esphome:", color: "text-blue-400" },

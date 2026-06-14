@@ -3,7 +3,7 @@ import { AnimatedFlowDemo } from "./AnimatedFlowDemo"
 import { ArrowRight, Code2, Cpu, Droplets, Wrench } from "lucide-react"
 import { motion, MotionValue } from "framer-motion"
 import { Link } from "react-router-dom"
-import { useLandingT } from "./landing.i18n"
+import { useLandingT } from "@/lib/i18n"
 
 interface HeroSectionProps {
   opacity: MotionValue<number>

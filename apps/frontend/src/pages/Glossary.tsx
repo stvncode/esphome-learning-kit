@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input"
 import { GLOSSARY } from "@/lib/glossary"
 import { BookOpen, Search } from "lucide-react"
 import { useMemo, useState } from "react"
-import { useGlossaryT } from "./glossary.i18n"
+import { useGlossaryT } from "@/lib/i18n"
 
 export function Glossary() {
   const t = useGlossaryT()

@@ -18,7 +18,7 @@ import { GraduationCap, Loader2, Plus, Users } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
-import { useClassesT } from "./classes.i18n"
+import { useClassesT } from "@/lib/i18n"
 
 export function Classes() {
   const navigate = useNavigate()

@@ -11,6 +11,7 @@ import {
   Lightbulb,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -57,6 +58,7 @@ const getLineColor = (line: string) => {
 }
 
 export function Level4_3() {
+  const t = useLevelT("4_3")
   const [trigger, setTrigger] = useState<string>("")
   const [action, setAction] = useState<string>("")
   const [generated, setGenerated] = useState(false)
@@ -90,17 +92,17 @@ export function Level4_3() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-purple-500/20 text-purple-400">Phase 4</Badge>
-          <Badge variant="outline">Level 4.3</Badge>
+          <Badge className="bg-purple-500/20 text-purple-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Create an Automation</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          A button and a light are defined — now connect them with an automation.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -111,10 +113,10 @@ export function Level4_3() {
             <Zap className="h-5 w-5 text-purple-400" />
           </div>
           <div>
-            <p className="font-medium text-foreground">Building automations</p>
+            <p className="font-medium text-foreground">{t("info.title")}</p>
             <p className="text-sm text-muted-foreground">
-              An automation has two parts: a <strong>trigger</strong> (what event starts it) and an{" "}
-              <strong>action</strong> (what happens). Pick both below to generate the YAML.
+              {t("info.body1")} <strong>{t("info.trigger")}</strong> {t("info.body2")}{" "}
+              <strong>{t("info.action")}</strong> {t("info.body3")}
             </p>
           </div>
         </CardContent>
@@ -126,9 +128,9 @@ export function Level4_3() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Lightbulb className="h-4 w-4 text-purple-400" />
-              <CardTitle className="text-lg">Automation Builder</CardTitle>
+              <CardTitle className="text-lg">{t("builder.title")}</CardTitle>
             </div>
-            <CardDescription>Pick a trigger and action, then generate</CardDescription>
+            <CardDescription>{t("builder.desc")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Step 1 */}
@@ -140,25 +142,25 @@ export function Level4_3() {
                 )}>
                   1
                 </div>
-                <p className="text-sm font-medium">Pick a trigger</p>
+                <p className="text-sm font-medium">{t("builder.step1")}</p>
                 {trigger && <CheckCircle2 className="h-4 w-4 text-green-500" />}
               </div>
               <div className="grid grid-cols-2 gap-2">
-                {["on_press", "on_release"].map((t) => (
+                {["on_press", "on_release"].map((trig) => (
                   <button
-                    key={t}
-                    onClick={() => setTrigger(t)}
+                    key={trig}
+                    onClick={() => setTrigger(trig)}
                     disabled={generated}
                     className={cn(
                       "rounded-lg border-2 p-3 text-left transition-all",
-                      trigger === t
+                      trigger === trig
                         ? "border-purple-500 bg-purple-500/10 text-purple-300"
                         : "border-border/50 hover:border-border hover:bg-muted/50 text-sm"
                     )}
                   >
-                    <code className="font-mono text-xs">{t}</code>
+                    <code className="font-mono text-xs">{trig}</code>
                     <p className="mt-1 text-xs text-muted-foreground">
-                      {t === "on_press" ? "Fires when button is pressed down" : "Fires when button is released"}
+                      {trig === "on_press" ? t("triggers.onPress") : t("triggers.onRelease")}
                     </p>
                   </button>
                 ))}
@@ -174,14 +176,14 @@ export function Level4_3() {
                 )}>
                   2
                 </div>
-                <p className="text-sm font-medium">Pick an action</p>
+                <p className="text-sm font-medium">{t("builder.step2")}</p>
                 {action && <CheckCircle2 className="h-4 w-4 text-green-500" />}
               </div>
               <div className="space-y-2">
                 {[
-                  { value: "light.turn_on", label: "Turn on the light" },
-                  { value: "light.toggle", label: "Toggle (on if off, off if on)" },
-                  { value: "light.turn_off", label: "Turn off the light" },
+                  { value: "light.turn_on", label: "actions.turnOn" },
+                  { value: "light.toggle", label: "actions.toggle" },
+                  { value: "light.turn_off", label: "actions.turnOff" },
                 ].map((a) => (
                   <button
                     key={a.value}
@@ -195,7 +197,7 @@ export function Level4_3() {
                     )}
                   >
                     <code className="font-mono text-xs text-red-400 w-32 shrink-0">{a.value}</code>
-                    <span className="text-xs text-muted-foreground">{a.label}</span>
+                    <span className="text-xs text-muted-foreground">{t(a.label as Parameters<typeof t>[0])}</span>
                   </button>
                 ))}
               </div>
@@ -210,7 +212,7 @@ export function Level4_3() {
                 )}>
                   3
                 </div>
-                <p className="text-sm font-medium">Generate</p>
+                <p className="text-sm font-medium">{t("builder.step3")}</p>
                 {generated && <CheckCircle2 className="h-4 w-4 text-green-500" />}
               </div>
               {!generated && (
@@ -220,7 +222,7 @@ export function Level4_3() {
                   className="w-full bg-purple-600 hover:bg-purple-700 disabled:opacity-40"
                 >
                   <Zap className="mr-2 h-4 w-4" />
-                  Generate Automation
+                  {t("buttons.generate")}
                 </Button>
               )}
             </div>
@@ -235,16 +237,16 @@ export function Level4_3() {
                   <div className="rounded-lg border border-green-500/30 bg-green-500/5 p-4 flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0 mt-0.5" />
                     <div>
-                      <p className="text-sm font-medium text-green-400">Automation created!</p>
+                      <p className="text-sm font-medium text-green-400">{t("success.title")}</p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        The button now triggers <code className="font-mono">{action}</code> on{" "}
+                        {t("success.body1")} <code className="font-mono">{action}</code> {t("success.body2")}{" "}
                         <code className="font-mono">{trigger}</code>.
                       </p>
                     </div>
                   </div>
                   <Button asChild className="w-full">
                     <Link to="/app/level/4.4">
-                      Continue to Level 4.4
+                      {t("buttons.continue")}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -259,10 +261,10 @@ export function Level4_3() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Code2 className="h-4 w-4 text-muted-foreground" />
-              <CardTitle className="text-lg">Live Preview</CardTitle>
+              <CardTitle className="text-lg">{t("preview.title")}</CardTitle>
             </div>
             <CardDescription>
-              The automation YAML updates as you make selections
+              {t("preview.desc")}
             </CardDescription>
           </CardHeader>
           <CardContent>

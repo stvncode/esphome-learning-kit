@@ -12,6 +12,7 @@ import {
   XCircle,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -26,54 +27,55 @@ const quizItems: QuizItem[] = [
   {
     id: "binary_sensor",
     yaml: "binary_sensor:",
-    explanation: "A category for things that are either ON or OFF — like buttons, motion sensors, door contacts",
+    explanation: "quiz.binary_sensor",
     color: "text-blue-400",
   },
   {
     id: "platform_gpio",
     yaml: "platform: gpio",
-    explanation: "This component is connected directly to a GPIO pin on the board",
+    explanation: "quiz.platform_gpio",
     color: "text-cyan-400",
   },
   {
     id: "pin",
     yaml: "pin: GPIO4",
-    explanation: "Which physical pin on the board this component uses",
+    explanation: "quiz.pin",
     color: "text-green-400",
   },
   {
     id: "name",
     yaml: 'name: "My Button"',
-    explanation: "The friendly name you'll see in Home Assistant",
+    explanation: "quiz.name",
     color: "text-purple-400",
   },
   {
     id: "on_press",
     yaml: "on_press:",
-    explanation: "What should happen when this button is pressed",
+    explanation: "quiz.on_press",
     color: "text-amber-400",
   },
   {
     id: "then",
     yaml: "then:",
-    explanation: "Here comes the list of actions to perform",
+    explanation: "quiz.then",
     color: "text-orange-400",
   },
   {
     id: "light_turn_on",
     yaml: "- light.turn_on: my_light",
-    explanation: "Turn on the light that has the ID 'my_light'",
+    explanation: "quiz.light_turn_on",
     color: "text-red-400",
   },
   {
     id: "id",
     yaml: "id: my_light",
-    explanation: "A short internal name so other parts of the config can reference this component",
+    explanation: "quiz.id",
     color: "text-pink-400",
   },
 ]
 
 export function Level2_2() {
+  const t = useLevelT("2_2")
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null)
   const [showResult, setShowResult] = useState(false)
@@ -141,17 +143,17 @@ export function Level2_2() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-blue-500/20 text-blue-400">Phase 2</Badge>
-          <Badge variant="outline">Level 2.2</Badge>
+          <Badge className="bg-blue-500/20 text-blue-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Understanding the Structure</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          Learn the vocabulary of ESPHome YAML by matching code to its meaning.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -161,20 +163,23 @@ export function Level2_2() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Code2 className="h-5 w-5 text-blue-400" />
-              <CardTitle>YAML Vocabulary Quiz</CardTitle>
+              <CardTitle>{t("quiz.cardTitle")}</CardTitle>
             </div>
             {!quizComplete && (
               <Badge variant="secondary">
-                Question {currentQuestion + 1} of {quizItems.length}
+                {t("quiz.questionCounter", {
+                  current: currentQuestion + 1,
+                  total: quizItems.length,
+                })}
               </Badge>
             )}
           </div>
           {!quizComplete && (
             <div className="mt-4">
               <div className="mb-2 flex justify-between text-sm">
-                <span className="text-muted-foreground">Progress</span>
+                <span className="text-muted-foreground">{t("quiz.progress")}</span>
                 <span className="font-medium">
-                  {score} correct
+                  {t("quiz.scoreCorrect", { score })}
                 </span>
               </div>
               <Progress value={(currentQuestion / quizItems.length) * 100} />
@@ -188,7 +193,7 @@ export function Level2_2() {
               {/* Question */}
               <div className="mb-8">
                 <p className="mb-4 text-sm text-muted-foreground">
-                  What does this YAML mean?
+                  {t("quiz.questionPrompt")}
                 </p>
                 <div className="rounded-xl border border-border/50 bg-gray-100 dark:bg-gray-900 p-6">
                   <pre className={cn("font-mono text-lg", currentItem.color)}>
@@ -251,7 +256,7 @@ export function Level2_2() {
                               : "text-foreground"
                         )}
                       >
-                        {answer.explanation}
+                        {t(answer.explanation as Parameters<typeof t>[0])}
                       </p>
                     </motion.button>
                   )
@@ -268,8 +273,8 @@ export function Level2_2() {
                   >
                     <Button onClick={nextQuestion} className="w-full">
                       {currentQuestion < quizItems.length - 1
-                        ? "Next Question"
-                        : "See Results"}
+                        ? t("buttons.nextQuestion")
+                        : t("buttons.seeResults")}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Button>
                   </motion.div>
@@ -295,24 +300,24 @@ export function Level2_2() {
               </div>
 
               <h3 className="mb-2 text-2xl font-bold">
-                {score >= 6 ? "Great job!" : "Keep practicing!"}
+                {score >= 6 ? t("results.passTitle") : t("results.failTitle")}
               </h3>
               <p className="mb-6 text-muted-foreground">
                 {score >= 6
-                  ? "You've got a solid grasp of YAML vocabulary!"
-                  : "Try again to get at least 6 correct answers."}
+                  ? t("results.passText")
+                  : t("results.failText")}
               </p>
 
               <div className="flex gap-4 justify-center">
                 {score < 6 && (
                   <Button variant="outline" onClick={startQuiz}>
-                    Try Again
+                    {t("buttons.tryAgain")}
                   </Button>
                 )}
                 {score >= 6 && (
                   <Button asChild>
                     <Link to="/app/level/3.1">
-                      Continue to Phase 3
+                      {t("buttons.continue")}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>

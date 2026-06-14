@@ -13,6 +13,7 @@ import {
   Zap,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useRecordQuizScore } from "@/lib/useQuizScore"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
@@ -29,9 +30,8 @@ const steps: Step[] = [
   {
     id: "what",
     number: 1,
-    title: "What is a Lambda?",
-    explanation:
-      "A lambda is a block of C++ code embedded directly inside your ESPHome YAML. It lets you add custom logic that standard components can't express — conditional checks, math, multi-step reactions — without writing a full custom component.",
+    title: "steps.what.title",
+    explanation: "steps.what.explanation",
     code: `# Minimal lambda example
 sensor:
   - platform: template
@@ -42,9 +42,8 @@ sensor:
   {
     id: "syntax",
     number: 2,
-    title: "Lambda Syntax",
-    explanation:
-      "Single-line lambdas use single quotes. Multi-line lambdas use the YAML block scalar |-. Inside the lambda, the variable x holds the current sensor value when used in on_value triggers. Terminate statements with semicolons — it's C++.",
+    title: "steps.syntax.title",
+    explanation: "steps.syntax.explanation",
     code: `binary_sensor:
   - platform: gpio
     pin: GPIO4
@@ -60,9 +59,8 @@ sensor:
   {
     id: "id",
     number: 3,
-    title: "Accessing Components with id()",
-    explanation:
-      "You call any component defined in your config using id(component_id). From there you can read its state with .state, or call actions like .turn_on(), .turn_off(), .toggle(), and .publish_state(). The id must match the id: field of the target component.",
+    title: "steps.id.title",
+    explanation: "steps.id.explanation",
     code: `light:
   - platform: binary
     name: "My Light"
@@ -78,9 +76,8 @@ sensor:
   {
     id: "example",
     number: 4,
-    title: "Practical Example — Fan on Temperature",
-    explanation:
-      "Here a sensor's on_value trigger fires every time a new reading arrives. The lambda checks the current value (x) and turns a fan on or off accordingly. This logic cannot be expressed in standard YAML automations alone.",
+    title: "steps.example.title",
+    explanation: "steps.example.explanation",
     code: `sensor:
   - platform: dht
     temperature:
@@ -108,33 +105,32 @@ interface Question {
 const questions: Question[] = [
   {
     id: "q1",
-    question: "Which syntax correctly calls a component action inside a lambda?",
+    question: "questions.q1.question",
     answers: [
-      { id: "a", text: "component.turn_on()" },
-      { id: "b", text: "id(component_id).turn_on()" },
-      { id: "c", text: "esphome.call(component_id, 'turn_on')" },
-      { id: "d", text: "{{ states('component_id') }}" },
+      { id: "a", text: "questions.q1.answers.a" },
+      { id: "b", text: "questions.q1.answers.b" },
+      { id: "c", text: "questions.q1.answers.c" },
+      { id: "d", text: "questions.q1.answers.d" },
     ],
     correctId: "b",
-    explanation:
-      "ESPHome uses id(component_id) to reference any component defined with an id: field. From there you can call actions like .turn_on() or read .state.",
+    explanation: "questions.q1.explanation",
   },
   {
     id: "q2",
-    question: "In a lambda triggered by on_value:, what does the variable x hold?",
+    question: "questions.q2.question",
     answers: [
-      { id: "a", text: "The component's id string" },
-      { id: "b", text: "The previous sensor reading" },
-      { id: "c", text: "The current sensor value" },
-      { id: "d", text: "A loop counter" },
+      { id: "a", text: "questions.q2.answers.a" },
+      { id: "b", text: "questions.q2.answers.b" },
+      { id: "c", text: "questions.q2.answers.c" },
+      { id: "d", text: "questions.q2.answers.d" },
     ],
     correctId: "c",
-    explanation:
-      "Inside an on_value lambda, x is automatically populated with the freshly received sensor value — the same value that triggered the callback.",
+    explanation: "questions.q2.explanation",
   },
 ]
 
 export function Level6_1() {
+  const t = useLevelT("6_1")
   const [openSteps, setOpenSteps] = useState<Set<string>>(new Set())
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [submitted, setSubmitted] = useState<Record<string, boolean>>({})
@@ -178,24 +174,22 @@ export function Level6_1() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-pink-500/20 text-pink-400">Phase 6</Badge>
-          <Badge variant="outline">Level 6.1</Badge>
+          <Badge className="bg-pink-500/20 text-pink-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Lambdas</h1>
-        <p className="text-lg text-muted-foreground">
-          Embed C++ logic directly in your YAML — the most powerful ESPHome feature.
-        </p>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
+        <p className="text-lg text-muted-foreground">{t("header.subtitle")}</p>
       </div>
 
       {/* Steps */}
       <div className="mb-8 space-y-3">
         <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-          Core concepts — click each to expand
+          {t("steps.heading")}
         </h2>
         {steps.map((step, idx) => {
           const isOpen = openSteps.has(step.id)
@@ -232,7 +226,9 @@ export function Level6_1() {
                   <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-pink-500/20">
                     <Zap className="h-4 w-4 text-pink-400" />
                   </div>
-                  <p className="flex-1 text-sm font-medium">{step.title}</p>
+                  <p className="flex-1 text-sm font-medium">
+                    {t(step.title as Parameters<typeof t>[0])}
+                  </p>
                   <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
                     <ChevronDown className="h-4 w-4 text-muted-foreground" />
                   </motion.div>
@@ -246,7 +242,9 @@ export function Level6_1() {
                       transition={{ duration: 0.2 }}
                     >
                       <div className="border-t border-border/50 px-4 py-3 space-y-3">
-                        <p className="text-sm text-muted-foreground">{step.explanation}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {t(step.explanation as Parameters<typeof t>[0])}
+                        </p>
                         {step.code && (
                           <div className="rounded-lg border border-border/50 bg-gray-950 p-3">
                             <pre className="font-mono text-xs leading-relaxed text-green-400 overflow-x-auto">
@@ -266,7 +264,10 @@ export function Level6_1() {
 
       {!allStepsRead && (
         <div className="mb-6 rounded-lg border border-pink-500/30 bg-pink-500/5 p-4 text-center text-sm text-pink-300">
-          Read all {steps.length} concepts to unlock the quiz ({openSteps.size}/{steps.length} read)
+          {t("steps.unlock", {
+            total: steps.length,
+            read: openSteps.size,
+          })}
         </div>
       )}
 
@@ -280,7 +281,7 @@ export function Level6_1() {
           >
             <div className="flex items-center gap-3">
               <Cpu className="h-5 w-5 text-pink-400" />
-              <h2 className="text-lg font-semibold">Quiz — answer both correctly to complete</h2>
+              <h2 className="text-lg font-semibold">{t("quiz.heading")}</h2>
             </div>
 
             {questions.map((q, qi) => {
@@ -309,7 +310,9 @@ export function Level6_1() {
                       >
                         {qi + 1}
                       </div>
-                      <CardTitle className="text-sm leading-relaxed">{q.question}</CardTitle>
+                      <CardTitle className="text-sm leading-relaxed">
+                        {t(q.question as Parameters<typeof t>[0])}
+                      </CardTitle>
                     </div>
                   </CardHeader>
                   <CardContent>
@@ -355,7 +358,7 @@ export function Level6_1() {
                                 answer.id.toUpperCase()
                               )}
                             </div>
-                            {answer.text}
+                            {t(answer.text as Parameters<typeof t>[0])}
                           </motion.button>
                         )
                       })}
@@ -376,9 +379,11 @@ export function Level6_1() {
                             )}
                           >
                             <span className="font-medium">
-                              {userAnswer === q.correctId ? "Correct! " : "Not quite — "}
+                              {userAnswer === q.correctId
+                                ? t("quiz.correctPrefix")
+                                : t("quiz.wrongPrefix")}
                             </span>
-                            {q.explanation}
+                            {t(q.explanation as Parameters<typeof t>[0])}
                           </div>
                         </motion.div>
                       )}
@@ -403,13 +408,13 @@ export function Level6_1() {
                       {allCorrect ? (
                         <>
                           <Code2 className="mx-auto mb-3 h-10 w-10 text-green-500" />
-                          <h3 className="mb-2 text-xl font-bold">Lambda mastered!</h3>
+                          <h3 className="mb-2 text-xl font-bold">{t("result.successTitle")}</h3>
                           <p className="mb-6 text-sm text-muted-foreground">
-                            You can now embed C++ logic directly in your configs.
+                            {t("result.successBody")}
                           </p>
                           <Button asChild>
                             <Link to="/app/level/6.2">
-                              Continue to Level 6.2
+                              {t("result.continue")}
                               <ChevronRight className="ml-2 h-4 w-4" />
                             </Link>
                           </Button>
@@ -417,10 +422,10 @@ export function Level6_1() {
                       ) : (
                         <>
                           <p className="mb-4 text-sm text-muted-foreground">
-                            Review the explanations above and try again.
+                            {t("result.retryBody")}
                           </p>
                           <Button variant="outline" onClick={reset}>
-                            Try Again
+                            {t("result.tryAgain")}
                           </Button>
                         </>
                       )}

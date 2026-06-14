@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils"
 import { motion } from "framer-motion"
 import { hardwareComponents } from "./constants"
 import type { ComponentItem } from "./types"
-import { useWorkspaceT } from "./workspace.i18n"
+import { useWorkspaceT } from "@/lib/i18n"
 
 interface ComponentsTabProps {
   onAddComponent: (comp: ComponentItem) => void

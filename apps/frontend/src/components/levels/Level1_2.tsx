@@ -14,6 +14,7 @@ import {
   Zap,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -79,7 +80,7 @@ const components: Component[] = [
   {
     id: "button",
     type: "button",
-    label: "Button",
+    label: "components.button.label",
     icon: CircleDot,
     color: "text-blue-400",
     bgColor: "bg-blue-500/20",
@@ -87,7 +88,7 @@ const components: Component[] = [
   {
     id: "led",
     type: "led",
-    label: "LED",
+    label: "components.led.label",
     icon: Lightbulb,
     color: "text-amber-400",
     bgColor: "bg-amber-500/20",
@@ -107,6 +108,7 @@ export function Level1_2() {
   const [showExplanation] = useState(true)
   const [challengeComplete, setChallengeComplete] = useState(false)
 
+  const t = useLevelT("1_2")
   const { completeLevel, completedLevels } = useProgressStore()
   const isCompleted = completedLevels.includes("1.2")
 
@@ -165,17 +167,17 @@ export function Level1_2() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-amber-500/20 text-amber-400">Phase 1</Badge>
-          <Badge variant="outline">Level 1.2</Badge>
+          <Badge className="bg-amber-500/20 text-amber-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Meet Your Board</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          The ESP32 is the brain that connects inputs to outputs. Learn its anatomy.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -183,9 +185,9 @@ export function Level1_2() {
         {/* Board Diagram */}
         <Card className="lg:col-span-2 border-border/50 bg-card/50">
           <CardHeader>
-            <CardTitle className="text-lg">ESP32 Development Board</CardTitle>
+            <CardTitle className="text-lg">{t("board.title")}</CardTitle>
             <CardDescription>
-              Drag components from the right panel to connect them to GPIO pins.
+              {t("board.desc")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -372,11 +374,11 @@ export function Level1_2() {
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="h-3 w-3 rounded-full bg-red-500/50 ring-1 ring-red-500" />
-                  <span className="text-xs text-muted-foreground">Power</span>
+                  <span className="text-xs text-muted-foreground">{t("legend.power")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div className="h-3 w-3 rounded-full bg-gray-600 ring-1 ring-gray-500" />
-                  <span className="text-xs text-muted-foreground">Ground</span>
+                  <span className="text-xs text-muted-foreground">{t("legend.ground")}</span>
                 </div>
               </div>
             </div>
@@ -393,7 +395,7 @@ export function Level1_2() {
             >
               <Card className="border-border/50 bg-card/50">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sm">Key Parts</CardTitle>
+                  <CardTitle className="text-sm">{t("keyParts.title")}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3 text-sm">
                   <div className="flex items-start gap-3">
@@ -401,9 +403,9 @@ export function Level1_2() {
                       <Zap className="h-4 w-4 text-red-400" />
                     </div>
                     <div>
-                      <p className="font-medium">Power Pins</p>
+                      <p className="font-medium">{t("keyParts.power.title")}</p>
                       <p className="text-xs text-muted-foreground">
-                        3.3V and VIN provide power to the board
+                        {t("keyParts.power.desc")}
                       </p>
                     </div>
                   </div>
@@ -412,9 +414,9 @@ export function Level1_2() {
                       <CircleDot className="h-4 w-4 text-green-400" />
                     </div>
                     <div>
-                      <p className="font-medium">GPIO Pins</p>
+                      <p className="font-medium">{t("keyParts.gpio.title")}</p>
                       <p className="text-xs text-muted-foreground">
-                        General Purpose Input/Output — connect sensors and actuators here
+                        {t("keyParts.gpio.desc")}
                       </p>
                     </div>
                   </div>
@@ -423,9 +425,9 @@ export function Level1_2() {
                       <Wifi className="h-4 w-4 text-cyan-400" />
                     </div>
                     <div>
-                      <p className="font-medium">WiFi Antenna</p>
+                      <p className="font-medium">{t("keyParts.wifi.title")}</p>
                       <p className="text-xs text-muted-foreground">
-                        Built-in wireless connectivity
+                        {t("keyParts.wifi.desc")}
                       </p>
                     </div>
                   </div>
@@ -437,9 +439,9 @@ export function Level1_2() {
           {/* Components to drag */}
           <Card className="border-border/50 bg-card/50">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Components</CardTitle>
+              <CardTitle className="text-sm">{t("components.title")}</CardTitle>
               <CardDescription className="text-xs">
-                Click a component, then click a GPIO pin to place it.
+                {t("components.desc")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -474,17 +476,18 @@ export function Level1_2() {
                       <Icon className={cn("h-5 w-5", comp.color)} />
                     </div>
                     <div className="text-left">
-                      <p className="font-medium">{comp.label}</p>
+                      <p className="font-medium">{t(comp.label as Parameters<typeof t>[0])}</p>
                       <p className="text-xs text-muted-foreground">
                         {isPlaced
-                          ? `Placed on GPIO${
-                              allPins.find(
-                                (p) => placedComponents[p.id] === comp.id
-                              )?.gpioNum ?? ""
-                            }`
+                          ? t("components.placedOn", {
+                              gpio:
+                                allPins.find(
+                                  (p) => placedComponents[p.id] === comp.id
+                                )?.gpioNum ?? "",
+                            })
                           : isSelected
-                            ? "Click a GPIO pin"
-                            : "Click to select"}
+                            ? t("components.clickPin")
+                            : t("components.clickSelect")}
                       </p>
                     </div>
                     {isPlaced && (
@@ -504,16 +507,16 @@ export function Level1_2() {
                   <span className="flex h-5 w-5 items-center justify-center rounded-full bg-amber-500/20 text-xs font-bold text-amber-400">
                     ?
                   </span>
-                  Challenge
+                  {t("challenge.title")}
                 </CardTitle>
                 {challengeComplete && (
                   <Badge className="bg-green-500/20 text-green-400">
-                    <CheckCircle2 className="mr-1 h-3 w-3" /> Complete!
+                    <CheckCircle2 className="mr-1 h-3 w-3" /> {t("challenge.complete")}
                   </Badge>
                 )}
               </div>
               <CardDescription className="text-xs">
-                Wire up a button on GPIO4 and an LED on GPIO5.
+                {t("challenge.desc")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -526,7 +529,7 @@ export function Level1_2() {
                       : "border-border/50 text-muted-foreground"
                   )}
                 >
-                  <span>Button → GPIO4</span>
+                  <span>{t("challenge.buttonWiring")}</span>
                   {placedComponents["gpio4"] === "button" && (
                     <CheckCircle2 className="h-4 w-4" />
                   )}
@@ -539,7 +542,7 @@ export function Level1_2() {
                       : "border-border/50 text-muted-foreground"
                   )}
                 >
-                  <span>LED → GPIO5</span>
+                  <span>{t("challenge.ledWiring")}</span>
                   {placedComponents["gpio5"] === "led" && (
                     <CheckCircle2 className="h-4 w-4" />
                   )}
@@ -554,7 +557,7 @@ export function Level1_2() {
                 }
                 className="w-full"
               >
-                Check Wiring
+                {t("buttons.checkWiring")}
               </Button>
 
               {challengeComplete && (
@@ -565,7 +568,7 @@ export function Level1_2() {
                 >
                   <Button asChild className="w-full" variant="outline">
                     <Link to="/app/level/1.3">
-                      Continue to Level 1.3
+                      {t("buttons.continue")}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>

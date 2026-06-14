@@ -11,8 +11,7 @@ import {
 import { Progress } from "@/components/ui/progress"
 import { ACHIEVEMENTS } from "@/lib/achievements"
 import { signOut, useSession } from "@/lib/auth-client"
-import { useTranslation } from "@/lib/i18n"
-import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
+import { useCurriculumLabels, useTranslation } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { useQueryClient } from "@tanstack/react-query"
 import {

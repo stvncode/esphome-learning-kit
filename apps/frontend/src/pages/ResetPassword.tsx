@@ -5,7 +5,7 @@ import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui
 import { Input } from "@/components/ui/input"
 import { authClient } from "@/lib/auth-client"
 import { useMutation } from "@tanstack/react-query"
-import { ArrowLeft, Cpu, Loader2 } from "lucide-react"
+import { ArrowLeft, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { Link, Navigate, useNavigate, useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
@@ -48,10 +48,8 @@ export function ResetPassword() {
       </Link>
       <div className="relative z-10 flex w-full max-w-sm flex-col gap-6">
         <Link to="/" className="flex items-center gap-2 self-center font-medium text-foreground">
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-cyan-400">
-            <Cpu className="h-3.5 w-3.5 text-white" />
-          </div>
-          ESPHome Learn
+          <img src="/esp32.png" className="h-10 w-10" />
+          ESPHome Learning
         </Link>
 
         <Card className="border-border bg-card shadow-none">

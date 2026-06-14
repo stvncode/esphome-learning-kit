@@ -1,0 +1,1609 @@
+{
+  "common": {
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "workspace": "Atelier",
+      "classes": "Classes",
+      "glossary": "Glossaire",
+      "settings": "Paramètres",
+      "builder": "Éditeur",
+      "starterKitGuide": "Guide du kit de démarrage",
+      "helpTitle": "Un terme vous bloque ?",
+      "helpBody": "Ouvrez le glossaire pour des définitions simples."
+    },
+    "header": {
+      "yourProgress": "Votre progression",
+      "levels": "{done}/{total} niveaux",
+      "dayStreak": "jours d'affilée",
+      "achievements": "succès",
+      "search": "Rechercher"
+    },
+    "palette": {
+      "placeholder": "Aller à un niveau ou une page…",
+      "noResults": "Aucun résultat",
+      "certificate": "Certificat"
+    },
+    "levelNav": {
+      "prev": "Préc.",
+      "next": "Suiv.",
+      "count": "Niveau {n} sur {total}"
+    },
+    "account": {
+      "signOut": "Se déconnecter",
+      "settings": "Paramètres",
+      "viewCertificate": "Voir votre certificat"
+    },
+    "common": {
+      "cancel": "Annuler",
+      "save": "Enregistrer",
+      "saving": "Enregistrement…"
+    },
+    "settings": {
+      "title": "Paramètres",
+      "subtitle": "Gérez votre profil et vos préférences.",
+      "profile": {
+        "title": "Profil",
+        "desc": "Votre nom et votre avatar dans l'application.",
+        "name": "Nom affiché",
+        "email": "E-mail",
+        "emailHint": "Votre e-mail ne peut pas être modifié.",
+        "avatarHint": "Cliquez sur votre avatar pour choisir une image. L'enregistrement arrive bientôt."
+      },
+      "prefs": {
+        "title": "Préférences",
+        "desc": "Thème et langue.",
+        "theme": "Thème",
+        "themeLight": "Clair",
+        "themeDark": "Sombre",
+        "themeSystem": "Système",
+        "language": "Langue"
+      },
+      "security": {
+        "title": "Sécurité",
+        "desc": "Modifiez votre mot de passe.",
+        "current": "Mot de passe actuel",
+        "new": "Nouveau mot de passe",
+        "update": "Mettre à jour le mot de passe",
+        "updated": "Mot de passe mis à jour"
+      },
+      "danger": {
+        "title": "Zone sensible",
+        "resetTitle": "Réinitialiser la progression",
+        "resetDesc": "Effacer tous les niveaux terminés, la série et les succès.",
+        "resetBtn": "Réinitialiser la progression",
+        "resetConfirmTitle": "Réinitialiser toute votre progression ?",
+        "resetConfirmDesc": "Cela efface vos niveaux terminés, votre série et vos succès. Action irréversible.",
+        "deleteTitle": "Supprimer le compte",
+        "deleteDesc": "Supprimer définitivement votre compte et toutes vos données.",
+        "deleteBtn": "Supprimer le compte",
+        "deleteConfirmTitle": "Supprimer votre compte ?",
+        "deleteConfirmDesc": "Cela supprime définitivement votre compte, votre progression, vos projets et vos classes. Action irréversible."
+      },
+      "toast": {
+        "profileSaved": "Profil mis à jour",
+        "progressReset": "Progression réinitialisée",
+        "accountDeleted": "Votre compte a été supprimé"
+      }
+    },
+    "onboarding": {
+      "title": "Bienvenue sur ESPHome Learn 👋",
+      "subtitle": "Vous apprendrez à créer de vrais objets connectés à travers 22 niveaux guidés. Voici le parcours :",
+      "s1Title": "Comprendre visuellement",
+      "s1Desc": "Des flux en glisser-déposer montrent comment fonctionnent les objets connectés — sans code pour démarrer.",
+      "s2Title": "Révéler le code",
+      "s2Desc": "Voyez le vrai YAML ESPHome auquel chaque bloc correspond.",
+      "s3Title": "Construisez vous-même",
+      "s3Desc": "Rédigez des configurations complètes, puis déboguez et connectez à Home Assistant.",
+      "s4Title": "Exporter vers ESPHome",
+      "s4Desc": "Transférez votre configuration sur du vrai matériel quand vous êtes prêt.",
+      "explore": "Explorer par moi-même",
+      "start": "Commencer le niveau 1"
+    },
+    "certificate": {
+      "lockedTitle": "Votre certificat est presque prêt",
+      "lockedDesc": "Terminez les {total} niveaux pour le débloquer — vous en êtes à {completed}/{total}.",
+      "keepLearning": "Continuer l'apprentissage",
+      "back": "Retour à l'application",
+      "print": "Imprimer / Enregistrer en PDF",
+      "heading": "Certificat de réussite",
+      "certifies": "Ceci certifie que",
+      "body": "a terminé avec succès les {total} niveaux du programme ESPHome Learn — des flux visuels et du YAML aux workflows sur matériel réel et aux sujets avancés.",
+      "date": "Date",
+      "org": "ESPHome Learn",
+      "kit": "Kit de démarrage"
+    },
+    "notFound": {
+      "title": "Nœud introuvable",
+      "desc": "On dirait que cette connexion est rompue. La page que vous cherchez n'existe pas ou a été déplacée.",
+      "goBack": "Retour",
+      "home": "Page d'accueil"
+    }
+  },
+  "curriculum": {
+    "breadcrumb": {
+      "home": "Accueil",
+      "phase": "Phase {n}"
+    },
+    "phase": {
+      "1": "Compréhension visuelle",
+      "2": "Révéler le code",
+      "3": "Édition guidée",
+      "4": "Créer de zéro",
+      "5": "Matériel réel",
+      "6": "Sujets avancés"
+    },
+    "phaseDesc": {
+      "1": "Assimilez le modèle mental des objets connectés",
+      "2": "Découvrez le YAML derrière chaque bloc visuel",
+      "3": "Faites vos premières modifications sur de vraies configurations",
+      "4": "Rédigez des configurations complètes à partir de zéro",
+      "5": "Déboguez avec les journaux et intégrez Home Assistant",
+      "6": "Maîtrisez les lambdas, les composants personnalisés et plus"
+    },
+    "level": {
+      "1": {
+        "1": "Qu'est-ce qu'un objet connecté ?",
+        "2": "Découvrez votre carte",
+        "3": "Votre premier flux",
+        "4": "Ajouter de la temporisation"
+      },
+      "2": {
+        "1": "Le YAML derrière la magie",
+        "2": "Comprendre la structure",
+        "3": "Repérez la différence",
+        "4": "Lire une configuration complète"
+      },
+      "3": {
+        "1": "Changer les noms",
+        "2": "Changer les broches",
+        "3": "Changer le comportement",
+        "4": "Ajouter un délai",
+        "5": "Conditions"
+      },
+      "4": {
+        "1": "Compléter les blancs",
+        "2": "Ajouter un composant",
+        "3": "Créer une automatisation",
+        "4": "Écrire une configuration complète"
+      },
+      "5": {
+        "1": "Déboguer avec les journaux",
+        "2": "Intégration avec Home Assistant"
+      },
+      "6": {
+        "1": "Lambdas",
+        "2": "Composants personnalisés",
+        "3": "Périphériques I2C et SPI"
+      }
+    }
+  },
+  "home": {
+    "hero": {
+      "badge": "Guide du kit de démarrage ESP32",
+      "title1": "Apprenez ESPHome,",
+      "title2": "visuellement.",
+      "subtitle": "Passez de zéro au matériel réel. Commencez par des flux en glisser-déposer, découvrez le YAML qui se cache derrière, puis rédigez des configurations complètes à flasher avec ESPHome.",
+      "continue": "Continuer l'apprentissage",
+      "start": "Commencer",
+      "certificate": "Voir votre certificat",
+      "workspace": "Ouvrir l'atelier",
+      "upNext": "À suivre — Niveau {id} : {title}",
+      "statPhases": "Phases",
+      "statLevels": "Niveaux",
+      "statProgress": "Votre progression",
+      "livePreview": "Aperçu en direct — Kit de démarrage ESP32-C6",
+      "previewCaption": "Les flux visuels se traduisent directement en YAML ESPHome — sans approximation."
+    },
+    "path": {
+      "title": "Parcours d'apprentissage",
+      "subtitle": "Six phases, chacune s'appuyant sur la précédente.",
+      "badge": "6 phases · 22 niveaux",
+      "progress": "Progression",
+      "continue": "Continuer",
+      "start": "Démarrer la phase"
+    }
+  },
+  "landing": {
+    "header": {
+      "features": "Fonctionnalités",
+      "builder": "Éditeur",
+      "curriculum": "Programme",
+      "signIn": "Se connecter",
+      "getStarted": "Commencer"
+    },
+    "hero": {
+      "badge": "Kit de démarrage ESP32-C6",
+      "title1": "Créez des objets connectés.",
+      "title2": "Sans approximation.",
+      "subtitle": "Apprenez ESPHome à travers 22 niveaux guidés. Commencez par glisser des blocs visuels, regardez le YAML se générer en direct, puis exportez-le pour le flasher avec ESPHome sur du vrai matériel.",
+      "ctaPrimary": "Commencer gratuitement",
+      "ctaSecondary": "Se connecter",
+      "statLevels": "Niveaux guidés",
+      "statPhases": "Phases",
+      "statWorkspace": "Éditeur visuel + YAML",
+      "sensorSub": "Température · Humidité",
+      "chipReady": "Prêt pour ESPHome"
+    },
+    "features": {
+      "eyebrow": "Pourquoi ESPHome Learn",
+      "title": "Tout ce qu'il vous faut, au même endroit",
+      "visualTitle": "Éditeur visuel",
+      "visualDesc": "Glissez des composants sur le canevas et reliez-les par des flux. Aucun code requis pour démarrer — juste de l'intuition.",
+      "yamlTitle": "YAML en direct",
+      "yamlDesc": "Chaque nœud et connexion génère instantanément un YAML ESPHome valide. Regardez-le se construire au fil de votre conception.",
+      "hwTitle": "Matériel réel",
+      "hwDesc": "Exportez votre configuration et flashez-la avec ESPHome — votre appareil apparaît dans Home Assistant. De l'apprentissage à la production en quelques minutes."
+    },
+    "how": {
+      "eyebrow": "Le parcours",
+      "title": "De zéro au déploiement — étape par étape",
+      "s1Title": "Comprendre visuellement",
+      "s1Desc": "Découvrez le fonctionnement des objets connectés grâce à des blocs glisser-déposer. Aucune connaissance préalable requise.",
+      "s2Title": "Révéler le code",
+      "s2Desc": "Voyez comment chaque bloc visuel correspond à du vrai YAML ESPHome. Faites le pont entre concept et code.",
+      "s3Title": "Exporter & déployer",
+      "s3Desc": "Exportez votre configuration et ouvrez-la dans ESPHome pour flasher votre ESP32. Votre appareil apparaît dans Home Assistant, prêt à être automatisé."
+    },
+    "builder": {
+      "eyebrow": "Éditeur",
+      "title": "Flux visuels. Vrai YAML. Un seul atelier.",
+      "subtitle": "Reliez des nœuds visuellement et regardez une configuration ESPHome valide se générer en temps réel. Passez à la vue YAML à tout moment pour voir le code derrière votre conception.",
+      "components": "Composants",
+      "selectedNode": "Nœud sélectionné",
+      "flow": "Flux",
+      "liveYaml": "YAML en direct",
+      "tabProperties": "Propriétés",
+      "tabLogs": "Journaux",
+      "callout1Title": "Glisser-déposer des nœuds",
+      "callout1Desc": "Composants, déclencheurs, actions — glissez-les sur le canevas et reliez-les.",
+      "callout2Title": "YAML instantané",
+      "callout2Desc": "Chaque connexion génère un YAML ESPHome valide en temps réel.",
+      "callout3Title": "Changez de vue à tout moment",
+      "callout3Desc": "Basculez entre les vues Éditeur et YAML sans perdre votre travail."
+    },
+    "curriculum": {
+      "eyebrow": "Programme",
+      "title": "6 phases. 22 niveaux.",
+      "tagline": "Du premier clic à la configuration avancée",
+      "levels": "{n} niveaux",
+      "phase1": "Compréhension visuelle",
+      "phase2": "Révéler le code",
+      "phase3": "Édition guidée",
+      "phase4": "Créer de zéro",
+      "phase5": "Matériel réel",
+      "phase6": "Sujets avancés"
+    },
+    "cta": {
+      "title": "Prêt à créer votre premier objet connecté ?",
+      "subtitle": "Commencez gratuitement. Aucun matériel requis pour débuter.",
+      "button": "Commencer — c'est gratuit"
+    },
+    "footer": {
+      "tagline": "Conçu pour les makers et les passionnés de domotique.",
+      "signIn": "Se connecter",
+      "signUp": "S'inscrire"
+    }
+  },
+  "workspace": {
+    "home": {
+      "title": "Atelier",
+      "subtitle": "Construisez votre configuration ESPHome visuellement, puis exportez le YAML pour le flasher avec ESPHome.",
+      "startFrom": "Partir de",
+      "starterKit": "Kit de démarrage",
+      "selected": "Sélectionné",
+      "starterKitDesc": "Préchargé avec tous les composants du kit de démarrage ESP32-C6",
+      "feat": {
+        "devkit": "Kit de dév. ESP32-C6",
+        "button": "Bouton + détecteur de mouvement PIR",
+        "aht20": "AHT20 Température / Humidité",
+        "rgb": "Bandeau de LED RVB",
+        "buzzer": "Buzzer"
+      },
+      "blank": "Canevas vierge",
+      "blankDesc": "Partez de zéro et ajoutez vos propres composants",
+      "board": "Carte",
+      "projectName": "Nom du projet",
+      "openBuilder": "Ouvrir l'éditeur",
+      "starterHint": "Carte : ESP32-C6 DevKit — les nœuds seront pré-placés sur le canevas.",
+      "recent": "Projets récents",
+      "nodes": "{n} nœuds",
+      "node": "{n} nœud"
+    },
+    "header": {
+      "workspace": "Atelier",
+      "builder": "Éditeur",
+      "yaml": "YAML",
+      "stop": "Arrêter",
+      "simulate": "Simuler",
+      "save": "Enregistrer",
+      "copy": "Copier",
+      "copyYaml": "Copier le YAML",
+      "export": "Exporter",
+      "undo": "Annuler (⌘Z)",
+      "redo": "Rétablir (⌘⇧Z)"
+    },
+    "tab": {
+      "generic": "Général",
+      "components": "Composants",
+      "automations": "Automatisations"
+    },
+    "stats": {
+      "nodes": "Nœuds",
+      "connections": "Connexions"
+    },
+    "auto": {
+      "add": "Ajouter une automatisation",
+      "desc": "Reliez des nœuds en une règle d'automatisation",
+      "source": "Nœud source",
+      "selectNode": "Choisir un nœud…",
+      "noNodes": "Aucun nœud sur le canevas",
+      "trigger": "Déclencheur",
+      "selectTrigger": "Choisir un déclencheur…",
+      "action": "Action",
+      "selectAction": "Choisir une action…",
+      "target": "Nœud cible",
+      "selectOutput": "Choisir une sortie…",
+      "noOutputs": "Aucun nœud de sortie",
+      "empty": "Aucune automatisation pour l'instant",
+      "fillAll": "Remplissez tous les champs de l'automatisation"
+    },
+    "comp": {
+      "title": "Composants",
+      "desc": "Nœuds matériels — cliquez pour ajouter. Glissez une poignée pour enchaîner la logique.",
+      "input": "Entrée",
+      "output": "Sortie",
+      "tipLabel": "Astuce :",
+      "tip": "Glissez depuis la poignée d'un nœud (le point sur son bord) pour ajouter un déclencheur, une action ou un nœud de temporisation en ligne."
+    },
+    "device": {
+      "title": "Paramètres de l'appareil",
+      "desc": "Configuration ESPHome de base",
+      "name": "Nom de l'appareil",
+      "nameHint": "Utilisé comme nom d'hôte ESPHome",
+      "board": "Carte",
+      "area": "Pièce",
+      "areaPlaceholder": "Salon",
+      "areaHint": "Affiché dans Home Assistant",
+      "wifi": "Wi-Fi",
+      "ssid": "SSID",
+      "ssidPlaceholder": "Nom du réseau",
+      "password": "Mot de passe"
+    },
+    "props": {
+      "connection": "Connexion",
+      "nodeTitle": "Nœud {type}",
+      "label": "Libellé",
+      "gpio": "Broche GPIO",
+      "duplicate": "Dupliquer",
+      "delete": "Supprimer",
+      "deleteConnection": "Supprimer la connexion"
+    },
+    "yamlPanel": {
+      "title": "Aperçu du YAML"
+    },
+    "palette": {
+      "search": "Rechercher…",
+      "noResults": "Aucun résultat"
+    },
+    "menu": {
+      "addCanvas": "Ajouter au canevas",
+      "canvasSub": "Clic droit • sans connexion",
+      "addNode": "Ajouter un nœud",
+      "addConnected": "Ajouter un nœud connecté",
+      "duplicateNode": "Dupliquer le nœud",
+      "deleteNode": "Supprimer le nœud"
+    },
+    "toast": {
+      "copied": "YAML copié !",
+      "downloaded": "YAML téléchargé !",
+      "saved": "Projet enregistré !",
+      "saveFailed": "Échec de l'enregistrement du projet",
+      "automationAdded": "Automatisation ajoutée",
+      "nodeDuplicated": "Nœud dupliqué",
+      "nodeRemoved": "Nœud supprimé",
+      "connectionRemoved": "Connexion supprimée",
+      "added": "« {label} » ajouté"
+    }
+  },
+  "glossary": {
+    "title": "Glossaire",
+    "subtitle": "Des définitions simples des termes ESPHome et IoT que vous croiserez dans les niveaux.",
+    "search": "Rechercher un terme…",
+    "noResults": "Aucun terme ne correspond à « {q} ».",
+    "def": {
+      "esphome": "Un système qui transforme une simple configuration YAML en firmware pour les puces ESP32/ESP8266, pour créer des objets connectés sans écrire de C++.",
+      "esp32": "Un microcontrôleur petit et bon marché avec WiFi et Bluetooth intégrés — le « cerveau » de votre objet connecté.",
+      "board": "La variante de carte de développement que vous utilisez (p. ex. esp32-c6-devkitc-1). Elle indique à ESPHome la puce et la disposition des broches.",
+      "firmware": "Le programme compilé qui s'exécute directement sur la puce. ESPHome le génère à partir de votre YAML.",
+      "flashing": "Écrire le firmware sur l'appareil — fait par le véritable outil ESPHome via USB la première fois, puis sans fil ensuite.",
+      "gpio": "Entrée/Sortie à usage général — une broche numérotée de la carte à laquelle vous reliez des composants (p. ex. GPIO5). Certaines sont en entrée seulement.",
+      "yaml": "Le format texte lisible dans lequel les configurations ESPHome sont écrites. L'indentation compte ; les tabulations sont interdites.",
+      "component": "Un bloc réutilisable dans ESPHome (capteur, lumière, interrupteur, etc.) que vous déclarez en YAML.",
+      "binarySensor": "Un composant pour les entrées tout-ou-rien comme un bouton ou un détecteur de mouvement — il renvoie vrai ou faux.",
+      "sensor": "Un composant qui renvoie une valeur numérique, comme la température ou l'humidité.",
+      "switchLight": "Des composants de sortie que vous pouvez allumer et éteindre (un relais, une LED, un ruban RVB).",
+      "automation": "Une règle qui réagit à un événement (un déclencheur) en exécutant une action — p. ex. « quand le bouton est pressé, allumer la lumière ».",
+      "lambda": "Un fragment de C++ que vous pouvez intégrer dans le YAML pour une logique personnalisée non couverte par ESPHome.",
+      "ota": "Mises à jour à distance (OTA) — envoyer un nouveau firmware à un appareil via le WiFi plutôt que par câble USB.",
+      "api": "La connexion native d'ESPHome qui permet à Home Assistant de découvrir et de contrôler l'appareil sur votre réseau local.",
+      "homeAssistant": "Un hub domotique open source populaire. Les appareils ESPHome y apparaissent automatiquement comme des entités à contrôler et automatiser.",
+      "i2cSpi": "Deux protocoles de câblage courants pour connecter des puces comme des capteurs et des écrans avec seulement quelques broches partagées.",
+      "pwm": "Modulation de largeur d'impulsion — commuter rapidement une broche pour simuler une valeur analogique, utilisée pour la luminosité d'une LED ou la vitesse d'un moteur.",
+      "pullResistor": "Un moyen de donner à une broche d'entrée une valeur par défaut stable (haute ou basse) pour qu'elle ne « flotte » pas et ne lise pas au hasard.",
+      "wifiCreds": "Le nom du réseau (SSID) et le mot de passe que votre appareil utilise pour rejoindre votre WiFi afin d'être accessible et mis à jour."
+    }
+  },
+  "classes": {
+    "title": "Classes",
+    "subtitleTeacher": "Créez une classe et invitez des élèves pour suivre leur progression ensemble.",
+    "subtitleStudent": "Les classes auxquelles vous avez été invité.",
+    "create": "Créer une classe",
+    "createDesc": "Vous serez l'enseignant. Invitez des élèves par e-mail depuis la classe.",
+    "createPlaceholder": "Groupe 3 — Intro à l'IoT",
+    "createBtn": "Créer",
+    "emptyTeacher": "Aucune classe pour l'instant. Créez-en une pour commencer.",
+    "emptyStudent": "Vous n'êtes dans aucune classe. Demandez un lien d'invitation à votre enseignant.",
+    "roleTeacher": "Enseignant",
+    "roleStudent": "Élève",
+    "students": "{n} élèves",
+    "student": "{n} élève",
+    "back": "Classes",
+    "notLoaded": "Impossible de charger cette classe.",
+    "backBtn": "Retour aux classes",
+    "invite": "Inviter des élèves",
+    "delete": "Supprimer la classe",
+    "leave": "Quitter la classe",
+    "leaderboard": "Classement",
+    "leaderboardDesc": "Classé par niveaux terminés, puis par succès.",
+    "leaderboardHint": "Cliquez sur un élève pour voir les détails.",
+    "noStudents": "Aucun élève pour l'instant.",
+    "noStudentsTeacher": "Partagez le code de la classe pour commencer.",
+    "levelsOf": "{done}/{total} niveaux",
+    "renameTitle": "Renommer la classe",
+    "save": "Enregistrer",
+    "inviteTitle": "Inviter des élèves",
+    "inviteDesc": "Saisissez des adresses e-mail (séparées par des virgules, espaces ou retours à la ligne). Chaque élève reçoit un lien pour rejoindre {name}.",
+    "invitePlaceholder": "ada@ecole.fr, grace@ecole.fr",
+    "inviteBtn": "Envoyer les invitations",
+    "memberProgress": "Progression dans cette classe",
+    "achievementsCount": "{n} succès",
+    "completedLevels": "Niveaux terminés",
+    "noneYet": "Aucun pour l'instant.",
+    "quizScores": "Résultats des quiz",
+    "noQuizzes": "Aucun quiz passé pour l'instant.",
+    "toastCreated": "Classe « {name} » créée",
+    "toastJoined": "Vous avez rejoint « {name} »",
+    "toastRenamed": "Classe renommée",
+    "toastRemoved": "Élève retiré",
+    "toastDeleted": "Classe supprimée",
+    "toastLeft": "Vous avez quitté la classe",
+    "toastInvited": "{n} élèves invités",
+    "toastCodeCopied": "Code de la classe copié",
+    "confirmDeleteTitle": "Supprimer cette classe ?",
+    "confirmDeleteDesc": "Cela supprime définitivement la classe et toutes ses inscriptions. Action irréversible.",
+    "confirmRemoveTitle": "Retirer {name} ?",
+    "confirmRemoveDesc": "{name} sera retiré de cette classe. Sa progression est conservée.",
+    "confirmRemoveBtn": "Retirer l'élève"
+  },
+  "levels": {
+    "1_1": {
+      "header": {
+        "phase": "Phase {n}",
+        "level": "Niveau {id}",
+        "completed": "Terminé",
+        "title": "Qu'est-ce qu'un objet connecté ?",
+        "subtitle": "Comprendre le schéma fondamental : les entrées déclenchent des actions, les sorties répondent."
+      },
+      "demo": {
+        "title": "Démo interactive",
+        "desc": "Cliquez sur le bouton pour voir le schéma de base d'un objet connecté en action.",
+        "button": "Bouton",
+        "inputLabel": "(Entrée)",
+        "clickMe": "Cliquez-moi !",
+        "signal": "Signal",
+        "light": "Lumière",
+        "outputLabel": "(Sortie)"
+      },
+      "explanation": {
+        "title": "Chaque objet connecté suit ce schéma :",
+        "input": {
+          "title": "Entrée",
+          "desc": "Quelque chose qui déclenche une action — boutons, capteurs, interrupteurs, planifications."
+        },
+        "logic": {
+          "title": "Logique",
+          "desc": "Le « cerveau » qui décide ce qui se passe lorsque l'entrée est déclenchée."
+        },
+        "output": {
+          "title": "Sortie",
+          "desc": "Quelque chose qui répond — lumières, relais, buzzers, écrans."
+        }
+      },
+      "challenge": {
+        "title": "Défi",
+        "desc": "Identifiez l'entrée et la sortie dans chaque scénario.",
+        "complete": "Terminé !",
+        "progress": "Progression",
+        "score": "{n}/{total} corrects"
+      },
+      "buttons": {
+        "startChallenge": "Commencer le défi",
+        "input": "Entrée",
+        "output": "Sortie",
+        "continue": "Continuer vers le niveau {id}"
+      },
+      "scenarios": {
+        "motionAlarm": {
+          "input": "Capteur de mouvement",
+          "output": "Alarme"
+        },
+        "tempFan": {
+          "input": "Capteur de température",
+          "output": "Ventilateur"
+        },
+        "switchRelay": {
+          "input": "Interrupteur",
+          "output": "Relais"
+        }
+      }
+    },
+    "1_2": {
+      "header": {
+        "phase": "Phase 1",
+        "level": "Niveau 1.2",
+        "completed": "Terminé",
+        "title": "Découvrez votre carte",
+        "subtitle": "L'ESP32 est le cerveau qui relie les entrées aux sorties. Apprenez-en l'anatomie."
+      },
+      "board": {
+        "title": "Carte de développement ESP32",
+        "desc": "Faites glisser les composants depuis le panneau de droite pour les connecter aux broches GPIO."
+      },
+      "legend": {
+        "power": "Alimentation",
+        "ground": "Masse"
+      },
+      "keyParts": {
+        "title": "Éléments clés",
+        "power": {
+          "title": "Broches d'alimentation",
+          "desc": "3.3V et VIN fournissent l'alimentation à la carte"
+        },
+        "gpio": {
+          "title": "Broches GPIO",
+          "desc": "Entrée/Sortie à usage général — connectez ici les capteurs et les actionneurs"
+        },
+        "wifi": {
+          "title": "Antenne WiFi",
+          "desc": "Connectivité sans fil intégrée"
+        }
+      },
+      "components": {
+        "title": "Composants",
+        "desc": "Cliquez sur un composant, puis cliquez sur une broche GPIO pour le placer.",
+        "button": {
+          "label": "Bouton"
+        },
+        "led": {
+          "label": "LED"
+        },
+        "placedOn": "Placé sur GPIO{gpio}",
+        "clickPin": "Cliquez sur une broche GPIO",
+        "clickSelect": "Cliquez pour sélectionner"
+      },
+      "challenge": {
+        "title": "Défi",
+        "complete": "Terminé !",
+        "desc": "Câblez un bouton sur GPIO4 et une LED sur GPIO5.",
+        "buttonWiring": "Bouton → GPIO4",
+        "ledWiring": "LED → GPIO5"
+      },
+      "buttons": {
+        "checkWiring": "Vérifier le câblage",
+        "continue": "Continuer vers le niveau 1.3"
+      }
+    },
+    "1_3": {
+      "header": {
+        "phase": "Phase 1",
+        "level": "Niveau 1.3",
+        "completed": "Terminé",
+        "title": "Votre premier flux",
+        "subtitle": "Construisez une logique visuelle en reliant des nœuds entre eux."
+      },
+      "buttons": {
+        "reset": "Réinitialiser",
+        "simulate": "Simuler",
+        "simulating": "Simulation...",
+        "continue": "Continuer vers le niveau 1.4"
+      },
+      "instructions": {
+        "title": "Comment ça marche",
+        "step1": "Cliquez sur les composants ci-dessous pour les ajouter au canevas",
+        "step2": "Faites glisser les nœuds pour les positionner",
+        "step3": "Reliez les nœuds en faisant glisser d'une poignée à une autre",
+        "step4a": "Cliquez sur une ligne pour la sélectionner, puis appuyez sur",
+        "step4b": "pour la supprimer",
+        "step5": "Cliquez sur « Simuler » pour voir votre flux en action"
+      },
+      "components": {
+        "title": "Composants",
+        "subtitle": "Cliquez pour ajouter au canevas",
+        "button": "Bouton",
+        "light": "Lumière",
+        "whenPressed": "Lorsque pressé",
+        "whenReleased": "Lorsque relâché",
+        "turnOn": "Allumer",
+        "turnOff": "Éteindre",
+        "toggle": "Basculer"
+      },
+      "categories": {
+        "Input": "Entrée",
+        "Trigger": "Déclencheur",
+        "Action": "Action",
+        "Output": "Sortie"
+      },
+      "challenge": {
+        "title": "Défi",
+        "complete": "Terminé !",
+        "description": "Créez un flux où appuyer sur le bouton allume la lumière, et le relâcher éteint la lumière.",
+        "addButton": "Ajouter un bouton",
+        "addLight": "Ajouter une lumière",
+        "pressTurnOn": "Lorsque pressé → Allumer",
+        "releaseTurnOff": "Lorsque relâché → Éteindre",
+        "connectNodes": "Connecter tous les nœuds ({n}/{total})"
+      },
+      "simulation": {
+        "step1": "1. Bouton pressé",
+        "step2": "2. La lumière s'allume",
+        "step3": "3. Bouton relâché",
+        "step4": "4. La lumière s'éteint"
+      }
+    },
+    "1_4": {
+      "header": {
+        "phase": "Phase {n}",
+        "level": "Niveau {id}",
+        "completed": "Terminé",
+        "title": "Ajouter du minutage",
+        "subtitle": "Découvrez comment les délais et les durées fonctionnent dans les automatisations."
+      },
+      "buttons": {
+        "reset": "Réinitialiser",
+        "simulate": "Simuler",
+        "simulating": "Simulation...",
+        "continue": "Continuer vers la phase 2"
+      },
+      "concept": {
+        "title": "Concept de minutage",
+        "body": "Parfois, vous souhaitez que des actions se produisent après un délai, ou pendant une durée précise.",
+        "exampleTitle": "Exemple : lumière temporisée",
+        "flow": {
+          "press": "Appui",
+          "on": "Allumée",
+          "off": "Éteinte"
+        }
+      },
+      "components": {
+        "title": "Composants",
+        "description": "Cliquez pour ajouter au canevas",
+        "categories": {
+          "Input": "Entrée",
+          "Action": "Action",
+          "Timing": "Minutage",
+          "Output": "Sortie"
+        },
+        "items": {
+          "button": "Bouton",
+          "light": "Lumière",
+          "turnOn": "Allumer",
+          "turnOff": "Éteindre",
+          "wait5s": "Attendre 5s",
+          "wait1s": "Attendre 1s"
+        }
+      },
+      "challenge": {
+        "title": "Défi",
+        "complete": "Terminé !",
+        "description": "Créez une lumière temporisée : l'appui sur le bouton l'allume, attend 5 secondes, puis l'éteint automatiquement.",
+        "tasks": {
+          "addButton": "Ajoutez un bouton",
+          "addTurnOn": "Ajoutez une action Allumer",
+          "addWait": "Ajoutez un bloc Attendre",
+          "addTurnOff": "Ajoutez une action Éteindre",
+          "connectNodes": "Connectez tous les nœuds ({n}/{total})"
+        }
+      },
+      "simulation": {
+        "title": "Simulation de la séquence temporisée...",
+        "steps": {
+          "pressed": "1. Bouton pressé",
+          "on": "2. La lumière s'allume",
+          "waiting": "3. Attente de 5 secondes...",
+          "waitComplete": "4. Attente terminée",
+          "off": "5. La lumière s'éteint"
+        }
+      }
+    },
+    "2_1": {
+      "header": {
+        "phase": "Phase 2",
+        "level": "Niveau 2.1",
+        "completed": "Terminé",
+        "title": "Le YAML derrière la magie",
+        "subtitle": "Chaque bloc visuel a une représentation textuelle. Survolez pour explorer la connexion."
+      },
+      "visual": {
+        "title": "Flux visuel",
+        "desc": "Survolez les blocs pour mettre en évidence leur YAML"
+      },
+      "blocks": {
+        "button": {
+          "label": "Bouton",
+          "badge": "Entrée"
+        },
+        "automation": {
+          "label": "Quand pressé",
+          "badge": "Automatisation"
+        },
+        "light": {
+          "label": "Lumière",
+          "badge": "Sortie"
+        }
+      },
+      "code": {
+        "title": "YAML généré",
+        "desc": "Survolez les lignes pour voir les explications",
+        "reveal": "Révéler le code",
+        "revealing": "Révélation..."
+      },
+      "yaml": {
+        "l1": "Un commentaire expliquant cette section",
+        "l2": "Une catégorie pour les éléments qui sont soit ON soit OFF — comme les boutons, les capteurs de mouvement, les contacts de porte",
+        "l3": "Ce capteur est connecté directement à une broche de la carte (GPIO = entrée/sortie à usage général)",
+        "l4": "Quelle broche physique de la carte — GPIO4 est la 4e broche à usage général",
+        "l5": "Le nom convivial que vous verrez dans Home Assistant",
+        "l6": "Que doit-il se passer quand quelqu'un appuie sur ce bouton ?",
+        "l7": "Voici la liste des actions à effectuer...",
+        "l8": "Allumer la lumière qui a l'ID 'my_light'",
+        "l10": "Un commentaire expliquant cette section",
+        "l11": "Une catégorie pour les composants lumineux — LED, ampoules, rubans RGB",
+        "l12": "Une simple lumière on/off (par opposition à variable)",
+        "l13": "Le nom convivial que vous verrez dans Home Assistant",
+        "l14": "Un nom interne court pour que d'autres parties de la configuration puissent référencer cette lumière",
+        "l15": "À quelle broche de sortie cette lumière est connectée",
+        "l17": "Configuration des broches de sortie physiques",
+        "l18": "Cette sortie est une broche GPIO",
+        "l19": "Connectée à la broche GPIO5",
+        "l20": "ID interne référencé par la lumière ci-dessus"
+      },
+      "legend": {
+        "input": "Entrée (binary_sensor)",
+        "automation": "Automatisation (on_press)",
+        "output": "Sortie (light + output)"
+      },
+      "buttons": {
+        "continue": "Continuer vers le niveau 2.2"
+      }
+    },
+    "2_2": {
+      "header": {
+        "phase": "Phase 2",
+        "level": "Niveau 2.2",
+        "completed": "Terminé",
+        "title": "Comprendre la structure",
+        "subtitle": "Apprenez le vocabulaire du YAML ESPHome en associant le code à sa signification."
+      },
+      "quiz": {
+        "cardTitle": "Quiz de vocabulaire YAML",
+        "questionCounter": "Question {current} sur {total}",
+        "progress": "Progression",
+        "scoreCorrect": "{score} correctes",
+        "questionPrompt": "Que signifie ce YAML ?",
+        "binary_sensor": "Une catégorie pour les choses qui sont soit ON soit OFF — comme les boutons, les capteurs de mouvement, les contacts de porte",
+        "platform_gpio": "Ce composant est connecté directement à une broche GPIO de la carte",
+        "pin": "Quelle broche physique de la carte ce composant utilise",
+        "name": "Le nom convivial que vous verrez dans Home Assistant",
+        "on_press": "Ce qui doit se passer lorsque ce bouton est pressé",
+        "then": "Voici la liste des actions à effectuer",
+        "light_turn_on": "Allumer la lumière qui a l'ID 'my_light'",
+        "id": "Un nom interne court pour que d'autres parties de la configuration puissent référencer ce composant"
+      },
+      "buttons": {
+        "nextQuestion": "Question suivante",
+        "seeResults": "Voir les résultats",
+        "tryAgain": "Réessayer",
+        "continue": "Continuer vers la phase 3"
+      },
+      "results": {
+        "passTitle": "Bravo !",
+        "failTitle": "Continuez à vous entraîner !",
+        "passText": "Vous maîtrisez bien le vocabulaire YAML !",
+        "failText": "Réessayez pour obtenir au moins 6 bonnes réponses."
+      }
+    },
+    "2_3": {
+      "header": {
+        "phase": "Phase 2",
+        "level": "Niveau 2.3",
+        "completed": "Terminé",
+        "title": "Trouvez la différence",
+        "subtitle": "Deux configs, trois différences. Cliquez sur les lignes qui ne correspondent pas."
+      },
+      "progress": {
+        "found": "Différences trouvées :"
+      },
+      "comparison": {
+        "title": "Comparaison des configs",
+        "desc": "Cliquez sur chaque ligne qui vous semble différente entre Config A et Config B",
+        "original": "Original",
+        "modified": "Modifié"
+      },
+      "diffs": {
+        "pin": "Numéro de pin différent — GPIO4 vs GPIO14",
+        "name": "Nom différent — \"My Button\" vs \"Door Button\"",
+        "missingHandler": "Ligne manquante — l'action turn_off est absente de Config B"
+      },
+      "foundList": {
+        "title": "Différences trouvées :",
+        "line": "Ligne {n}"
+      },
+      "complete": {
+        "title": "Toutes les différences trouvées !",
+        "desc": "Vous savez lire les configs YAML assez attentivement pour repérer les changements subtils.",
+        "continue": "Continuer vers le niveau 2.4"
+      }
+    },
+    "2_4": {
+      "header": {
+        "phase": "Phase 2",
+        "level": "Niveau 2.4",
+        "completed": "Terminé",
+        "title": "Lire une configuration complète",
+        "subtitle": "Explorez une configuration ESPHome complète, section par section."
+      },
+      "badges": {
+        "read": "Lu"
+      },
+      "checklist": {
+        "title": "Liste de lecture",
+        "desc": "Ouvrez chaque section pour terminer le niveau",
+        "progress": "Progression"
+      },
+      "buttons": {
+        "continue": "Continuer vers la Phase 3"
+      },
+      "sections": {
+        "device": {
+          "title": "Nom de l'appareil",
+          "desc": "Identifie votre appareil sur le réseau"
+        },
+        "wifi": {
+          "title": "WiFi",
+          "desc": "Identifiants réseau pour que l'appareil puisse se connecter"
+        },
+        "button": {
+          "title": "Bouton",
+          "desc": "Un bouton-poussoir physique connecté à GPIO4"
+        },
+        "light": {
+          "title": "Lumière et automatisation",
+          "desc": "Une sortie LED et l'automatisation qui la contrôle"
+        },
+        "automation": {
+          "title": "Automatisation avancée",
+          "desc": "Comportement à bascule avec extinction automatique après 5 secondes"
+        }
+      }
+    },
+    "3_1": {
+      "header": {
+        "phase": "Phase 3",
+        "level": "Niveau 3.1",
+        "completed": "Terminé",
+        "title": "Changez les noms",
+        "subtitle": "Votre première modification ! Remplacez les noms par défaut par quelque chose de significatif."
+      },
+      "tip": {
+        "title": "Sans risque",
+        "body": "Les noms ne sont que des étiquettes pour les humains — ils peuvent être ce que vous voulez ! Ils apparaissent dans Home Assistant et vous aident à identifier vos appareils."
+      },
+      "editor": {
+        "title": "Modifier les noms",
+        "desc": "Remplacez ces noms par défaut par quelque chose de descriptif"
+      },
+      "buttonInput": {
+        "label": "Nom du bouton",
+        "valid": "Valide",
+        "hintLink": "Besoin d'un indice ?",
+        "placeholder": "Saisissez un nom pour votre bouton",
+        "hint": "Essayez quelque chose comme « Bouton porte d'entrée » ou « Bouton bureau »",
+        "minLength": "Le nom doit comporter au moins 3 caractères"
+      },
+      "lightInput": {
+        "label": "Nom de la lumière",
+        "valid": "Valide",
+        "hintLink": "Besoin d'un indice ?",
+        "placeholder": "Saisissez un nom pour votre lumière",
+        "hint": "Essayez quelque chose comme « Lumière du salon » ou « LED d'état »",
+        "minLength": "Le nom doit comporter au moins 3 caractères"
+      },
+      "challenge": {
+        "title": "Défi",
+        "complete": "Terminé !",
+        "desc": "Renommez à la fois le bouton et la lumière avec quelque chose de significatif (au moins 3 caractères, différent des valeurs par défaut)"
+      },
+      "buttons": {
+        "continue": "Continuer vers le niveau 3.2"
+      },
+      "preview": {
+        "title": "Aperçu en direct",
+        "desc": "Voyez vos modifications se mettre à jour en temps réel",
+        "legendEditable": "Surligné = modifiable",
+        "legendValid": "Vert = modification valide"
+      }
+    },
+    "3_2": {
+      "header": {
+        "phase": "Phase 3",
+        "level": "Niveau 3.2",
+        "completed": "Terminé",
+        "title": "Changer les broches",
+        "subtitle": "Réaffectez les connexions matérielles en modifiant les numéros de broches GPIO."
+      },
+      "tip": {
+        "title": "Que sont les broches GPIO ?",
+        "body": "Les broches GPIO (General Purpose Input/Output) sont les connecteurs physiques de votre carte ESP. Changer le numéro de broche dans la configuration indique à ESPHome d'utiliser une autre connexion physique."
+      },
+      "task": {
+        "title": "Votre tâche :",
+        "buttonPin": "Changez la broche du bouton de GPIO4 vers",
+        "lightPin": "Changez la broche de sortie de la lumière de GPIO5 vers"
+      },
+      "edit": {
+        "title": "Modifier les broches",
+        "desc": "Mettez à jour les affectations de broches ci-dessous",
+        "buttonLabel": "Broche du bouton",
+        "lightLabel": "Broche de sortie de la lumière",
+        "correct": "Correct",
+        "target": "Cible :",
+        "notQuiteButton": "Pas tout à fait — la cible est GPIO14",
+        "notQuiteLight": "Pas tout à fait — la cible est GPIO2"
+      },
+      "challenge": {
+        "title": "Défi",
+        "complete": "Terminé !",
+        "desc": "Réglez le bouton sur GPIO14 et la sortie de la lumière sur GPIO2"
+      },
+      "buttons": {
+        "continue": "Continuer vers le niveau 3.3"
+      },
+      "preview": {
+        "title": "Aperçu en direct",
+        "desc": "Voyez les changements de broches se mettre à jour en temps réel",
+        "legendBlue": "Bleu = en cours de modification",
+        "legendGreen": "Vert = valeur correcte"
+      }
+    },
+    "3_3": {
+      "header": {
+        "phase": "Phase 3",
+        "level": "Niveau 3.3",
+        "completed": "Terminé",
+        "title": "Changer le comportement",
+        "subtitle": "Passez du mode toujours allumé au mode bascule — appuyez une fois pour allumer, appuyez de nouveau pour éteindre."
+      },
+      "explanation": {
+        "title": "Bascule ou Allumer",
+        "turnOn": "allume toujours la lumière quel que soit son état actuel.",
+        "toggle": "inverse l'état — si elle est allumée, elle s'éteint ; si elle est éteinte, elle s'allume."
+      },
+      "task": {
+        "title": "Votre tâche",
+        "before": "Changez l'action de",
+        "middle": "en",
+        "after": "dans l'éditeur ci-dessous."
+      },
+      "editPanel": {
+        "title": "Modifier l'action",
+        "description": "Changez ce qui se passe lorsque le bouton est pressé",
+        "actionLabel": "Action (dans on_press → then)",
+        "correct": "Correct",
+        "target": "Cible :",
+        "notQuite": "Pas tout à fait — essayez"
+      },
+      "challenge": {
+        "title": "Défi",
+        "complete": "Terminé !",
+        "replaceBefore": "Remplacez",
+        "replaceWith": "par"
+      },
+      "buttons": {
+        "continue": "Continuer vers le niveau {version}"
+      },
+      "preview": {
+        "title": "Aperçu en direct",
+        "description": "Voyez l'action se mettre à jour en temps réel",
+        "legendBlue": "Bleu = ligne en cours de modification",
+        "legendGreen": "Vert = valeur correcte"
+      }
+    },
+    "3_4": {
+      "header": {
+        "phase": "Phase 3",
+        "level": "Niveau 3.4",
+        "completed": "Terminé",
+        "title": "Ajouter un délai",
+        "subtitle": "Faites que la lumière s'éteigne automatiquement 5 secondes après son allumage."
+      },
+      "explanation": {
+        "title": "Comment fonctionne le délai",
+        "part1": "Les actions ESPHome s'exécutent en séquence. En insérant",
+        "part2": "entre",
+        "part3": "et",
+        "part4": ", l'appareil attend 5 secondes avant d'exécuter l'action turn_off."
+      },
+      "task": {
+        "title": "Votre tâche :",
+        "part1": "Insérez une action",
+        "part2": "entre",
+        "part3": "et",
+        "part4": ".",
+        "checkAdd": "Ajouter",
+        "checkTurnOff": "présent après le délai"
+      },
+      "edit": {
+        "title": "Insérer le délai",
+        "description": "Saisissez la ligne à insérer entre turn_on et turn_off",
+        "sequenceLabel": "Séquence d'automatisation",
+        "insertHere": "insérez ici →",
+        "tryHint": "Essayez"
+      },
+      "hint": {
+        "part1": "La valeur après",
+        "part2": "est une durée —",
+        "part3": "signifie 5 secondes,",
+        "part4": "correspondrait à une demi-seconde."
+      },
+      "challenge": {
+        "title": "Défi",
+        "complete": "Terminé !",
+        "part1": "Insérez",
+        "part2": "entre turn_on et turn_off"
+      },
+      "buttons": {
+        "continue": "Continuer vers le niveau 3.5"
+      },
+      "preview": {
+        "title": "Aperçu en direct",
+        "description": "Voyez le délai apparaître dans la séquence d'automatisation"
+      }
+    },
+    "3_5": {
+      "header": {
+        "phase": "Phase {n}",
+        "level": "Niveau {n}",
+        "completed": "Terminé",
+        "title": "Conditions",
+        "subtitle": "Apprenez à ajouter des conditions pour que les automatisations ne s'exécutent que lorsque c'est pertinent."
+      },
+      "explanation": {
+        "title": "Qu'est-ce qu'une condition ?",
+        "body1": "Une condition permet à votre automatisation de vérifier l'état actuel de votre appareil avant d'agir. Par exemple : « n'allumer la lumière que si le capteur de porte est sur OFF (porte fermée) ». Si la condition n'est pas remplie, tout le bloc",
+        "body2": "est ignoré."
+      },
+      "example": {
+        "title": "Exemple : une condition en action",
+        "description": "La lumière ne s'allume que lorsque le capteur de porte est sur OFF",
+        "hint1": "Lignes 6–7 :",
+        "hint2": "vérifie si",
+        "hint3": "est sur OFF. Si la porte est ouverte (capteur sur ON), la condition échoue et la lumière reste éteinte."
+      },
+      "quiz": {
+        "heading": "Quiz — répondez correctement aux {n} questions pour terminer",
+        "correctPrefix": "Correct ! ",
+        "wrongPrefix": "Pas tout à fait — ",
+        "q1": {
+          "question": "Quel mot-clé YAML utilisez-vous pour ajouter une condition à une automatisation ESPHome ?",
+          "explanation": "ESPHome utilise condition: dans une automatisation pour vérifier un état avant d'exécuter des actions. C'est différent de nombreux langages de programmation qui utilisent if."
+        },
+        "q2": {
+          "question": "Où se place le bloc condition: dans une automatisation ESPHome ?",
+          "answers": {
+            "a": "En haut du fichier YAML, avant tout composant",
+            "b": "À l'intérieur du bloc on_press, au même niveau que then:",
+            "c": "Après la section light:",
+            "d": "À l'intérieur du bloc output:"
+          },
+          "explanation": "condition: se place à l'intérieur du déclencheur de l'automatisation (comme on_press), au même niveau que then:. L'automatisation vérifie d'abord la condition, puis exécute then: uniquement si elle est remplie."
+        },
+        "q3": {
+          "question": "Si une condition: est évaluée à false, qu'arrive-t-il aux actions dans then: ?",
+          "answers": {
+            "a": "Elles s'exécutent quand même, mais plus lentement",
+            "b": "L'appareil redémarre pour réévaluer",
+            "c": "Elles sont entièrement ignorées",
+            "d": "Elles s'exécutent une fois puis s'arrêtent"
+          },
+          "explanation": "Lorsqu'une condition est fausse, ESPHome ignore complètement le bloc then:. Aucune action n'est exécutée — c'est comme si l'appui sur le bouton n'avait rien déclenché."
+        }
+      },
+      "results": {
+        "perfectTitle": "Score parfait !",
+        "scoreTitle": "{n} sur {total} correctes",
+        "perfectBody": "Vous comprenez les conditions ESPHome. Vous êtes prêt à construire de vrais projets !",
+        "retryBody": "Revoyez les explications ci-dessus et réessayez pour obtenir les {total} bonnes réponses."
+      },
+      "buttons": {
+        "tryAgain": "Réessayer",
+        "backToHome": "Retour à l'accueil"
+      }
+    },
+    "4_1": {
+      "header": {
+        "phase": "Phase 4",
+        "level": "Niveau 4.1",
+        "completed": "Terminé",
+        "title": "Remplissez les blancs",
+        "subtitle": "Complétez la configuration ESPHome en remplissant les 5 valeurs manquantes."
+      },
+      "task": {
+        "title": "Votre tâche :",
+        "body": "Cinq valeurs clés ont été retirées d'une configuration ESPHome fonctionnelle. Remplissez chacune correctement et regardez le YAML prendre vie à droite."
+      },
+      "form": {
+        "title": "Remplissez les blancs",
+        "desc": "Saisissez chaque valeur manquante exactement comme elle doit apparaître"
+      },
+      "blanks": {
+        "deviceName": {
+          "label": "Nom de l'appareil",
+          "placeholder": "ex. my-esp-device",
+          "hint": "Minuscules, tirets autorisés, pas d'espaces"
+        },
+        "buttonPin": {
+          "label": "Broche GPIO du bouton",
+          "placeholder": "ex. GPIO4",
+          "hint": "Format : GPIO suivi d'un numéro"
+        },
+        "lightPin": {
+          "label": "Broche GPIO de la lumière",
+          "placeholder": "ex. GPIO5",
+          "hint": "Une broche différente de celle du bouton"
+        },
+        "trigger": {
+          "label": "Type de déclencheur",
+          "placeholder": "ex. on_press",
+          "hint": "L'événement qui se produit lorsque le bouton est enfoncé"
+        },
+        "action": {
+          "label": "Action",
+          "placeholder": "ex. light.turn_on",
+          "hint": "L'appel de service qui active la lumière"
+        }
+      },
+      "status": {
+        "correct": "Correct",
+        "wrong": "Réessayez"
+      },
+      "progress": {
+        "label": "Progression",
+        "score": "{n} / {total}"
+      },
+      "buttons": {
+        "continue": "Continuer vers le niveau 4.2"
+      },
+      "preview": {
+        "title": "Aperçu en direct",
+        "desc": "Les blancs se remplissent au fur et à mesure que vous tapez"
+      }
+    },
+    "4_2": {
+      "header": {
+        "phase": "Phase 4",
+        "level": "Niveau 4.2",
+        "completed": "Terminé",
+        "title": "Ajouter un composant",
+        "subtitle": "Un bouton est déjà câblé. Ajoutez une seconde lumière à la configuration."
+      },
+      "info": {
+        "title": "Ajouter des composants",
+        "body1": "ESPHome prend en charge plusieurs lumières dans la même configuration. Chaque lumière a besoin d'un",
+        "body2": "unique et de sa propre entrée",
+        "body3": "avec une broche GPIO différente."
+      },
+      "form": {
+        "title": "Ajouter une seconde lumière",
+        "desc": "Indiquez un nom et une broche GPIO pour le nouveau composant lumière",
+        "nameLabel": "Nom de la lumière",
+        "namePlaceholder": "ex. \"Status LED\"",
+        "nameError": "Le nom doit comporter au moins 2 caractères",
+        "pinLabel": "Broche GPIO",
+        "pinPlaceholder": "ex. GPIO2",
+        "pinHelp": "Doit être différente de GPIO4 (bouton) et GPIO5 (première lumière)",
+        "pinError": "Le format doit être GPIO suivi d'un nombre (ex. GPIO2)",
+        "addButton": "Ajouter la lumière"
+      },
+      "success": {
+        "title": "Lumière ajoutée !",
+        "body": "Le YAML inclut désormais votre second composant lumière."
+      },
+      "buttons": {
+        "continue": "Continuer vers le niveau 4.3"
+      },
+      "preview": {
+        "title": "Aperçu en direct",
+        "desc": "Le nouveau composant lumière apparaît en bas une fois ajouté"
+      }
+    },
+    "4_3": {
+      "header": {
+        "phase": "Phase 4",
+        "level": "Niveau 4.3",
+        "completed": "Terminé",
+        "title": "Créer une automatisation",
+        "subtitle": "Un bouton et une lumière sont définis — connectez-les maintenant avec une automatisation."
+      },
+      "info": {
+        "title": "Construire des automatisations",
+        "body1": "Une automatisation comporte deux parties : un",
+        "trigger": "déclencheur",
+        "body2": "(l'événement qui la démarre) et une",
+        "action": "action",
+        "body3": "(ce qui se passe). Choisissez les deux ci-dessous pour générer le YAML."
+      },
+      "builder": {
+        "title": "Constructeur d'automatisation",
+        "desc": "Choisissez un déclencheur et une action, puis générez",
+        "step1": "Choisir un déclencheur",
+        "step2": "Choisir une action",
+        "step3": "Générer"
+      },
+      "triggers": {
+        "onPress": "Se déclenche quand le bouton est enfoncé",
+        "onRelease": "Se déclenche quand le bouton est relâché"
+      },
+      "actions": {
+        "turnOn": "Allumer la lumière",
+        "toggle": "Basculer (allumer si éteinte, éteindre si allumée)",
+        "turnOff": "Éteindre la lumière"
+      },
+      "buttons": {
+        "generate": "Générer l'automatisation",
+        "continue": "Continuer vers le niveau 4.4"
+      },
+      "success": {
+        "title": "Automatisation créée !",
+        "body1": "Le bouton déclenche maintenant",
+        "body2": "sur"
+      },
+      "preview": {
+        "title": "Aperçu en direct",
+        "desc": "Le YAML de l'automatisation se met à jour au fur et à mesure de vos choix"
+      }
+    },
+    "4_4": {
+      "header": {
+        "phase": "Phase 4",
+        "level": "Niveau 4.4",
+        "completed": "Terminé",
+        "title": "Écrire une configuration complète",
+        "subtitle": "Le défi le plus difficile jusqu'ici : écrire une configuration ESPHome complète à partir de zéro."
+      },
+      "info": {
+        "title": "Construire à partir de zéro",
+        "desc": "Écrivez une configuration ESPHome complète et suffisamment valide. La liste à droite indique quelles sections requises vous avez incluses. Les 5 doivent être présentes pour terminer le niveau."
+      },
+      "editor": {
+        "title": "Votre configuration",
+        "description": "Saisissez ci-dessous une configuration YAML ESPHome complète",
+        "placeholder": "Continuez à écrire votre configuration ESPHome ici..."
+      },
+      "checklist": {
+        "title": "Exigences",
+        "description": "Les 5 doivent être présentes pour terminer",
+        "progress": "Progression",
+        "count": "{n} / {total}"
+      },
+      "complete": {
+        "title": "Phase 4 terminée !",
+        "desc": "Vous savez écrire une configuration ESPHome complète à partir de zéro.",
+        "continue": "Continuer vers la phase 5"
+      }
+    },
+    "5_1": {
+      "header": {
+        "phase": "Phase 5",
+        "level": "Niveau 5.1",
+        "completed": "Terminé",
+        "title": "Déboguer avec les logs",
+        "subtitle": "Lisez un log ESPHome simulé et identifiez ce qui s'est mal passé."
+      },
+      "info": {
+        "title": "Lire les logs ESPHome",
+        "levelsIntro": "Les logs comportent trois niveaux :",
+        "infoLevel": "INFO — fonctionnement normal",
+        "warnLevel": "WARNING — quelque chose pourrait être anormal",
+        "errorLevel": "ERROR — quelque chose a échoué.",
+        "errorsFirst": "Les erreurs sont le premier endroit à regarder lorsqu'un appareil ne fonctionne pas."
+      },
+      "logViewer": {
+        "title": "Sortie de log simulée",
+        "complete": "Log terminé",
+        "playing": "Lecture…",
+        "play": "Lancer les logs",
+        "desc": "Regardez le flux de logs en temps réel",
+        "empty": "Appuyez sur « Lancer les logs » pour démarrer la simulation"
+      },
+      "quiz": {
+        "title": "Qu'est-ce qui n'a pas fonctionné ?",
+        "desc": "D'après la ligne ERROR du log ci-dessus, sélectionnez le bon diagnostic.",
+        "submit": "Valider la réponse",
+        "options": {
+          "a": "Le WiFi n'a pas réussi à se connecter au réseau",
+          "b": "GPIO34 est en lecture seule et ne peut pas être utilisé en sortie",
+          "c": "La luminosité de la lumière était réglée trop haut"
+        }
+      },
+      "result": {
+        "correctTitle": "Correct !",
+        "correctBefore": "La ligne ERROR",
+        "correctAfter": "signifie que vous avez essayé d'utiliser GPIO34 comme broche de sortie, mais elle ne prend en charge que l'entrée. Utilisez une autre broche GPIO pour votre lumière.",
+        "wrongTitle": "Pas tout à fait.",
+        "wrongBody": "Regardez la ligne ERROR rouge dans le log. La bonne réponse est :"
+      },
+      "buttons": {
+        "continue": "Continuer vers le niveau 5.2"
+      }
+    },
+    "5_2": {
+      "header": {
+        "phase": "Phase 5",
+        "level": "Niveau 5.2",
+        "completed": "Terminé",
+        "title": "Intégration avec Home Assistant",
+        "subtitle": "L'étape finale : connectez votre appareil ESPHome à Home Assistant pour un contrôle complet de votre maison connectée."
+      },
+      "apiBlock": {
+        "title": "Le bloc api:",
+        "bodyBefore": "Ajouter un bloc",
+        "bodyAfter": "à votre configuration active l'API native d'ESPHome. Home Assistant découvre automatiquement les appareils exécutant cette API sur le réseau local et expose leurs capteurs et commandes en tant qu'entités HA."
+      },
+      "configCard": {
+        "title": "Configuration avec le bloc api:",
+        "desc": "La clé de chiffrement sécurise la communication entre l'appareil et Home Assistant"
+      },
+      "keyTip": {
+        "before": "Générez une clé aléatoire de 32 octets avec",
+        "after": "Cela chiffre toutes les communications entre votre appareil et Home Assistant."
+      },
+      "diagram": {
+        "title": "Comment ça se connecte",
+        "desc": "Votre appareil communique avec Home Assistant via votre réseau WiFi local",
+        "espTitle": "Appareil ESP32",
+        "espSubtitle": "Exécutant ESPHome",
+        "haSubtitle": "Hub domotique",
+        "entitiesLabel": "Entités qui apparaissent dans Home Assistant :",
+        "entityButton": "Mon Bouton",
+        "entityLight": "Ma Lumière"
+      },
+      "celebration": {
+        "title": "Phase 5 terminée !",
+        "subtitle": "Vous maîtrisez désormais les flux de travail avec du vrai matériel :",
+        "skills": {
+          "logDebugging": "Débogage des journaux",
+          "haIntegration": "Intégration à Home Assistant"
+        },
+        "next": "Votre parcours ESPHome continue. La phase 6 aborde des sujets avancés : lambda, composants personnalisés et appareils I2C/SPI.",
+        "continue": "Continuer vers la phase 6"
+      }
+    },
+    "6_1": {
+      "header": {
+        "phase": "Phase 6",
+        "level": "Niveau 6.1",
+        "completed": "Terminé",
+        "title": "Lambdas",
+        "subtitle": "Intégrez de la logique C++ directement dans votre YAML — la fonctionnalité la plus puissante d'ESPHome."
+      },
+      "steps": {
+        "heading": "Concepts clés — cliquez sur chacun pour développer",
+        "unlock": "Lisez les {total} concepts pour débloquer le quiz ({read}/{total} lus)",
+        "what": {
+          "title": "Qu'est-ce qu'une lambda ?",
+          "explanation": "Une lambda est un bloc de code C++ intégré directement dans votre YAML ESPHome. Elle vous permet d'ajouter une logique personnalisée que les composants standard ne peuvent pas exprimer — vérifications conditionnelles, calculs, réactions en plusieurs étapes — sans écrire un composant personnalisé complet."
+        },
+        "syntax": {
+          "title": "Syntaxe des lambdas",
+          "explanation": "Les lambdas sur une seule ligne utilisent des guillemets simples. Les lambdas multilignes utilisent le scalaire de bloc YAML |-. À l'intérieur de la lambda, la variable x contient la valeur actuelle du capteur lorsqu'elle est utilisée dans les déclencheurs on_value. Terminez les instructions par des points-virgules — c'est du C++."
+        },
+        "id": {
+          "title": "Accéder aux composants avec id()",
+          "explanation": "Vous appelez n'importe quel composant défini dans votre configuration à l'aide de id(component_id). À partir de là, vous pouvez lire son état avec .state, ou appeler des actions comme .turn_on(), .turn_off(), .toggle() et .publish_state(). L'id doit correspondre au champ id: du composant cible."
+        },
+        "example": {
+          "title": "Exemple pratique — ventilateur selon la température",
+          "explanation": "Ici, le déclencheur on_value d'un capteur se déclenche à chaque nouvelle lecture. La lambda vérifie la valeur actuelle (x) et allume ou éteint un ventilateur en conséquence. Cette logique ne peut pas être exprimée par les seules automatisations YAML standard."
+        }
+      },
+      "quiz": {
+        "heading": "Quiz — répondez correctement aux deux pour terminer",
+        "correctPrefix": "Correct ! ",
+        "wrongPrefix": "Pas tout à fait — "
+      },
+      "questions": {
+        "q1": {
+          "question": "Quelle syntaxe appelle correctement une action de composant à l'intérieur d'une lambda ?",
+          "answers": {
+            "a": "component.turn_on()",
+            "b": "id(component_id).turn_on()",
+            "c": "esphome.call(component_id, 'turn_on')",
+            "d": "{{ states('component_id') }}"
+          },
+          "explanation": "ESPHome utilise id(component_id) pour référencer n'importe quel composant défini avec un champ id:. À partir de là, vous pouvez appeler des actions comme .turn_on() ou lire .state."
+        },
+        "q2": {
+          "question": "Dans une lambda déclenchée par on_value:, que contient la variable x ?",
+          "answers": {
+            "a": "La chaîne d'id du composant",
+            "b": "La lecture précédente du capteur",
+            "c": "La valeur actuelle du capteur",
+            "d": "Un compteur de boucle"
+          },
+          "explanation": "À l'intérieur d'une lambda on_value, x est automatiquement rempli avec la valeur du capteur fraîchement reçue — la même valeur qui a déclenché le rappel."
+        }
+      },
+      "result": {
+        "successTitle": "Lambda maîtrisée !",
+        "successBody": "Vous pouvez maintenant intégrer de la logique C++ directement dans vos configurations.",
+        "continue": "Continuer vers le niveau 6.2",
+        "retryBody": "Relisez les explications ci-dessus et réessayez.",
+        "tryAgain": "Réessayer"
+      }
+    },
+    "6_2": {
+      "header": {
+        "phase": "Phase 6",
+        "level": "Niveau 6.2",
+        "completed": "Terminé",
+        "title": "Composants personnalisés",
+        "subtitle": "Construisez votre propre composant ESPHome en C++ et reliez-le à une configuration YAML."
+      },
+      "info": {
+        "title": "Comment fonctionnent les composants personnalisés",
+        "desc": "Vous écrivez un fichier {hFile} contenant une classe C++, vous le référencez avec {includes}, puis vous l'instanciez à l'aide de {customComponent} et d'un court lambda. Cela vous permet de lire n'importe quel capteur ou de piloter n'importe quel matériel pour lequel ESPHome n'a pas de plateforme intégrée."
+      },
+      "reference": {
+        "title": "Référence — my_sensor.h",
+        "desc": "La classe C++ que vous allez relier. Votre YAML doit inclure ce fichier et l'instancier."
+      },
+      "editor": {
+        "title": "Votre configuration YAML",
+        "desc": "Reliez my_sensor.h à l'aide de la plateforme custom_component",
+        "placeholder": "Écrivez le YAML pour relier my_sensor.h..."
+      },
+      "checklist": {
+        "title": "Exigences",
+        "desc": "Les 5 doivent être présentes",
+        "progress": "Progression",
+        "count": "{n} / {total}"
+      },
+      "requirements": {
+        "esphome": "bloc esphome: avec includes:",
+        "header": "fichier .h listé dans includes:",
+        "custom": "plateforme custom_component:",
+        "lambda": "lambda: return {make_shared<...>()};",
+        "sensor_id": "id: pour le capteur personnalisé"
+      },
+      "hint": {
+        "title": "Astuce",
+        "body": "Utilisez {customComponent} sous un capteur de premier niveau et instanciez avec {lambda}"
+      },
+      "complete": {
+        "title": "Niveau terminé !",
+        "desc": "Vous savez relier n'importe quel capteur C++ à ESPHome.",
+        "continue": "Continuer vers le niveau 6.3"
+      }
+    },
+    "6_3": {
+      "header": {
+        "phase": "Phase 6",
+        "level": "Niveau 6.3",
+        "completed": "Terminé",
+        "title": "Périphériques I2C et SPI",
+        "subtitle": "Connectez des capteurs et des écrans via les deux bus matériels les plus courants."
+      },
+      "buses": {
+        "pinsLabel": "Broches",
+        "prosLabel": "Avantages",
+        "consLabel": "Inconvénients",
+        "commonDevices": "Périphériques courants :",
+        "i2c": {
+          "subtitle": "Bus synchrone à deux fils",
+          "pins": {
+            "sda": "Données série",
+            "scl": "Horloge série"
+          },
+          "pros": {
+            "0": "Seulement 2 fils",
+            "1": "Jusqu'à 127 périphériques par bus",
+            "2": "Adressage intégré"
+          },
+          "cons": {
+            "0": "Plus lent que SPI",
+            "1": "Distances de câble plus courtes"
+          },
+          "example": "BME280, SHT31, écrans OLED, modules RTC"
+        },
+        "spi": {
+          "subtitle": "Bus synchrone à quatre fils",
+          "pins": {
+            "clk": "Horloge",
+            "mosi": "Contrôleur → Périphérique",
+            "miso": "Périphérique → Contrôleur",
+            "cs": "Sélection de puce (par périphérique)"
+          },
+          "pros": {
+            "0": "Rapide — jusqu'à 80 MHz",
+            "1": "Bidirectionnel simultané",
+            "2": "Protocole simple"
+          },
+          "cons": {
+            "0": "Une broche CS par périphérique",
+            "1": "Plus de fils"
+          },
+          "example": "Écrans TFT couleur, cartes SD, ADC haute vitesse"
+        }
+      },
+      "configs": {
+        "i2c": {
+          "title": "BME280 via I2C",
+          "desc": "Température, pression et humidité"
+        },
+        "spi": {
+          "title": "TFT ILI9341 via SPI",
+          "desc": "Écran couleur avec une lambda personnalisée"
+        }
+      },
+      "quiz": {
+        "heading": "Quiz — répondez aux trois questions pour terminer la Phase 6",
+        "correct": "Correct ! ",
+        "notQuite": "Pas tout à fait — ",
+        "q1": {
+          "question": "Quelles sont les deux broches utilisées par I2C ?",
+          "explanation": "I2C utilise SDA (données série) et SCL (horloge série). Sur l'ESP32, il s'agit généralement de GPIO21 et GPIO22 par défaut, mais n'importe quelle paire de GPIO peut être configurée."
+        },
+        "q2": {
+          "question": "Quelle plateforme ESPHome utiliseriez-vous pour un capteur BME280 ?",
+          "explanation": "ESPHome est livré avec une plateforme bme280_i2c dédiée. Il suffit de déclarer le bus i2c:, de pointer le capteur vers la bonne adresse, et ESPHome gère automatiquement toutes les lectures de registres."
+        },
+        "q3": {
+          "question": "Que fait l'option scan: true dans le bloc i2c: ?",
+          "answers": {
+            "a": "Active le chiffrement sur le bus I2C",
+            "b": "Analyse et journalise toutes les adresses I2C détectées au démarrage",
+            "c": "Interroge en continu les capteurs pour de nouvelles données",
+            "d": "Active le mode multi-maître"
+          },
+          "explanation": "Avec scan: true, ESPHome journalise toutes les adresses I2C détectées au démarrage. C'est inestimable pour déboguer le câblage — si votre capteur n'apparaît pas, c'est que la connexion physique ou l'adresse est incorrecte."
+        }
+      },
+      "outcome": {
+        "title": "Phase 6 terminée !",
+        "mastered": "Vous maîtrisez désormais les sujets ESPHome avancés :",
+        "topics": {
+          "lambdas": "Lambdas",
+          "customComponents": "Composants personnalisés",
+          "i2c": "Périphériques I2C",
+          "spi": "Périphériques SPI"
+        },
+        "toolkit": "Vous disposez maintenant de la boîte à outils complète d'ESPHome — de votre premier flux visuel jusqu'aux composants C++ personnalisés. Allez construire quelque chose d'incroyable.",
+        "graduate": "Diplômé ESPHome",
+        "reviewHint": "Relisez les explications ci-dessus et réessayez."
+      },
+      "buttons": {
+        "tryAgain": "Réessayer"
+      }
+    }
+  }
+}

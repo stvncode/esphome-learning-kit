@@ -1,6 +1,6 @@
 import { motion } from "framer-motion"
 import { Code2, Hammer, Lightbulb, Pencil, Sparkles, Wifi } from "lucide-react"
-import { useLandingT } from "./landing.i18n"
+import { useLandingT } from "@/lib/i18n"
 
 const PHASES = [
   { id: 1, titleKey: "curriculum.phase1" as const, icon: Lightbulb, color: "from-amber-500 to-orange-500",  levels: 4 },

@@ -17,6 +17,7 @@ import {
   Lock,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -40,6 +41,7 @@ const getLineColor = (line: string) => {
 }
 
 export function Level5_2() {
+  const t = useLevelT("5_2")
   const [celebrated, setCelebrated] = useState(false)
 
   const { completeLevel, completedLevels } = useProgressStore()
@@ -60,17 +62,17 @@ export function Level5_2() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-cyan-500/20 text-cyan-400">Phase 5</Badge>
-          <Badge variant="outline">Level 5.2</Badge>
+          <Badge className="bg-cyan-500/20 text-cyan-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Integration with Home Assistant</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          The final step: connect your ESPHome device to Home Assistant for full smart home control.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -81,12 +83,10 @@ export function Level5_2() {
             <Home className="h-5 w-5 text-cyan-400" />
           </div>
           <div>
-            <p className="font-medium text-foreground">The api: block</p>
+            <p className="font-medium text-foreground">{t("apiBlock.title")}</p>
             <p className="text-sm text-muted-foreground">
-              Adding an{" "}
-              <code className="rounded bg-muted px-1 font-mono text-xs">api:</code> block to your config
-              enables the native ESPHome API. Home Assistant automatically discovers devices running
-              this API on the local network and exposes their sensors and controls as HA entities.
+              {t("apiBlock.bodyBefore")}{" "}
+              <code className="rounded bg-muted px-1 font-mono text-xs">api:</code> {t("apiBlock.bodyAfter")}
             </p>
           </div>
         </CardContent>
@@ -97,10 +97,10 @@ export function Level5_2() {
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
             <Code2 className="h-4 w-4 text-muted-foreground" />
-            <CardTitle className="text-sm">Config with api: block</CardTitle>
+            <CardTitle className="text-sm">{t("configCard.title")}</CardTitle>
           </div>
           <CardDescription className="text-xs">
-            The encryption key secures communication between the device and Home Assistant
+            {t("configCard.desc")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -119,9 +119,8 @@ export function Level5_2() {
           <div className="mt-3 flex items-start gap-2 rounded-lg border border-cyan-500/30 bg-cyan-500/5 p-3">
             <Lock className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" />
             <p className="text-xs text-muted-foreground">
-              Generate a random 32-byte key with{" "}
-              <code className="font-mono">openssl rand -base64 32</code>. This encrypts all
-              communication between your device and Home Assistant.
+              {t("keyTip.before")}{" "}
+              <code className="font-mono">openssl rand -base64 32</code>. {t("keyTip.after")}
             </p>
           </div>
         </CardContent>
@@ -130,9 +129,9 @@ export function Level5_2() {
       {/* Animated diagram */}
       <Card className="mb-8 border-border/50 bg-card/50">
         <CardHeader className="pb-3">
-          <CardTitle className="text-sm">How it connects</CardTitle>
+          <CardTitle className="text-sm">{t("diagram.title")}</CardTitle>
           <CardDescription className="text-xs">
-            Your device communicates with Home Assistant over your local WiFi network
+            {t("diagram.desc")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -147,8 +146,8 @@ export function Level5_2() {
               <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-cyan-500/20 border border-cyan-500/30">
                 <Cpu className="h-8 w-8 text-cyan-400" />
               </div>
-              <p className="text-xs font-medium text-center">ESP32 Device</p>
-              <p className="text-xs text-muted-foreground text-center">Running ESPHome</p>
+              <p className="text-xs font-medium text-center">{t("diagram.espTitle")}</p>
+              <p className="text-xs text-muted-foreground text-center">{t("diagram.espSubtitle")}</p>
             </motion.div>
 
             {/* Arrow + WiFi */}
@@ -181,7 +180,7 @@ export function Level5_2() {
                 <Home className="h-8 w-8 text-blue-400" />
               </div>
               <p className="text-xs font-medium text-center">Home Assistant</p>
-              <p className="text-xs text-muted-foreground text-center">Smart home hub</p>
+              <p className="text-xs text-muted-foreground text-center">{t("diagram.haSubtitle")}</p>
             </motion.div>
           </div>
 
@@ -192,21 +191,21 @@ export function Level5_2() {
             transition={{ delay: 1.1 }}
           >
             <p className="text-xs font-medium text-muted-foreground mb-3 text-center">
-              Entities that appear in Home Assistant:
+              {t("diagram.entitiesLabel")}
             </p>
             <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
               <div className="flex items-center gap-2 rounded-lg border border-border/50 bg-muted/20 p-3">
                 <CircleDot className="h-4 w-4 text-purple-400 shrink-0" />
                 <div>
                   <p className="text-xs font-medium">binary_sensor</p>
-                  <p className="text-xs text-muted-foreground">My Button</p>
+                  <p className="text-xs text-muted-foreground">{t("diagram.entityButton")}</p>
                 </div>
               </div>
               <div className="flex items-center gap-2 rounded-lg border border-border/50 bg-muted/20 p-3">
                 <Lightbulb className="h-4 w-4 text-amber-400 shrink-0" />
                 <div>
                   <p className="text-xs font-medium">light</p>
-                  <p className="text-xs text-muted-foreground">My Light</p>
+                  <p className="text-xs text-muted-foreground">{t("diagram.entityLight")}</p>
                 </div>
               </div>
             </div>
@@ -234,31 +233,30 @@ export function Level5_2() {
                   <Sparkles className="h-10 w-10 text-cyan-400" />
                 </motion.div>
 
-                <h3 className="mb-2 text-2xl font-bold">Phase 5 Complete!</h3>
+                <h3 className="mb-2 text-2xl font-bold">{t("celebration.title")}</h3>
                 <p className="mb-2 text-muted-foreground">
-                  You've mastered real hardware workflows:
+                  {t("celebration.subtitle")}
                 </p>
 
                 <div className="my-6 flex flex-wrap justify-center gap-2">
                   {[
-                    "Log debugging",
-                    "Home Assistant integration",
+                    "celebration.skills.logDebugging",
+                    "celebration.skills.haIntegration",
                   ].map((item) => (
                     <Badge key={item} className="bg-cyan-500/20 text-cyan-300">
                       <CheckCircle2 className="mr-1 h-3 w-3" />
-                      {item}
+                      {t(item as Parameters<typeof t>[0])}
                     </Badge>
                   ))}
                 </div>
 
                 <p className="text-sm text-muted-foreground mb-6">
-                  Your ESPHome journey continues. Phase 6 covers advanced topics: lambdas, custom
-                  components, and I2C/SPI devices.
+                  {t("celebration.next")}
                 </p>
 
                 <Button asChild>
                   <Link to="/app/level/6.1">
-                    Continue to Phase 6
+                    {t("celebration.continue")}
                     <ChevronRight className="ml-2 h-4 w-4" />
                   </Link>
                 </Button>

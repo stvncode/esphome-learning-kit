@@ -2,13 +2,12 @@ import { CountUp } from "@/components/CountUp"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { resumeLevel } from "@/lib/curriculum"
-import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
+import { useCurriculumLabels, useHomeT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { motion } from "framer-motion"
 import { GraduationCap, Play, Wrench } from "lucide-react"
 import { Link } from "react-router-dom"
 import { HomeFlowDemo } from "./HomeFlowDemo"
-import { useHomeT } from "./home.i18n"
 
 export function HomeHero() {
   const { completedLevels, currentLevel } = useProgressStore()

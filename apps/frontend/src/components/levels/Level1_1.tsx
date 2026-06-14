@@ -19,6 +19,7 @@ import {
   Zap,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -31,18 +32,18 @@ interface Scenario {
 const scenarios: Scenario[] = [
   {
     id: "motion-alarm",
-    input: { icon: Activity, label: "Motion Sensor", color: "text-purple-400" },
-    output: { icon: Bell, label: "Alarm", color: "text-red-400" },
+    input: { icon: Activity, label: "scenarios.motionAlarm.input", color: "text-purple-400" },
+    output: { icon: Bell, label: "scenarios.motionAlarm.output", color: "text-red-400" },
   },
   {
     id: "temp-fan",
-    input: { icon: Thermometer, label: "Temperature Sensor", color: "text-orange-400" },
-    output: { icon: Fan, label: "Fan", color: "text-cyan-400" },
+    input: { icon: Thermometer, label: "scenarios.tempFan.input", color: "text-orange-400" },
+    output: { icon: Fan, label: "scenarios.tempFan.output", color: "text-cyan-400" },
   },
   {
     id: "switch-relay",
-    input: { icon: ToggleLeft, label: "Switch", color: "text-green-400" },
-    output: { icon: Zap, label: "Relay", color: "text-yellow-400" },
+    input: { icon: ToggleLeft, label: "scenarios.switchRelay.input", color: "text-green-400" },
+    output: { icon: Zap, label: "scenarios.switchRelay.output", color: "text-yellow-400" },
   },
 ]
 
@@ -53,6 +54,7 @@ export function Level1_1() {
   const [answers, setAnswers] = useState<Record<string, "input" | "output" | null>>({})
   const [challengeComplete, setChallengeComplete] = useState(false)
 
+  const t = useLevelT("1_1")
   const { completeLevel, completedLevels } = useProgressStore()
   const isCompleted = completedLevels.includes("1.1")
 
@@ -92,26 +94,26 @@ export function Level1_1() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-amber-500/20 text-amber-400">Phase 1</Badge>
-          <Badge variant="outline">Level 1.1</Badge>
+          <Badge className="bg-amber-500/20 text-amber-400">{t("header.phase", { n: 1 })}</Badge>
+          <Badge variant="outline">{t("header.level", { id: "1.1" })}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">What is a Smart Device?</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          Understanding the fundamental pattern: inputs trigger actions, outputs respond.
+          {t("header.subtitle")}
         </p>
       </div>
 
       {/* Interactive Demo */}
       <Card className="mb-8 overflow-hidden border-border/50 bg-card/50">
         <CardHeader>
-          <CardTitle className="text-lg">Interactive Demo</CardTitle>
+          <CardTitle className="text-lg">{t("demo.title")}</CardTitle>
           <CardDescription>
-            Click the button to see the basic smart device pattern in action.
+            {t("demo.desc")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -129,9 +131,9 @@ export function Level1_1() {
               >
                 <CircleDot className="mb-2 h-12 w-12 text-blue-400" />
               </motion.div>
-              <span className="text-sm font-medium text-blue-300">Button</span>
+              <span className="text-sm font-medium text-blue-300">{t("demo.button")}</span>
               <span className="absolute -bottom-6 text-xs text-muted-foreground">
-                (Input)
+                {t("demo.inputLabel")}
               </span>
               {!isLightOn && (
                 <motion.span
@@ -139,7 +141,7 @@ export function Level1_1() {
                   animate={{ opacity: 1 }}
                   className="absolute -top-8 rounded-full bg-blue-500/20 px-3 py-1 text-xs text-blue-400"
                 >
-                  Click me!
+                  {t("demo.clickMe")}
                 </motion.span>
               )}
             </motion.button>
@@ -153,7 +155,7 @@ export function Level1_1() {
                     animate={{ opacity: 1, scale: 1, x: 0 }}
                     className="rounded-lg bg-gradient-to-r from-blue-500/20 to-amber-500/20 px-4 py-2"
                   >
-                    <span className="text-sm font-medium text-foreground">Signal</span>
+                    <span className="text-sm font-medium text-foreground">{t("demo.signal")}</span>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -205,10 +207,10 @@ export function Level1_1() {
                   isLightOn ? "text-amber-300" : "text-muted-foreground"
                 )}
               >
-                Light
+                {t("demo.light")}
               </span>
               <span className="absolute -bottom-6 text-xs text-muted-foreground">
-                (Output)
+                {t("demo.outputLabel")}
               </span>
             </motion.div>
           </div>
@@ -223,35 +225,34 @@ export function Level1_1() {
                 className="mt-8 rounded-xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-amber-500/10 p-6"
               >
                 <h3 className="mb-3 text-lg font-semibold">
-                  Every smart device follows this pattern:
+                  {t("explanation.title")}
                 </h3>
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="rounded-lg bg-blue-500/10 p-4">
                     <div className="mb-2 flex items-center gap-2 text-blue-400">
                       <CircleDot className="h-5 w-5" />
-                      <span className="font-semibold">Input</span>
+                      <span className="font-semibold">{t("explanation.input.title")}</span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      Something that triggers an action — buttons, sensors, switches,
-                      schedules.
+                      {t("explanation.input.desc")}
                     </p>
                   </div>
                   <div className="rounded-lg bg-purple-500/10 p-4">
                     <div className="mb-2 flex items-center gap-2 text-purple-400">
                       <ArrowRight className="h-5 w-5" />
-                      <span className="font-semibold">Logic</span>
+                      <span className="font-semibold">{t("explanation.logic.title")}</span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      The "brain" that decides what happens when the input is triggered.
+                      {t("explanation.logic.desc")}
                     </p>
                   </div>
                   <div className="rounded-lg bg-amber-500/10 p-4">
                     <div className="mb-2 flex items-center gap-2 text-amber-400">
                       <Lightbulb className="h-5 w-5" />
-                      <span className="font-semibold">Output</span>
+                      <span className="font-semibold">{t("explanation.output.title")}</span>
                     </div>
                     <p className="text-sm text-muted-foreground">
-                      Something that responds — lights, relays, buzzers, displays.
+                      {t("explanation.output.desc")}
                     </p>
                   </div>
                 </div>
@@ -276,15 +277,15 @@ export function Level1_1() {
                     <span className="flex h-6 w-6 items-center justify-center rounded-full bg-amber-500/20 text-xs font-bold text-amber-400">
                       ?
                     </span>
-                    Challenge
+                    {t("challenge.title")}
                   </CardTitle>
                   <CardDescription>
-                    Identify the input and output in each scenario.
+                    {t("challenge.desc")}
                   </CardDescription>
                 </div>
                 {challengeComplete && (
                   <Badge className="bg-green-500/20 text-green-400">
-                    <CheckCircle2 className="mr-1 h-3 w-3" /> Complete!
+                    <CheckCircle2 className="mr-1 h-3 w-3" /> {t("challenge.complete")}
                   </Badge>
                 )}
               </div>
@@ -292,7 +293,7 @@ export function Level1_1() {
             <CardContent>
               {!challengeStarted ? (
                 <Button onClick={() => setChallengeStarted(true)} className="w-full">
-                  Start Challenge
+                  {t("buttons.startChallenge")}
                 </Button>
               ) : (
                 <div className="space-y-6">
@@ -321,7 +322,7 @@ export function Level1_1() {
                               <InputIcon className={cn("h-8 w-8", scenario.input.color)} />
                             </div>
                             <span className="text-sm font-medium">
-                              {scenario.input.label}
+                              {t(scenario.input.label as Parameters<typeof t>[0])}
                             </span>
                             <div className="flex gap-2">
                               <Button
@@ -338,7 +339,7 @@ export function Level1_1() {
                                     "bg-green-500 hover:bg-green-600"
                                 )}
                               >
-                                Input
+                                {t("buttons.input")}
                               </Button>
                               <Button
                                 size="sm"
@@ -354,7 +355,7 @@ export function Level1_1() {
                                     "bg-red-500 hover:bg-red-600"
                                 )}
                               >
-                                Output
+                                {t("buttons.output")}
                               </Button>
                             </div>
                           </div>
@@ -377,7 +378,7 @@ export function Level1_1() {
                               <OutputIcon className={cn("h-8 w-8", scenario.output.color)} />
                             </div>
                             <span className="text-sm font-medium">
-                              {scenario.output.label}
+                              {t(scenario.output.label as Parameters<typeof t>[0])}
                             </span>
                             <div className="flex gap-2">
                               <Button
@@ -394,7 +395,7 @@ export function Level1_1() {
                                     "bg-red-500 hover:bg-red-600"
                                 )}
                               >
-                                Input
+                                {t("buttons.input")}
                               </Button>
                               <Button
                                 size="sm"
@@ -410,7 +411,7 @@ export function Level1_1() {
                                     "bg-green-500 hover:bg-green-600"
                                 )}
                               >
-                                Output
+                                {t("buttons.output")}
                               </Button>
                             </div>
                           </div>
@@ -422,16 +423,16 @@ export function Level1_1() {
                   {/* Progress */}
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Progress</span>
+                      <span className="text-muted-foreground">{t("challenge.progress")}</span>
                       <span>
-                        {
-                          Object.entries(answers).filter(
+                        {t("challenge.score", {
+                          n: Object.entries(answers).filter(
                             ([key, val]) =>
                               (key.endsWith("-input") && val === "input") ||
                               (key.endsWith("-output") && val === "output")
-                          ).length
-                        }
-                        /6 correct
+                          ).length,
+                          total: 6,
+                        })}
                       </span>
                     </div>
                     <Progress
@@ -458,7 +459,7 @@ export function Level1_1() {
                 >
                   <Button asChild className="w-full" size="lg">
                     <Link to="/app/level/1.2">
-                      Continue to Level 1.2
+                      {t("buttons.continue", { id: "1.2" })}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>

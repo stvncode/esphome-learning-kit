@@ -1,0 +1,1609 @@
+{
+  "common": {
+    "nav": {
+      "dashboard": "Dashboard",
+      "workspace": "Werkruimte",
+      "classes": "Klassen",
+      "glossary": "Woordenlijst",
+      "settings": "Instellingen",
+      "builder": "Bouwer",
+      "starterKitGuide": "Starterkit-gids",
+      "helpTitle": "Een term onduidelijk?",
+      "helpBody": "Open de woordenlijst voor heldere uitleg."
+    },
+    "header": {
+      "yourProgress": "Jouw voortgang",
+      "levels": "{done}/{total} niveaus",
+      "dayStreak": "dagen op rij",
+      "achievements": "prestaties",
+      "search": "Zoeken"
+    },
+    "palette": {
+      "placeholder": "Ga naar een niveau of pagina…",
+      "noResults": "Geen resultaten",
+      "certificate": "Certificaat"
+    },
+    "levelNav": {
+      "prev": "Vorige",
+      "next": "Volgende",
+      "count": "Niveau {n} van {total}"
+    },
+    "account": {
+      "signOut": "Uitloggen",
+      "settings": "Instellingen",
+      "viewCertificate": "Bekijk je certificaat"
+    },
+    "common": {
+      "cancel": "Annuleren",
+      "save": "Wijzigingen opslaan",
+      "saving": "Opslaan…"
+    },
+    "settings": {
+      "title": "Instellingen",
+      "subtitle": "Beheer je profiel en voorkeuren.",
+      "profile": {
+        "title": "Profiel",
+        "desc": "Je naam en avatar in de app.",
+        "name": "Weergavenaam",
+        "email": "E-mail",
+        "emailHint": "Je e-mail kan niet worden gewijzigd.",
+        "avatarHint": "Klik op je avatar om een afbeelding te kiezen. Opslaan komt binnenkort."
+      },
+      "prefs": {
+        "title": "Voorkeuren",
+        "desc": "Thema en taal.",
+        "theme": "Thema",
+        "themeLight": "Licht",
+        "themeDark": "Donker",
+        "themeSystem": "Systeem",
+        "language": "Taal"
+      },
+      "security": {
+        "title": "Beveiliging",
+        "desc": "Wijzig je wachtwoord.",
+        "current": "Huidig wachtwoord",
+        "new": "Nieuw wachtwoord",
+        "update": "Wachtwoord bijwerken",
+        "updated": "Wachtwoord bijgewerkt"
+      },
+      "danger": {
+        "title": "Gevarenzone",
+        "resetTitle": "Voortgang resetten",
+        "resetDesc": "Wis alle voltooide niveaus, reeks en prestaties.",
+        "resetBtn": "Voortgang resetten",
+        "resetConfirmTitle": "Al je voortgang resetten?",
+        "resetConfirmDesc": "Dit wist je voltooide niveaus, reeks en prestaties. Dit kan niet ongedaan worden gemaakt.",
+        "deleteTitle": "Account verwijderen",
+        "deleteDesc": "Verwijder je account en al je gegevens permanent.",
+        "deleteBtn": "Account verwijderen",
+        "deleteConfirmTitle": "Je account verwijderen?",
+        "deleteConfirmDesc": "Dit verwijdert je account, voortgang, projecten en klassen permanent. Dit kan niet ongedaan worden gemaakt."
+      },
+      "toast": {
+        "profileSaved": "Profiel bijgewerkt",
+        "progressReset": "Voortgang gereset",
+        "accountDeleted": "Je account is verwijderd"
+      }
+    },
+    "onboarding": {
+      "title": "Welkom bij ESPHome Learn 👋",
+      "subtitle": "Je leert echte slimme apparaten bouwen via 22 begeleide niveaus. Dit is het traject:",
+      "s1Title": "Visueel begrijpen",
+      "s1Desc": "Sleep-en-neerzetflows laten zien hoe slimme apparaten werken — geen code om te beginnen.",
+      "s2Title": "Onthul de code",
+      "s2Desc": "Zie de echte ESPHome-YAML waarmee elk blok overeenkomt.",
+      "s3Title": "Bouw het zelf",
+      "s3Desc": "Schrijf volledige configuraties, debug daarna en verbind met Home Assistant.",
+      "s4Title": "Exporteren naar ESPHome",
+      "s4Desc": "Breng je configuratie naar echte hardware wanneer je er klaar voor bent.",
+      "explore": "Zelf verkennen",
+      "start": "Start niveau 1"
+    },
+    "certificate": {
+      "lockedTitle": "Je certificaat is bijna klaar",
+      "lockedDesc": "Voltooi alle {total} niveaus om het te ontgrendelen — je bent bij {completed}/{total}.",
+      "keepLearning": "Verder leren",
+      "back": "Terug naar de app",
+      "print": "Afdrukken / Opslaan als pdf",
+      "heading": "Certificaat van voltooiing",
+      "certifies": "Dit certificeert dat",
+      "body": "alle {total} niveaus van het ESPHome Learn-lesprogramma met succes heeft voltooid — van visuele flows en YAML tot workflows op echte hardware en gevorderde onderwerpen.",
+      "date": "Datum",
+      "org": "ESPHome Learn",
+      "kit": "Starterkit"
+    },
+    "notFound": {
+      "title": "Knooppunt niet gevonden",
+      "desc": "Het lijkt erop dat deze verbinding verbroken is. De pagina die je zoekt bestaat niet of is verplaatst.",
+      "goBack": "Terug",
+      "home": "Startpagina"
+    }
+  },
+  "curriculum": {
+    "breadcrumb": {
+      "home": "Start",
+      "phase": "Fase {n}"
+    },
+    "phase": {
+      "1": "Visueel begrip",
+      "2": "De code onthullen",
+      "3": "Begeleid bewerken",
+      "4": "Vanaf nul bouwen",
+      "5": "Echte hardware",
+      "6": "Gevorderde onderwerpen"
+    },
+    "phaseDesc": {
+      "1": "Leer het mentale model van slimme apparaten",
+      "2": "Ontdek de YAML achter elk visueel blok",
+      "3": "Maak je eerste wijzigingen in echte configuraties",
+      "4": "Schrijf volledige configuraties vanaf een leeg blad",
+      "5": "Debug met logboeken en integreer met Home Assistant",
+      "6": "Beheers lambdas, eigen componenten en meer"
+    },
+    "level": {
+      "1": {
+        "1": "Wat is een slim apparaat?",
+        "2": "Maak kennis met je bord",
+        "3": "Je eerste flow",
+        "4": "Timing toevoegen"
+      },
+      "2": {
+        "1": "De YAML achter de magie",
+        "2": "De structuur begrijpen",
+        "3": "Zoek het verschil",
+        "4": "Een volledige configuratie lezen"
+      },
+      "3": {
+        "1": "De namen wijzigen",
+        "2": "De pinnen wijzigen",
+        "3": "Het gedrag wijzigen",
+        "4": "Een vertraging toevoegen",
+        "5": "Voorwaarden"
+      },
+      "4": {
+        "1": "Vul de lege plekken in",
+        "2": "Een component toevoegen",
+        "3": "Een automatisering maken",
+        "4": "Een volledige configuratie schrijven"
+      },
+      "5": {
+        "1": "Debuggen met logboeken",
+        "2": "Integratie met Home Assistant"
+      },
+      "6": {
+        "1": "Lambdas",
+        "2": "Eigen componenten",
+        "3": "I2C- en SPI-apparaten"
+      }
+    }
+  },
+  "home": {
+    "hero": {
+      "badge": "ESP32 Starterkit-gids",
+      "title1": "Leer ESPHome,",
+      "title2": "visueel.",
+      "subtitle": "Ga van nul naar echte hardware. Begin met sleep-en-neerzetflows, ontdek de YAML erachter en schrijf daarna volledige configuraties om met ESPHome te flashen.",
+      "continue": "Verder leren",
+      "start": "Begin met leren",
+      "certificate": "Bekijk je certificaat",
+      "workspace": "Werkruimte openen",
+      "upNext": "Hierna — Niveau {id}: {title}",
+      "statPhases": "Fasen",
+      "statLevels": "Niveaus",
+      "statProgress": "Jouw voortgang",
+      "livePreview": "Live voorbeeld — ESP32-C6 Starterkit",
+      "previewCaption": "Visuele flows vertalen rechtstreeks naar ESPHome-YAML — geen giswerk."
+    },
+    "path": {
+      "title": "Leertraject",
+      "subtitle": "Zes fasen, elk voortbouwend op de vorige.",
+      "badge": "6 fasen · 22 niveaus",
+      "progress": "Voortgang",
+      "continue": "Doorgaan",
+      "start": "Fase starten"
+    }
+  },
+  "landing": {
+    "header": {
+      "features": "Functies",
+      "builder": "Bouwer",
+      "curriculum": "Lesprogramma",
+      "signIn": "Inloggen",
+      "getStarted": "Aan de slag"
+    },
+    "hero": {
+      "badge": "ESP32-C6 Starterkit",
+      "title1": "Bouw slimme apparaten.",
+      "title2": "Zonder giswerk.",
+      "subtitle": "Leer ESPHome via 22 begeleide niveaus. Begin met het slepen van visuele flows, zie de YAML live ontstaan en exporteer hem daarna om met ESPHome op echte hardware te flashen.",
+      "ctaPrimary": "Gratis beginnen",
+      "ctaSecondary": "Inloggen",
+      "statLevels": "Begeleide niveaus",
+      "statPhases": "Fasen",
+      "statWorkspace": "Bouwer + YAML-editor",
+      "sensorSub": "Temperatuur · Vochtigheid",
+      "chipReady": "Klaar voor ESPHome"
+    },
+    "features": {
+      "eyebrow": "Waarom ESPHome Learn",
+      "title": "Alles wat je nodig hebt, op één plek",
+      "visualTitle": "Visuele bouwer",
+      "visualDesc": "Sleep componenten op het canvas en verbind ze met flows. Geen code nodig om te beginnen — alleen intuïtie.",
+      "yamlTitle": "Live YAML",
+      "yamlDesc": "Elk knooppunt en elke verbinding genereert direct geldige ESPHome-YAML. Zie het opbouwen terwijl je ontwerpt.",
+      "hwTitle": "Echte hardware",
+      "hwDesc": "Exporteer je configuratie en flash hem met ESPHome — je apparaat verschijnt in Home Assistant. Van leren naar productie in enkele minuten."
+    },
+    "how": {
+      "eyebrow": "Het traject",
+      "title": "Van nul tot uitgerold — stap voor stap",
+      "s1Title": "Visueel begrijpen",
+      "s1Desc": "Leer hoe slimme apparaten werken met sleep-en-neerzetblokken. Geen voorkennis vereist.",
+      "s2Title": "Onthul de code",
+      "s2Desc": "Zie hoe elk visueel blok overeenkomt met echte ESPHome-YAML. Sla de brug tussen concept en code.",
+      "s3Title": "Exporteren & uitrollen",
+      "s3Desc": "Exporteer je configuratie en open hem in ESPHome om je ESP32 te flashen. Je apparaat verschijnt in Home Assistant, klaar om te automatiseren."
+    },
+    "builder": {
+      "eyebrow": "Bouwer",
+      "title": "Visuele flows. Echte YAML. Eén werkruimte.",
+      "subtitle": "Verbind knooppunten visueel en zie een geldige ESPHome-configuratie in realtime ontstaan. Schakel altijd over naar de YAML-weergave om de code achter je ontwerp te zien.",
+      "components": "Componenten",
+      "selectedNode": "Geselecteerd knooppunt",
+      "flow": "Flow",
+      "liveYaml": "Live YAML",
+      "tabProperties": "Eigenschappen",
+      "tabLogs": "Logboeken",
+      "callout1Title": "Knooppunten slepen & neerzetten",
+      "callout1Desc": "Componenten, triggers, acties — sleep ze op het canvas en verbind ze.",
+      "callout2Title": "Directe YAML-uitvoer",
+      "callout2Desc": "Elke verbinding die je maakt genereert in realtime geldige ESPHome-YAML.",
+      "callout3Title": "Schakel altijd van weergave",
+      "callout3Desc": "Wissel tussen de Bouwer- en YAML-weergave zonder je werk te verliezen."
+    },
+    "curriculum": {
+      "eyebrow": "Lesprogramma",
+      "title": "6 fasen. 22 niveaus.",
+      "tagline": "Van de eerste klik tot geavanceerde configuratie",
+      "levels": "{n} niveaus",
+      "phase1": "Visueel begrip",
+      "phase2": "De code onthullen",
+      "phase3": "Begeleid bewerken",
+      "phase4": "Vanaf nul bouwen",
+      "phase5": "Echte hardware",
+      "phase6": "Gevorderde onderwerpen"
+    },
+    "cta": {
+      "title": "Klaar om je eerste slimme apparaat te bouwen?",
+      "subtitle": "Begin gratis. Geen hardware nodig om te leren.",
+      "button": "Begin met leren — het is gratis"
+    },
+    "footer": {
+      "tagline": "Gemaakt voor makers en domotica-liefhebbers.",
+      "signIn": "Inloggen",
+      "signUp": "Registreren"
+    }
+  },
+  "workspace": {
+    "home": {
+      "title": "Werkruimte",
+      "subtitle": "Bouw je ESPHome-configuratie visueel en exporteer daarna YAML om met ESPHome te flashen.",
+      "startFrom": "Beginnen vanaf",
+      "starterKit": "Starterkit",
+      "selected": "Geselecteerd",
+      "starterKitDesc": "Vooraf geladen met alle componenten van de ESP32-C6-starterkit",
+      "feat": {
+        "devkit": "ESP32-C6 Dev Kit",
+        "button": "Knop + PIR-bewegingssensor",
+        "aht20": "AHT20 Temp / Vochtigheid",
+        "rgb": "RGB-LED-reeks",
+        "buzzer": "Zoemer"
+      },
+      "blank": "Leeg canvas",
+      "blankDesc": "Begin vanaf nul en voeg je eigen componenten toe",
+      "board": "Bord",
+      "projectName": "Projectnaam",
+      "openBuilder": "Bouwer openen",
+      "starterHint": "Bord: ESP32-C6 DevKit — knooppunten worden vooraf op het canvas geplaatst.",
+      "recent": "Recente projecten",
+      "nodes": "{n} knooppunten",
+      "node": "{n} knooppunt"
+    },
+    "header": {
+      "workspace": "Werkruimte",
+      "builder": "Bouwer",
+      "yaml": "YAML",
+      "stop": "Stoppen",
+      "simulate": "Simuleren",
+      "save": "Opslaan",
+      "copy": "Kopiëren",
+      "copyYaml": "YAML kopiëren",
+      "export": "Exporteren",
+      "undo": "Ongedaan maken (⌘Z)",
+      "redo": "Opnieuw (⌘⇧Z)"
+    },
+    "tab": {
+      "generic": "Algemeen",
+      "components": "Componenten",
+      "automations": "Automatiseringen"
+    },
+    "stats": {
+      "nodes": "Knooppunten",
+      "connections": "Verbindingen"
+    },
+    "auto": {
+      "add": "Automatisering toevoegen",
+      "desc": "Verbind knooppunten tot een automatiseringsregel",
+      "source": "Bronknooppunt",
+      "selectNode": "Kies een knooppunt…",
+      "noNodes": "Geen knooppunten op het canvas",
+      "trigger": "Trigger",
+      "selectTrigger": "Kies een trigger…",
+      "action": "Actie",
+      "selectAction": "Kies een actie…",
+      "target": "Doelknooppunt",
+      "selectOutput": "Kies een uitvoer…",
+      "noOutputs": "Geen uitvoerknooppunten",
+      "empty": "Nog geen automatiseringen",
+      "fillAll": "Vul alle automatiseringsvelden in"
+    },
+    "comp": {
+      "title": "Componenten",
+      "desc": "Hardwareknooppunten — klik om toe te voegen. Sleep een handvat om logica te koppelen.",
+      "input": "Invoer",
+      "output": "Uitvoer",
+      "tipLabel": "Tip:",
+      "tip": "Sleep vanaf het handvat van een knooppunt (de stip aan de rand) om direct een trigger-, actie- of timingknooppunt toe te voegen."
+    },
+    "device": {
+      "title": "Apparaatinstellingen",
+      "desc": "Basis-ESPHome-configuratie",
+      "name": "Apparaatnaam",
+      "nameHint": "Gebruikt als ESPHome-hostnaam",
+      "board": "Bord",
+      "area": "Ruimte",
+      "areaPlaceholder": "Woonkamer",
+      "areaHint": "Wordt getoond in Home Assistant",
+      "wifi": "Wi-Fi",
+      "ssid": "SSID",
+      "ssidPlaceholder": "Netwerknaam",
+      "password": "Wachtwoord"
+    },
+    "props": {
+      "connection": "Verbinding",
+      "nodeTitle": "{type}-knooppunt",
+      "label": "Label",
+      "gpio": "GPIO-pin",
+      "duplicate": "Dupliceren",
+      "delete": "Verwijderen",
+      "deleteConnection": "Verbinding verwijderen"
+    },
+    "yamlPanel": {
+      "title": "YAML-voorbeeld"
+    },
+    "palette": {
+      "search": "Zoeken…",
+      "noResults": "Geen resultaten"
+    },
+    "menu": {
+      "addCanvas": "Aan canvas toevoegen",
+      "canvasSub": "Rechtsklik • geen verbinding",
+      "addNode": "Knooppunt toevoegen",
+      "addConnected": "Verbonden knooppunt toevoegen",
+      "duplicateNode": "Knooppunt dupliceren",
+      "deleteNode": "Knooppunt verwijderen"
+    },
+    "toast": {
+      "copied": "YAML gekopieerd!",
+      "downloaded": "YAML gedownload!",
+      "saved": "Project opgeslagen!",
+      "saveFailed": "Project opslaan mislukt",
+      "automationAdded": "Automatisering toegevoegd",
+      "nodeDuplicated": "Knooppunt gedupliceerd",
+      "nodeRemoved": "Knooppunt verwijderd",
+      "connectionRemoved": "Verbinding verwijderd",
+      "added": "\"{label}\" toegevoegd"
+    }
+  },
+  "glossary": {
+    "title": "Woordenlijst",
+    "subtitle": "Begrijpelijke uitleg van de ESPHome- en IoT-termen die je in de niveaus tegenkomt.",
+    "search": "Termen zoeken…",
+    "noResults": "Geen termen komen overeen met \"{q}\".",
+    "def": {
+      "esphome": "Een systeem dat een eenvoudige YAML-configuratie omzet in firmware voor ESP32/ESP8266-chips, zodat je slimme apparaten bouwt zonder C++ te schrijven.",
+      "esp32": "Een kleine, goedkope microcontroller met ingebouwde WiFi en Bluetooth — het 'brein' van je slimme apparaat.",
+      "board": "De specifieke dev-bordvariant die je gebruikt (bijv. esp32-c6-devkitc-1). Het vertelt ESPHome welke chip en pinindeling je hebt.",
+      "firmware": "Het gecompileerde programma dat rechtstreeks op de chip draait. ESPHome bouwt het uit je YAML.",
+      "flashing": "Firmware op het apparaat schrijven — de eerste keer via USB met de echte ESPHome-tool, daarna draadloos.",
+      "gpio": "General-Purpose Input/Output — een genummerde pin op het bord waarop je componenten aansluit (bijv. GPIO5). Sommige zijn alleen-invoer.",
+      "yaml": "Het leesbare tekstformaat waarin ESPHome-configuraties worden geschreven. Inspringen telt; tabs zijn niet toegestaan.",
+      "component": "Een herbruikbaar bouwblok in ESPHome (een sensor, lamp, schakelaar, enz.) dat je in YAML declareert.",
+      "binarySensor": "Een component voor aan/uit-invoer zoals een knop of bewegingssensor — het meldt waar of onwaar.",
+      "sensor": "Een component dat een numerieke waarde meldt, zoals temperatuur of vochtigheid.",
+      "switchLight": "Uitvoercomponenten die je aan en uit kunt zetten (een relais, een LED, een RGB-strip).",
+      "automation": "Een regel die op iets reageert (een trigger) door een actie uit te voeren — bijv. 'als de knop wordt ingedrukt, zet de lamp aan'.",
+      "lambda": "Een stukje C++ dat je in YAML kunt insluiten voor eigen logica die ESPHome standaard niet dekt.",
+      "ota": "Over-the-Air-updates — nieuwe firmware via WiFi naar een apparaat sturen in plaats van via een USB-kabel.",
+      "api": "De native ESPHome-verbinding waarmee Home Assistant het apparaat op je lokale netwerk ontdekt en bestuurt.",
+      "homeAssistant": "Een populaire open-source smart-home-hub. ESPHome-apparaten verschijnen daar automatisch als entiteiten die je kunt bedienen en automatiseren.",
+      "i2cSpi": "Twee veelgebruikte bedradingsprotocollen om chips zoals sensoren en schermen aan te sluiten met slechts enkele gedeelde pinnen.",
+      "pwm": "Pulsbreedtemodulatie — een pin snel aan/uit schakelen om een analoge waarde na te bootsen, gebruikt voor LED-helderheid of motorsnelheid.",
+      "pullResistor": "Een manier om een invoerpin een stabiele standaardwaarde (hoog of laag) te geven zodat hij niet 'zweeft' en willekeurig leest.",
+      "wifiCreds": "De netwerknaam (SSID) en het wachtwoord die je apparaat gebruikt om verbinding te maken met je WiFi, zodat het bereikbaar en bij te werken is."
+    }
+  },
+  "classes": {
+    "title": "Klassen",
+    "subtitleTeacher": "Maak een klas en nodig leerlingen uit om hun voortgang samen te volgen.",
+    "subtitleStudent": "Klassen waarvoor je bent uitgenodigd.",
+    "create": "Klas aanmaken",
+    "createDesc": "Jij wordt de docent. Nodig leerlingen per e-mail uit vanuit de klas.",
+    "createPlaceholder": "Groep 3 — Intro tot IoT",
+    "createBtn": "Aanmaken",
+    "emptyTeacher": "Nog geen klassen. Maak er een om te beginnen.",
+    "emptyStudent": "Je zit nog in geen enkele klas. Vraag je docent om een uitnodigingslink.",
+    "roleTeacher": "Docent",
+    "roleStudent": "Leerling",
+    "students": "{n} leerlingen",
+    "student": "{n} leerling",
+    "back": "Klassen",
+    "notLoaded": "Deze klas kon niet worden geladen.",
+    "backBtn": "Terug naar Klassen",
+    "invite": "Leerlingen uitnodigen",
+    "delete": "Klas verwijderen",
+    "leave": "Klas verlaten",
+    "leaderboard": "Scorebord",
+    "leaderboardDesc": "Gerangschikt op voltooide niveaus, daarna prestaties.",
+    "leaderboardHint": "Klik op een leerling voor details.",
+    "noStudents": "Nog geen leerlingen.",
+    "noStudentsTeacher": "Deel de klascode om te beginnen.",
+    "levelsOf": "{done}/{total} niveaus",
+    "renameTitle": "Klas hernoemen",
+    "save": "Opslaan",
+    "inviteTitle": "Leerlingen uitnodigen",
+    "inviteDesc": "Voer e-mailadressen in (gescheiden door komma's, spaties of nieuwe regels). Elke leerling krijgt een link om {name} te joinen.",
+    "invitePlaceholder": "ada@school.nl, grace@school.nl",
+    "inviteBtn": "Uitnodigingen versturen",
+    "memberProgress": "Voortgang in deze klas",
+    "achievementsCount": "{n} prestaties",
+    "completedLevels": "Voltooide niveaus",
+    "noneYet": "Nog geen.",
+    "quizScores": "Quizscores",
+    "noQuizzes": "Nog geen quizzen gemaakt.",
+    "toastCreated": "Klas \"{name}\" aangemaakt",
+    "toastJoined": "Lid geworden van \"{name}\"",
+    "toastRenamed": "Klas hernoemd",
+    "toastRemoved": "Leerling verwijderd",
+    "toastDeleted": "Klas verwijderd",
+    "toastLeft": "Klas verlaten",
+    "toastInvited": "{n} leerlingen uitgenodigd",
+    "toastCodeCopied": "Klascode gekopieerd",
+    "confirmDeleteTitle": "Deze klas verwijderen?",
+    "confirmDeleteDesc": "Dit verwijdert de klas en alle lidmaatschappen permanent. Dit kan niet ongedaan worden gemaakt.",
+    "confirmRemoveTitle": "{name} verwijderen?",
+    "confirmRemoveDesc": "{name} wordt uit deze klas verwijderd. De eigen voortgang blijft behouden.",
+    "confirmRemoveBtn": "Leerling verwijderen"
+  },
+  "levels": {
+    "1_1": {
+      "header": {
+        "phase": "Fase {n}",
+        "level": "Niveau {id}",
+        "completed": "Voltooid",
+        "title": "Wat is een slim apparaat?",
+        "subtitle": "Het fundamentele patroon begrijpen: invoer activeert acties, uitvoer reageert."
+      },
+      "demo": {
+        "title": "Interactieve demo",
+        "desc": "Klik op de knop om het basispatroon van een slim apparaat in actie te zien.",
+        "button": "Knop",
+        "inputLabel": "(Invoer)",
+        "clickMe": "Klik mij!",
+        "signal": "Signaal",
+        "light": "Lamp",
+        "outputLabel": "(Uitvoer)"
+      },
+      "explanation": {
+        "title": "Elk slim apparaat volgt dit patroon:",
+        "input": {
+          "title": "Invoer",
+          "desc": "Iets dat een actie activeert — knoppen, sensoren, schakelaars, schema's."
+        },
+        "logic": {
+          "title": "Logica",
+          "desc": "Het \"brein\" dat beslist wat er gebeurt wanneer de invoer wordt geactiveerd."
+        },
+        "output": {
+          "title": "Uitvoer",
+          "desc": "Iets dat reageert — lampen, relais, zoemers, schermen."
+        }
+      },
+      "challenge": {
+        "title": "Uitdaging",
+        "desc": "Identificeer de invoer en uitvoer in elk scenario.",
+        "complete": "Voltooid!",
+        "progress": "Voortgang",
+        "score": "{n}/{total} correct"
+      },
+      "buttons": {
+        "startChallenge": "Uitdaging starten",
+        "input": "Invoer",
+        "output": "Uitvoer",
+        "continue": "Doorgaan naar niveau {id}"
+      },
+      "scenarios": {
+        "motionAlarm": {
+          "input": "Bewegingssensor",
+          "output": "Alarm"
+        },
+        "tempFan": {
+          "input": "Temperatuursensor",
+          "output": "Ventilator"
+        },
+        "switchRelay": {
+          "input": "Schakelaar",
+          "output": "Relais"
+        }
+      }
+    },
+    "1_2": {
+      "header": {
+        "phase": "Fase 1",
+        "level": "Niveau 1.2",
+        "completed": "Voltooid",
+        "title": "Maak kennis met je bord",
+        "subtitle": "De ESP32 is het brein dat invoer met uitvoer verbindt. Leer de anatomie ervan."
+      },
+      "board": {
+        "title": "ESP32-ontwikkelbord",
+        "desc": "Sleep componenten vanuit het rechterpaneel om ze met GPIO-pinnen te verbinden."
+      },
+      "legend": {
+        "power": "Voeding",
+        "ground": "Aarde"
+      },
+      "keyParts": {
+        "title": "Belangrijke onderdelen",
+        "power": {
+          "title": "Voedingspinnen",
+          "desc": "3.3V en VIN leveren voeding aan het bord"
+        },
+        "gpio": {
+          "title": "GPIO-pinnen",
+          "desc": "Algemene Invoer/Uitvoer — sluit hier sensoren en actuatoren aan"
+        },
+        "wifi": {
+          "title": "WiFi-antenne",
+          "desc": "Ingebouwde draadloze connectiviteit"
+        }
+      },
+      "components": {
+        "title": "Componenten",
+        "desc": "Klik op een component en klik vervolgens op een GPIO-pin om het te plaatsen.",
+        "button": {
+          "label": "Knop"
+        },
+        "led": {
+          "label": "LED"
+        },
+        "placedOn": "Geplaatst op GPIO{gpio}",
+        "clickPin": "Klik op een GPIO-pin",
+        "clickSelect": "Klik om te selecteren"
+      },
+      "challenge": {
+        "title": "Uitdaging",
+        "complete": "Voltooid!",
+        "desc": "Bedraad een knop op GPIO4 en een LED op GPIO5.",
+        "buttonWiring": "Knop → GPIO4",
+        "ledWiring": "LED → GPIO5"
+      },
+      "buttons": {
+        "checkWiring": "Bedrading controleren",
+        "continue": "Doorgaan naar niveau 1.3"
+      }
+    },
+    "1_3": {
+      "header": {
+        "phase": "Fase 1",
+        "level": "Niveau 1.3",
+        "completed": "Voltooid",
+        "title": "Je eerste flow",
+        "subtitle": "Bouw visuele logica door nodes met elkaar te verbinden."
+      },
+      "buttons": {
+        "reset": "Opnieuw instellen",
+        "simulate": "Simuleren",
+        "simulating": "Simuleren...",
+        "continue": "Doorgaan naar niveau 1.4"
+      },
+      "instructions": {
+        "title": "Hoe het werkt",
+        "step1": "Klik op de componenten hieronder om ze aan het canvas toe te voegen",
+        "step2": "Sleep nodes om ze te positioneren",
+        "step3": "Verbind nodes door van de ene handle naar de andere te slepen",
+        "step4a": "Klik op een lijn om die te selecteren en druk dan op",
+        "step4b": "om te verwijderen",
+        "step5": "Klik op \"Simuleren\" om je flow in actie te zien"
+      },
+      "components": {
+        "title": "Componenten",
+        "subtitle": "Klik om aan het canvas toe te voegen",
+        "button": "Knop",
+        "light": "Lamp",
+        "whenPressed": "Wanneer ingedrukt",
+        "whenReleased": "Wanneer losgelaten",
+        "turnOn": "Inschakelen",
+        "turnOff": "Uitschakelen",
+        "toggle": "Schakelen"
+      },
+      "categories": {
+        "Input": "Invoer",
+        "Trigger": "Trigger",
+        "Action": "Actie",
+        "Output": "Uitvoer"
+      },
+      "challenge": {
+        "title": "Uitdaging",
+        "complete": "Voltooid!",
+        "description": "Maak een flow waarbij het indrukken van de knop de lamp inschakelt, en het loslaten de lamp uitschakelt.",
+        "addButton": "Voeg een knop toe",
+        "addLight": "Voeg een lamp toe",
+        "pressTurnOn": "Wanneer ingedrukt → Inschakelen",
+        "releaseTurnOff": "Wanneer losgelaten → Uitschakelen",
+        "connectNodes": "Verbind alle nodes ({n}/{total})"
+      },
+      "simulation": {
+        "step1": "1. Knop ingedrukt",
+        "step2": "2. Lamp gaat aan",
+        "step3": "3. Knop losgelaten",
+        "step4": "4. Lamp gaat uit"
+      }
+    },
+    "1_4": {
+      "header": {
+        "phase": "Fase {n}",
+        "level": "Niveau {id}",
+        "completed": "Voltooid",
+        "title": "Timing toevoegen",
+        "subtitle": "Leer hoe vertragingen en tijdsduren werken in automatiseringen."
+      },
+      "buttons": {
+        "reset": "Resetten",
+        "simulate": "Simuleren",
+        "simulating": "Simuleren...",
+        "continue": "Doorgaan naar fase 2"
+      },
+      "concept": {
+        "title": "Timing-concept",
+        "body": "Soms wil je dat acties na een vertraging gebeuren, of gedurende een bepaalde tijd.",
+        "exampleTitle": "Voorbeeld: getimede lamp",
+        "flow": {
+          "press": "Druk",
+          "on": "Aan",
+          "off": "Uit"
+        }
+      },
+      "components": {
+        "title": "Componenten",
+        "description": "Klik om toe te voegen aan het canvas",
+        "categories": {
+          "Input": "Invoer",
+          "Action": "Actie",
+          "Timing": "Timing",
+          "Output": "Uitvoer"
+        },
+        "items": {
+          "button": "Knop",
+          "light": "Lamp",
+          "turnOn": "Inschakelen",
+          "turnOff": "Uitschakelen",
+          "wait5s": "Wacht 5s",
+          "wait1s": "Wacht 1s"
+        }
+      },
+      "challenge": {
+        "title": "Uitdaging",
+        "complete": "Voltooid!",
+        "description": "Maak een getimede lamp: een druk op de knop schakelt hem in, wacht 5 seconden en schakelt hem dan automatisch uit.",
+        "tasks": {
+          "addButton": "Voeg een knop toe",
+          "addTurnOn": "Voeg een Inschakelen-actie toe",
+          "addWait": "Voeg een Wacht-blok toe",
+          "addTurnOff": "Voeg een Uitschakelen-actie toe",
+          "connectNodes": "Verbind alle nodes ({n}/{total})"
+        }
+      },
+      "simulation": {
+        "title": "Getimede reeks simuleren...",
+        "steps": {
+          "pressed": "1. Knop ingedrukt",
+          "on": "2. Lamp gaat aan",
+          "waiting": "3. 5 seconden wachten...",
+          "waitComplete": "4. Wachten voltooid",
+          "off": "5. Lamp gaat uit"
+        }
+      }
+    },
+    "2_1": {
+      "header": {
+        "phase": "Fase 2",
+        "level": "Niveau 2.1",
+        "completed": "Voltooid",
+        "title": "De YAML achter de magie",
+        "subtitle": "Elk visueel blok heeft een tekstuele weergave. Beweeg eroverheen om de verbinding te verkennen."
+      },
+      "visual": {
+        "title": "Visuele flow",
+        "desc": "Beweeg over blokken om hun YAML te markeren"
+      },
+      "blocks": {
+        "button": {
+          "label": "Knop",
+          "badge": "Invoer"
+        },
+        "automation": {
+          "label": "Bij indrukken",
+          "badge": "Automatisering"
+        },
+        "light": {
+          "label": "Lamp",
+          "badge": "Uitvoer"
+        }
+      },
+      "code": {
+        "title": "Gegenereerde YAML",
+        "desc": "Beweeg over regels om uitleg te zien",
+        "reveal": "Code onthullen",
+        "revealing": "Onthullen..."
+      },
+      "yaml": {
+        "l1": "Een opmerking die deze sectie uitlegt",
+        "l2": "Een categorie voor dingen die ofwel AAN ofwel UIT zijn — zoals knoppen, bewegingssensoren, deurcontacten",
+        "l3": "Deze sensor is rechtstreeks verbonden met een pin op de bord (GPIO = General Purpose Input/Output)",
+        "l4": "Welke fysieke pin op de bord — GPIO4 is de 4e general-purpose pin",
+        "l5": "De vriendelijke naam die je in Home Assistant ziet",
+        "l6": "Wat moet er gebeuren wanneer iemand op deze knop drukt?",
+        "l7": "Hier komt de lijst met uit te voeren acties...",
+        "l8": "Zet de lamp aan met de ID 'my_light'",
+        "l10": "Een opmerking die deze sectie uitlegt",
+        "l11": "Een categorie voor lichtcomponenten — LED's, lampen, RGB-strips",
+        "l12": "Een eenvoudige aan/uit-lamp (in tegenstelling tot dimbaar)",
+        "l13": "De vriendelijke naam die je in Home Assistant ziet",
+        "l14": "Een korte interne naam zodat andere delen van de configuratie naar deze lamp kunnen verwijzen",
+        "l15": "Met welke uitvoerpin deze lamp is verbonden",
+        "l17": "Configuratie van fysieke uitvoerpinnen",
+        "l18": "Deze uitvoer is een GPIO-pin",
+        "l19": "Verbonden met pin GPIO5",
+        "l20": "Interne ID waarnaar de lamp hierboven verwijst"
+      },
+      "legend": {
+        "input": "Invoer (binary_sensor)",
+        "automation": "Automatisering (on_press)",
+        "output": "Uitvoer (light + output)"
+      },
+      "buttons": {
+        "continue": "Doorgaan naar niveau 2.2"
+      }
+    },
+    "2_2": {
+      "header": {
+        "phase": "Fase 2",
+        "level": "Niveau 2.2",
+        "completed": "Voltooid",
+        "title": "De structuur begrijpen",
+        "subtitle": "Leer de woordenschat van ESPHome YAML door code aan de betekenis ervan te koppelen."
+      },
+      "quiz": {
+        "cardTitle": "YAML-woordenschatquiz",
+        "questionCounter": "Vraag {current} van {total}",
+        "progress": "Voortgang",
+        "scoreCorrect": "{score} correct",
+        "questionPrompt": "Wat betekent deze YAML?",
+        "binary_sensor": "Een categorie voor dingen die ofwel AAN of UIT zijn — zoals knoppen, bewegingssensoren, deurcontacten",
+        "platform_gpio": "Dit component is rechtstreeks verbonden met een GPIO-pin op het bord",
+        "pin": "Welke fysieke pin op het bord dit component gebruikt",
+        "name": "De vriendelijke naam die je in Home Assistant ziet",
+        "on_press": "Wat er moet gebeuren wanneer op deze knop wordt gedrukt",
+        "then": "Hier komt de lijst met uit te voeren acties",
+        "light_turn_on": "Zet de lamp aan die de ID 'my_light' heeft",
+        "id": "Een korte interne naam zodat andere delen van de configuratie naar dit component kunnen verwijzen"
+      },
+      "buttons": {
+        "nextQuestion": "Volgende vraag",
+        "seeResults": "Resultaten bekijken",
+        "tryAgain": "Opnieuw proberen",
+        "continue": "Doorgaan naar fase 3"
+      },
+      "results": {
+        "passTitle": "Goed gedaan!",
+        "failTitle": "Blijf oefenen!",
+        "passText": "Je hebt de YAML-woordenschat goed onder de knie!",
+        "failText": "Probeer opnieuw om minstens 6 juiste antwoorden te krijgen."
+      }
+    },
+    "2_3": {
+      "header": {
+        "phase": "Fase 2",
+        "level": "Niveau 2.3",
+        "completed": "Voltooid",
+        "title": "Zoek de verschillen",
+        "subtitle": "Twee configs, drie verschillen. Klik op de regels die niet overeenkomen."
+      },
+      "progress": {
+        "found": "Gevonden verschillen:"
+      },
+      "comparison": {
+        "title": "Config-vergelijking",
+        "desc": "Klik op elke regel waarvan je denkt dat die verschilt tussen Config A en Config B",
+        "original": "Origineel",
+        "modified": "Gewijzigd"
+      },
+      "diffs": {
+        "pin": "Ander pinnummer — GPIO4 vs GPIO14",
+        "name": "Andere naam — \"My Button\" vs \"Door Button\"",
+        "missingHandler": "Ontbrekende regel — de turn_off-actie ontbreekt in Config B"
+      },
+      "foundList": {
+        "title": "Gevonden verschillen:",
+        "line": "Regel {n}"
+      },
+      "complete": {
+        "title": "Alle verschillen gevonden!",
+        "desc": "Je kunt YAML-configs zorgvuldig genoeg lezen om subtiele wijzigingen op te merken.",
+        "continue": "Doorgaan naar niveau 2.4"
+      }
+    },
+    "2_4": {
+      "header": {
+        "phase": "Fase 2",
+        "level": "Niveau 2.4",
+        "completed": "Voltooid",
+        "title": "Een volledige config lezen",
+        "subtitle": "Verken een volledige ESPHome-configuratie sectie voor sectie."
+      },
+      "badges": {
+        "read": "Gelezen"
+      },
+      "checklist": {
+        "title": "Leeschecklist",
+        "desc": "Open elke sectie om het niveau te voltooien",
+        "progress": "Voortgang"
+      },
+      "buttons": {
+        "continue": "Doorgaan naar Fase 3"
+      },
+      "sections": {
+        "device": {
+          "title": "Apparaatnaam",
+          "desc": "Identificeert je apparaat op het netwerk"
+        },
+        "wifi": {
+          "title": "WiFi",
+          "desc": "Netwerkgegevens zodat het apparaat verbinding kan maken"
+        },
+        "button": {
+          "title": "Knop",
+          "desc": "Een fysieke drukknop verbonden met GPIO4"
+        },
+        "light": {
+          "title": "Lamp en automatisering",
+          "desc": "Een LED-uitvoer en de automatisering die deze aanstuurt"
+        },
+        "automation": {
+          "title": "Geavanceerde automatisering",
+          "desc": "Schakelgedrag met automatisch uitschakelen na 5 seconden"
+        }
+      }
+    },
+    "3_1": {
+      "header": {
+        "phase": "Fase 3",
+        "level": "Niveau 3.1",
+        "completed": "Voltooid",
+        "title": "Wijzig de namen",
+        "subtitle": "Je eerste bewerking! Verander de standaardnamen in iets zinvols."
+      },
+      "tip": {
+        "title": "Veilig om te wijzigen",
+        "body": "Namen zijn slechts labels voor mensen — ze mogen alles zijn wat je wilt! Ze verschijnen in Home Assistant en helpen je je apparaten te herkennen."
+      },
+      "editor": {
+        "title": "Namen bewerken",
+        "desc": "Verander deze standaardnamen in iets beschrijvends"
+      },
+      "buttonInput": {
+        "label": "Naam van de knop",
+        "valid": "Geldig",
+        "hintLink": "Een hint nodig?",
+        "placeholder": "Voer een naam in voor je knop",
+        "hint": "Probeer iets als \"Voordeurknop\" of \"Bureauknop\"",
+        "minLength": "De naam moet minstens 3 tekens bevatten"
+      },
+      "lightInput": {
+        "label": "Naam van de lamp",
+        "valid": "Geldig",
+        "hintLink": "Een hint nodig?",
+        "placeholder": "Voer een naam in voor je lamp",
+        "hint": "Probeer iets als \"Woonkamerlamp\" of \"Status-LED\"",
+        "minLength": "De naam moet minstens 3 tekens bevatten"
+      },
+      "challenge": {
+        "title": "Uitdaging",
+        "complete": "Voltooid!",
+        "desc": "Hernoem zowel de knop als de lamp naar iets zinvols (minstens 3 tekens, anders dan de standaardwaarden)"
+      },
+      "buttons": {
+        "continue": "Doorgaan naar niveau 3.2"
+      },
+      "preview": {
+        "title": "Live voorbeeld",
+        "desc": "Bekijk je wijzigingen in realtime worden bijgewerkt",
+        "legendEditable": "Gemarkeerd = bewerkbaar",
+        "legendValid": "Groen = geldige wijziging"
+      }
+    },
+    "3_2": {
+      "header": {
+        "phase": "Fase 3",
+        "level": "Niveau 3.2",
+        "completed": "Voltooid",
+        "title": "Verander de pinnen",
+        "subtitle": "Wijs de hardware-verbindingen opnieuw toe door de GPIO-pinnummers aan te passen."
+      },
+      "tip": {
+        "title": "Wat zijn GPIO-pinnen?",
+        "body": "GPIO-pinnen (General Purpose Input/Output) zijn de fysieke connectoren op je ESP-bord. Door het pinnummer in de config te wijzigen vertel je ESPHome om een andere fysieke verbinding te gebruiken."
+      },
+      "task": {
+        "title": "Jouw taak:",
+        "buttonPin": "Verander de knoppin van GPIO4 naar",
+        "lightPin": "Verander de uitvoerpin van de lamp van GPIO5 naar"
+      },
+      "edit": {
+        "title": "Pinnen bewerken",
+        "desc": "Werk de pintoewijzingen hieronder bij",
+        "buttonLabel": "Knoppin",
+        "lightLabel": "Lamp-uitvoerpin",
+        "correct": "Correct",
+        "target": "Doel:",
+        "notQuiteButton": "Net niet — het doel is GPIO14",
+        "notQuiteLight": "Net niet — het doel is GPIO2"
+      },
+      "challenge": {
+        "title": "Uitdaging",
+        "complete": "Voltooid!",
+        "desc": "Zet de knop op GPIO14 en de lamp-uitvoer op GPIO2"
+      },
+      "buttons": {
+        "continue": "Doorgaan naar niveau 3.3"
+      },
+      "preview": {
+        "title": "Live voorbeeld",
+        "desc": "Bekijk pinwijzigingen die in realtime worden bijgewerkt",
+        "legendBlue": "Blauw = momenteel aan het bewerken",
+        "legendGreen": "Groen = correcte waarde"
+      }
+    },
+    "3_3": {
+      "header": {
+        "phase": "Fase 3",
+        "level": "Niveau 3.3",
+        "completed": "Voltooid",
+        "title": "Verander het gedrag",
+        "subtitle": "Schakel van altijd-aan naar omschakelen — druk eenmaal om aan te zetten, druk nogmaals om uit te zetten."
+      },
+      "explanation": {
+        "title": "Omschakelen vs Aanzetten",
+        "turnOn": "zet de lamp altijd aan, ongeacht de huidige staat.",
+        "toggle": "wisselt de staat — als hij aan is, gaat hij uit; als hij uit is, gaat hij aan."
+      },
+      "task": {
+        "title": "Jouw taak",
+        "before": "Verander de actie van",
+        "middle": "naar",
+        "after": "in de editor hieronder."
+      },
+      "editPanel": {
+        "title": "Actie bewerken",
+        "description": "Verander wat er gebeurt wanneer de knop wordt ingedrukt",
+        "actionLabel": "Actie (binnen on_press → then)",
+        "correct": "Correct",
+        "target": "Doel:",
+        "notQuite": "Niet helemaal — probeer"
+      },
+      "challenge": {
+        "title": "Uitdaging",
+        "complete": "Voltooid!",
+        "replaceBefore": "Vervang",
+        "replaceWith": "door"
+      },
+      "buttons": {
+        "continue": "Doorgaan naar niveau {version}"
+      },
+      "preview": {
+        "title": "Live voorbeeld",
+        "description": "Zie de actie in realtime bijwerken",
+        "legendBlue": "Blauw = regel die wordt gewijzigd",
+        "legendGreen": "Groen = correcte waarde"
+      }
+    },
+    "3_4": {
+      "header": {
+        "phase": "Fase 3",
+        "level": "Niveau 3.4",
+        "completed": "Voltooid",
+        "title": "Een vertraging toevoegen",
+        "subtitle": "Laat de lamp automatisch uitgaan 5 seconden nadat ze is aangegaan."
+      },
+      "explanation": {
+        "title": "Hoe vertraging werkt",
+        "part1": "ESPHome-acties worden in volgorde uitgevoerd. Door",
+        "part2": "tussen",
+        "part3": "en",
+        "part4": " in te voegen, wacht het apparaat 5 seconden voordat het de turn_off-actie uitvoert."
+      },
+      "task": {
+        "title": "Jouw taak:",
+        "part1": "Voeg een",
+        "part2": "actie toe tussen",
+        "part3": "en",
+        "part4": ".",
+        "checkAdd": "Voeg toe",
+        "checkTurnOff": "aanwezig na de vertraging"
+      },
+      "edit": {
+        "title": "De vertraging invoegen",
+        "description": "Typ de regel die je tussen turn_on en turn_off wilt invoegen",
+        "sequenceLabel": "Automatiseringsvolgorde",
+        "insertHere": "hier invoegen →",
+        "tryHint": "Probeer"
+      },
+      "hint": {
+        "part1": "De waarde na",
+        "part2": "is een tijdsduur —",
+        "part3": "betekent 5 seconden,",
+        "part4": "zou een halve seconde zijn."
+      },
+      "challenge": {
+        "title": "Uitdaging",
+        "complete": "Voltooid!",
+        "part1": "Voeg",
+        "part2": "in tussen turn_on en turn_off"
+      },
+      "buttons": {
+        "continue": "Doorgaan naar niveau 3.5"
+      },
+      "preview": {
+        "title": "Live voorbeeld",
+        "description": "Zie de vertraging verschijnen in de automatiseringsvolgorde"
+      }
+    },
+    "3_5": {
+      "header": {
+        "phase": "Fase {n}",
+        "level": "Niveau {n}",
+        "completed": "Voltooid",
+        "title": "Voorwaarden",
+        "subtitle": "Leer hoe je voorwaarden toevoegt zodat automatiseringen alleen draaien wanneer het zinvol is."
+      },
+      "explanation": {
+        "title": "Wat is een voorwaarde?",
+        "body1": "Met een voorwaarde kan je automatisering de huidige status van je apparaat controleren voordat ze handelt. Bijvoorbeeld: \"zet de lamp alleen aan als de deursensor OFF is (deur is dicht).\" Als aan de voorwaarde niet is voldaan, wordt het hele",
+        "body2": "blok overgeslagen."
+      },
+      "example": {
+        "title": "Voorbeeld: een voorwaarde in actie",
+        "description": "De lamp gaat alleen aan wanneer de deursensor OFF is",
+        "hint1": "Regel 6–7:",
+        "hint2": "controleert of",
+        "hint3": "OFF is. Als de deur openstaat (sensor op ON), faalt de voorwaarde en blijft de lamp uit."
+      },
+      "quiz": {
+        "heading": "Quiz — beantwoord alle {n} correct om te voltooien",
+        "correctPrefix": "Correct! ",
+        "wrongPrefix": "Niet helemaal — ",
+        "q1": {
+          "question": "Welk YAML-sleutelwoord gebruik je om een voorwaarde aan een ESPHome-automatisering toe te voegen?",
+          "explanation": "ESPHome gebruikt condition: binnen een automatisering om een status te controleren voordat acties worden uitgevoerd. Dit verschilt van veel programmeertalen die if gebruiken."
+        },
+        "q2": {
+          "question": "Waar gaat het condition:-blok in een ESPHome-automatisering?",
+          "answers": {
+            "a": "Bovenaan het YAML-bestand, voor alle componenten",
+            "b": "Binnen het on_press-blok, naast then:",
+            "c": "Na de light:-sectie",
+            "d": "Binnen het output:-blok"
+          },
+          "explanation": "condition: staat binnen de automatiseringstrigger (zoals on_press), op hetzelfde niveau als then:. De automatisering controleert eerst de voorwaarde en voert then: alleen uit als deze slaagt."
+        },
+        "q3": {
+          "question": "Als een condition: als false wordt geëvalueerd, wat gebeurt er dan met de acties in then:?",
+          "answers": {
+            "a": "Ze draaien toch, maar langzamer",
+            "b": "Het apparaat herstart om opnieuw te evalueren",
+            "c": "Ze worden volledig overgeslagen",
+            "d": "Ze draaien één keer en stoppen dan"
+          },
+          "explanation": "Wanneer een voorwaarde onwaar is, slaat ESPHome het then:-blok volledig over. Er worden geen acties uitgevoerd — het is alsof de knopdruk niets heeft geactiveerd."
+        }
+      },
+      "results": {
+        "perfectTitle": "Perfecte score!",
+        "scoreTitle": "{n} van {total} correct",
+        "perfectBody": "Je begrijpt ESPHome-voorwaarden. Je bent klaar om echte projecten te bouwen!",
+        "retryBody": "Bekijk de uitleg hierboven en probeer opnieuw om alle {total} correct te krijgen."
+      },
+      "buttons": {
+        "tryAgain": "Opnieuw proberen",
+        "backToHome": "Terug naar start"
+      }
+    },
+    "4_1": {
+      "header": {
+        "phase": "Fase 4",
+        "level": "Niveau 4.1",
+        "completed": "Voltooid",
+        "title": "Vul de lege plekken in",
+        "subtitle": "Voltooi de ESPHome-config door de 5 ontbrekende waarden in te vullen."
+      },
+      "task": {
+        "title": "Jouw taak:",
+        "body": "Vijf belangrijke waarden zijn verwijderd uit een werkende ESPHome-config. Vul ze elk correct in en kijk hoe de YAML rechts tot leven komt."
+      },
+      "form": {
+        "title": "Vul de lege plekken in",
+        "desc": "Voer elke ontbrekende waarde exact in zoals deze moet verschijnen"
+      },
+      "blanks": {
+        "deviceName": {
+          "label": "Apparaatnaam",
+          "placeholder": "bijv. my-esp-device",
+          "hint": "Kleine letters, koppeltekens toegestaan, geen spaties"
+        },
+        "buttonPin": {
+          "label": "Knop GPIO-pin",
+          "placeholder": "bijv. GPIO4",
+          "hint": "Formaat: GPIO gevolgd door een nummer"
+        },
+        "lightPin": {
+          "label": "Lamp GPIO-pin",
+          "placeholder": "bijv. GPIO5",
+          "hint": "Een andere pin dan die van de knop"
+        },
+        "trigger": {
+          "label": "Type trigger",
+          "placeholder": "bijv. on_press",
+          "hint": "De gebeurtenis die optreedt wanneer de knop wordt ingedrukt"
+        },
+        "action": {
+          "label": "Actie",
+          "placeholder": "bijv. light.turn_on",
+          "hint": "De service-aanroep die de lamp activeert"
+        }
+      },
+      "status": {
+        "correct": "Correct",
+        "wrong": "Probeer opnieuw"
+      },
+      "progress": {
+        "label": "Voortgang",
+        "score": "{n} / {total}"
+      },
+      "buttons": {
+        "continue": "Doorgaan naar niveau 4.2"
+      },
+      "preview": {
+        "title": "Live voorbeeld",
+        "desc": "Lege plekken worden ingevuld terwijl je typt"
+      }
+    },
+    "4_2": {
+      "header": {
+        "phase": "Fase 4",
+        "level": "Niveau 4.2",
+        "completed": "Voltooid",
+        "title": "Een component toevoegen",
+        "subtitle": "Een knop is al bedraad. Voeg een tweede lamp toe aan de configuratie."
+      },
+      "info": {
+        "title": "Componenten toevoegen",
+        "body1": "ESPHome ondersteunt meerdere lampen in dezelfde configuratie. Elke lamp heeft een unieke",
+        "body2": "nodig en een eigen",
+        "body3": "vermelding met een andere GPIO-pin."
+      },
+      "form": {
+        "title": "Tweede lamp toevoegen",
+        "desc": "Geef een naam en GPIO-pin op voor de nieuwe lampcomponent",
+        "nameLabel": "Naam van de lamp",
+        "namePlaceholder": "bijv. \"Status LED\"",
+        "nameError": "De naam moet minstens 2 tekens bevatten",
+        "pinLabel": "GPIO-pin",
+        "pinPlaceholder": "bijv. GPIO2",
+        "pinHelp": "Moet anders zijn dan GPIO4 (knop) en GPIO5 (eerste lamp)",
+        "pinError": "Het formaat moet GPIO gevolgd door een getal zijn (bijv. GPIO2)",
+        "addButton": "Lamp toevoegen"
+      },
+      "success": {
+        "title": "Lamp toegevoegd!",
+        "body": "De YAML bevat nu je tweede lampcomponent."
+      },
+      "buttons": {
+        "continue": "Doorgaan naar niveau 4.3"
+      },
+      "preview": {
+        "title": "Live voorbeeld",
+        "desc": "De nieuwe lampcomponent verschijnt onderaan zodra deze is toegevoegd"
+      }
+    },
+    "4_3": {
+      "header": {
+        "phase": "Fase 4",
+        "level": "Niveau 4.3",
+        "completed": "Voltooid",
+        "title": "Maak een automatisering",
+        "subtitle": "Een knop en een lamp zijn gedefinieerd — verbind ze nu met een automatisering."
+      },
+      "info": {
+        "title": "Automatiseringen bouwen",
+        "body1": "Een automatisering bestaat uit twee delen: een",
+        "trigger": "trigger",
+        "body2": "(welke gebeurtenis hem start) en een",
+        "action": "actie",
+        "body3": "(wat er gebeurt). Kies beide hieronder om de YAML te genereren."
+      },
+      "builder": {
+        "title": "Automatiseringsbouwer",
+        "desc": "Kies een trigger en een actie, en genereer dan",
+        "step1": "Kies een trigger",
+        "step2": "Kies een actie",
+        "step3": "Genereren"
+      },
+      "triggers": {
+        "onPress": "Wordt geactiveerd wanneer de knop wordt ingedrukt",
+        "onRelease": "Wordt geactiveerd wanneer de knop wordt losgelaten"
+      },
+      "actions": {
+        "turnOn": "Zet de lamp aan",
+        "toggle": "Schakelen (aan als uit, uit als aan)",
+        "turnOff": "Zet de lamp uit"
+      },
+      "buttons": {
+        "generate": "Automatisering genereren",
+        "continue": "Doorgaan naar niveau 4.4"
+      },
+      "success": {
+        "title": "Automatisering gemaakt!",
+        "body1": "De knop activeert nu",
+        "body2": "op"
+      },
+      "preview": {
+        "title": "Live voorbeeld",
+        "desc": "De YAML van de automatisering wordt bijgewerkt terwijl je keuzes maakt"
+      }
+    },
+    "4_4": {
+      "header": {
+        "phase": "Fase 4",
+        "level": "Niveau 4.4",
+        "completed": "Voltooid",
+        "title": "Schrijf een volledige config",
+        "subtitle": "De moeilijkste uitdaging tot nu toe: schrijf een volledige ESPHome-config vanaf nul."
+      },
+      "info": {
+        "title": "Vanaf nul opbouwen",
+        "desc": "Schrijf een volledige, voldoende geldige ESPHome-config. De checklist rechts houdt bij welke vereiste secties je hebt opgenomen. Alle 5 moeten aanwezig zijn om het niveau te voltooien."
+      },
+      "editor": {
+        "title": "Jouw config",
+        "description": "Typ hieronder een volledige ESPHome YAML-configuratie",
+        "placeholder": "Schrijf hier verder aan je ESPHome-config..."
+      },
+      "checklist": {
+        "title": "Vereisten",
+        "description": "Alle 5 moeten aanwezig zijn om te voltooien",
+        "progress": "Voortgang",
+        "count": "{n} / {total}"
+      },
+      "complete": {
+        "title": "Fase 4 voltooid!",
+        "desc": "Je kunt een volledige ESPHome-config vanaf nul schrijven.",
+        "continue": "Doorgaan naar fase 5"
+      }
+    },
+    "5_1": {
+      "header": {
+        "phase": "Fase 5",
+        "level": "Niveau 5.1",
+        "completed": "Voltooid",
+        "title": "Debuggen met logs",
+        "subtitle": "Lees een gesimuleerde ESPHome-log en bepaal wat er misging."
+      },
+      "info": {
+        "title": "ESPHome-logs lezen",
+        "levelsIntro": "Logs hebben drie niveaus:",
+        "infoLevel": "INFO — normale werking",
+        "warnLevel": "WARNING — er kan iets mis zijn",
+        "errorLevel": "ERROR — er is iets mislukt.",
+        "errorsFirst": "Fouten zijn de eerste plek om te kijken wanneer een apparaat niet werkt."
+      },
+      "logViewer": {
+        "title": "Gesimuleerde loguitvoer",
+        "complete": "Log voltooid",
+        "playing": "Bezig…",
+        "play": "Logs afspelen",
+        "desc": "Bekijk de logstroom in realtime",
+        "empty": "Druk op \"Logs afspelen\" om de simulatie te starten"
+      },
+      "quiz": {
+        "title": "Wat ging er mis?",
+        "desc": "Selecteer op basis van de ERROR-regel in de log hierboven de juiste diagnose.",
+        "submit": "Antwoord indienen",
+        "options": {
+          "a": "WiFi kon geen verbinding maken met het netwerk",
+          "b": "GPIO34 is alleen invoer en kan niet als uitvoer worden gebruikt",
+          "c": "De helderheid van de lamp stond te hoog ingesteld"
+        }
+      },
+      "result": {
+        "correctTitle": "Correct!",
+        "correctBefore": "De ERROR-regel",
+        "correctAfter": "betekent dat je GPIO34 als uitvoerpin probeerde te gebruiken, maar deze ondersteunt alleen invoer. Gebruik een andere GPIO-pin voor je lamp.",
+        "wrongTitle": "Niet helemaal.",
+        "wrongBody": "Kijk naar de rode ERROR-regel in de log. Het juiste antwoord is:"
+      },
+      "buttons": {
+        "continue": "Doorgaan naar niveau 5.2"
+      }
+    },
+    "5_2": {
+      "header": {
+        "phase": "Fase 5",
+        "level": "Niveau 5.2",
+        "completed": "Voltooid",
+        "title": "Integratie met Home Assistant",
+        "subtitle": "De laatste stap: verbind je ESPHome-apparaat met Home Assistant voor volledige slimme-huisbesturing."
+      },
+      "apiBlock": {
+        "title": "Het api:-blok",
+        "bodyBefore": "Door een",
+        "bodyAfter": "blok aan je configuratie toe te voegen, schakel je de native ESPHome API in. Home Assistant ontdekt automatisch apparaten die deze API draaien op het lokale netwerk en stelt hun sensoren en bedieningen beschikbaar als HA-entiteiten."
+      },
+      "configCard": {
+        "title": "Configuratie met api:-blok",
+        "desc": "De versleutelingssleutel beveiligt de communicatie tussen het apparaat en Home Assistant"
+      },
+      "keyTip": {
+        "before": "Genereer een willekeurige sleutel van 32 bytes met",
+        "after": "Dit versleutelt alle communicatie tussen je apparaat en Home Assistant."
+      },
+      "diagram": {
+        "title": "Hoe het verbindt",
+        "desc": "Je apparaat communiceert met Home Assistant via je lokale WiFi-netwerk",
+        "espTitle": "ESP32-apparaat",
+        "espSubtitle": "Draait ESPHome",
+        "haSubtitle": "Slimme-huishub",
+        "entitiesLabel": "Entiteiten die in Home Assistant verschijnen:",
+        "entityButton": "Mijn Knop",
+        "entityLight": "Mijn Lamp"
+      },
+      "celebration": {
+        "title": "Fase 5 voltooid!",
+        "subtitle": "Je beheerst nu workflows met echte hardware:",
+        "skills": {
+          "logDebugging": "Logboek-debugging",
+          "haIntegration": "Home Assistant-integratie"
+        },
+        "next": "Je ESPHome-reis gaat door. Fase 6 behandelt geavanceerde onderwerpen: lambda's, aangepaste componenten en I2C/SPI-apparaten.",
+        "continue": "Doorgaan naar fase 6"
+      }
+    },
+    "6_1": {
+      "header": {
+        "phase": "Fase 6",
+        "level": "Niveau 6.1",
+        "completed": "Voltooid",
+        "title": "Lambdas",
+        "subtitle": "Integreer C++-logica rechtstreeks in je YAML — de krachtigste ESPHome-functie."
+      },
+      "steps": {
+        "heading": "Kernconcepten — klik op elk om uit te klappen",
+        "unlock": "Lees alle {total} concepten om de quiz te ontgrendelen ({read}/{total} gelezen)",
+        "what": {
+          "title": "Wat is een lambda?",
+          "explanation": "Een lambda is een blok C++-code dat rechtstreeks in je ESPHome YAML is ingebed. Hiermee kun je aangepaste logica toevoegen die standaardcomponenten niet kunnen uitdrukken — voorwaardelijke controles, wiskunde, reacties in meerdere stappen — zonder een volledig aangepast component te schrijven."
+        },
+        "syntax": {
+          "title": "Lambda-syntaxis",
+          "explanation": "Lambdas op één regel gebruiken enkele aanhalingstekens. Lambdas op meerdere regels gebruiken de YAML-blokscalair |-. Binnen de lambda bevat de variabele x de huidige sensorwaarde wanneer deze wordt gebruikt in on_value-triggers. Sluit instructies af met puntkomma's — het is C++."
+        },
+        "id": {
+          "title": "Componenten benaderen met id()",
+          "explanation": "Je roept elk component dat in je configuratie is gedefinieerd aan met id(component_id). Vandaar kun je de status lezen met .state, of acties aanroepen zoals .turn_on(), .turn_off(), .toggle() en .publish_state(). De id moet overeenkomen met het id:-veld van het doelcomponent."
+        },
+        "example": {
+          "title": "Praktisch voorbeeld — ventilator op temperatuur",
+          "explanation": "Hier wordt de on_value-trigger van een sensor geactiveerd telkens als er een nieuwe meting binnenkomt. De lambda controleert de huidige waarde (x) en zet een ventilator dienovereenkomstig aan of uit. Deze logica kan niet worden uitgedrukt met alleen standaard YAML-automatiseringen."
+        }
+      },
+      "quiz": {
+        "heading": "Quiz — beantwoord beide correct om te voltooien",
+        "correctPrefix": "Correct! ",
+        "wrongPrefix": "Net niet — "
+      },
+      "questions": {
+        "q1": {
+          "question": "Welke syntaxis roept een componentactie correct aan binnen een lambda?",
+          "answers": {
+            "a": "component.turn_on()",
+            "b": "id(component_id).turn_on()",
+            "c": "esphome.call(component_id, 'turn_on')",
+            "d": "{{ states('component_id') }}"
+          },
+          "explanation": "ESPHome gebruikt id(component_id) om naar elk component te verwijzen dat met een id:-veld is gedefinieerd. Vandaar kun je acties aanroepen zoals .turn_on() of .state lezen."
+        },
+        "q2": {
+          "question": "Wat bevat de variabele x in een lambda die door on_value: wordt geactiveerd?",
+          "answers": {
+            "a": "De id-tekenreeks van het component",
+            "b": "De vorige sensormeting",
+            "c": "De huidige sensorwaarde",
+            "d": "Een lusteller"
+          },
+          "explanation": "Binnen een on_value-lambda wordt x automatisch gevuld met de zojuist ontvangen sensorwaarde — dezelfde waarde die de callback heeft geactiveerd."
+        }
+      },
+      "result": {
+        "successTitle": "Lambda onder de knie!",
+        "successBody": "Je kunt nu C++-logica rechtstreeks in je configuraties integreren.",
+        "continue": "Doorgaan naar niveau 6.2",
+        "retryBody": "Bekijk de uitleg hierboven en probeer het opnieuw.",
+        "tryAgain": "Opnieuw proberen"
+      }
+    },
+    "6_2": {
+      "header": {
+        "phase": "Fase 6",
+        "level": "Niveau 6.2",
+        "completed": "Voltooid",
+        "title": "Aangepaste componenten",
+        "subtitle": "Bouw je eigen ESPHome-component in C++ en koppel het aan een YAML-config."
+      },
+      "info": {
+        "title": "Hoe aangepaste componenten werken",
+        "desc": "Je schrijft een {hFile}-bestand met een C++-klasse, verwijst ernaar met {includes} en instantieert het vervolgens met {customComponent} en een korte lambda. Hiermee kun je elke sensor uitlezen of elke hardware aansturen waarvoor ESPHome geen ingebouwd platform heeft."
+      },
+      "reference": {
+        "title": "Referentie — my_sensor.h",
+        "desc": "De C++-klasse die je gaat koppelen. Je YAML moet dit bestand opnemen en het instantiëren."
+      },
+      "editor": {
+        "title": "Jouw YAML-config",
+        "desc": "Koppel my_sensor.h met het custom_component-platform",
+        "placeholder": "Schrijf de YAML om my_sensor.h te koppelen..."
+      },
+      "checklist": {
+        "title": "Vereisten",
+        "desc": "Alle 5 moeten aanwezig zijn",
+        "progress": "Voortgang",
+        "count": "{n} / {total}"
+      },
+      "requirements": {
+        "esphome": "esphome:-blok met includes:",
+        "header": ".h-bestand vermeld in includes:",
+        "custom": "custom_component:-platform",
+        "lambda": "lambda: return {make_shared<...>()};",
+        "sensor_id": "id: voor de aangepaste sensor"
+      },
+      "hint": {
+        "title": "Tip",
+        "body": "Gebruik {customComponent} onder een sensor op hoofdniveau en instantieer met {lambda}"
+      },
+      "complete": {
+        "title": "Niveau voltooid!",
+        "desc": "Je kunt elke C++-sensor aan ESPHome koppelen.",
+        "continue": "Doorgaan naar niveau 6.3"
+      }
+    },
+    "6_3": {
+      "header": {
+        "phase": "Fase 6",
+        "level": "Niveau 6.3",
+        "completed": "Voltooid",
+        "title": "I2C- en SPI-apparaten",
+        "subtitle": "Verbind sensoren en schermen via de twee meest voorkomende hardwarebussen."
+      },
+      "buses": {
+        "pinsLabel": "Pinnen",
+        "prosLabel": "Voordelen",
+        "consLabel": "Nadelen",
+        "commonDevices": "Veelgebruikte apparaten:",
+        "i2c": {
+          "subtitle": "Synchrone bus met twee draden",
+          "pins": {
+            "sda": "Seriële data",
+            "scl": "Seriële klok"
+          },
+          "pros": {
+            "0": "Slechts 2 draden",
+            "1": "Tot 127 apparaten per bus",
+            "2": "Ingebouwde adressering"
+          },
+          "cons": {
+            "0": "Langzamer dan SPI",
+            "1": "Kortere kabelafstanden"
+          },
+          "example": "BME280, SHT31, OLED-schermen, RTC-modules"
+        },
+        "spi": {
+          "subtitle": "Synchrone bus met vier draden",
+          "pins": {
+            "clk": "Klok",
+            "mosi": "Controller → Apparaat",
+            "miso": "Apparaat → Controller",
+            "cs": "Chipselectie (per apparaat)"
+          },
+          "pros": {
+            "0": "Snel — tot 80 MHz",
+            "1": "Full-duplex",
+            "2": "Eenvoudig protocol"
+          },
+          "cons": {
+            "0": "Eén CS-pin per apparaat",
+            "1": "Meer draden"
+          },
+          "example": "Kleuren-TFT-schermen, SD-kaarten, snelle ADC's"
+        }
+      },
+      "configs": {
+        "i2c": {
+          "title": "BME280 via I2C",
+          "desc": "Temperatuur, druk en luchtvochtigheid"
+        },
+        "spi": {
+          "title": "ILI9341 TFT via SPI",
+          "desc": "Kleurenscherm met een aangepaste lambda"
+        }
+      },
+      "quiz": {
+        "heading": "Quiz — beantwoord alle drie om Fase 6 te voltooien",
+        "correct": "Correct! ",
+        "notQuite": "Niet helemaal — ",
+        "q1": {
+          "question": "Welke twee pinnen gebruikt I2C?",
+          "explanation": "I2C gebruikt SDA (seriële data) en SCL (seriële klok). Op de ESP32 zijn dit standaard meestal GPIO21 en GPIO22, hoewel elk GPIO-paar kan worden geconfigureerd."
+        },
+        "q2": {
+          "question": "Welk ESPHome-platform zou je gebruiken voor een BME280-sensor?",
+          "explanation": "ESPHome wordt geleverd met een speciaal bme280_i2c-platform. Je declareert gewoon de i2c:-bus, wijst de sensor naar het juiste adres, en ESPHome verzorgt automatisch alle registeruitlezingen."
+        },
+        "q3": {
+          "question": "Wat doet de optie scan: true in het i2c:-blok?",
+          "answers": {
+            "a": "Schakelt versleuteling in op de I2C-bus",
+            "b": "Scant en logt alle gedetecteerde I2C-adressen bij het opstarten",
+            "c": "Pollt sensoren continu voor nieuwe gegevens",
+            "d": "Schakelt multi-mastermodus in"
+          },
+          "explanation": "Met scan: true logt ESPHome alle I2C-adressen die het bij het opstarten detecteert. Dit is van onschatbare waarde bij het debuggen van bedrading — als je sensor niet verschijnt, is er iets mis met de fysieke verbinding of het adres."
+        }
+      },
+      "outcome": {
+        "title": "Fase 6 voltooid!",
+        "mastered": "Je beheerst nu de geavanceerde ESPHome-onderwerpen:",
+        "topics": {
+          "lambdas": "Lambdas",
+          "customComponents": "Aangepaste componenten",
+          "i2c": "I2C-apparaten",
+          "spi": "SPI-apparaten"
+        },
+        "toolkit": "Je beschikt nu over de volledige ESPHome-toolkit — van je eerste visuele flow tot aangepaste C++-componenten. Ga iets geweldigs bouwen.",
+        "graduate": "ESPHome-afgestudeerde",
+        "reviewHint": "Bekijk de uitleg hierboven en probeer het opnieuw."
+      },
+      "buttons": {
+        "tryAgain": "Opnieuw proberen"
+      }
+    }
+  }
+}

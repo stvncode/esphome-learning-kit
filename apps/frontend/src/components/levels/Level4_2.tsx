@@ -13,6 +13,7 @@ import {
   Lightbulb,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -60,6 +61,7 @@ const getLineColor = (line: string) => {
 }
 
 export function Level4_2() {
+  const t = useLevelT("4_2")
   const [lightName, setLightName] = useState("")
   const [lightPin, setLightPin] = useState("")
   const [added, setAdded] = useState(false)
@@ -110,17 +112,17 @@ export function Level4_2() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-purple-500/20 text-purple-400">Phase 4</Badge>
-          <Badge variant="outline">Level 4.2</Badge>
+          <Badge className="bg-purple-500/20 text-purple-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Add a Component</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          A button is already wired up. Add a second light to the config.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -131,12 +133,11 @@ export function Level4_2() {
             <Lightbulb className="h-5 w-5 text-purple-400" />
           </div>
           <div>
-            <p className="font-medium text-foreground">Adding components</p>
+            <p className="font-medium text-foreground">{t("info.title")}</p>
             <p className="text-sm text-muted-foreground">
-              ESPHome supports multiple lights in the same config. Each light needs a unique{" "}
-              <code className="rounded bg-muted px-1 font-mono text-xs">id:</code> and its own{" "}
-              <code className="rounded bg-muted px-1 font-mono text-xs">output:</code> entry with a
-              different GPIO pin.
+              {t("info.body1")}{" "}
+              <code className="rounded bg-muted px-1 font-mono text-xs">id:</code> {t("info.body2")}{" "}
+              <code className="rounded bg-muted px-1 font-mono text-xs">output:</code> {t("info.body3")}
             </p>
           </div>
         </CardContent>
@@ -148,19 +149,19 @@ export function Level4_2() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Plus className="h-4 w-4 text-purple-400" />
-              <CardTitle className="text-lg">Add Second Light</CardTitle>
+              <CardTitle className="text-lg">{t("form.title")}</CardTitle>
             </div>
             <CardDescription>
-              Provide a name and GPIO pin for the new light component
+              {t("form.desc")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-5">
             <div className="space-y-1.5">
-              <label className="text-sm font-medium">Light Name</label>
+              <label className="text-sm font-medium">{t("form.nameLabel")}</label>
               <Input
                 value={lightName}
                 onChange={(e) => setLightName(e.target.value)}
-                placeholder='e.g. "Status LED"'
+                placeholder={t("form.namePlaceholder")}
                 disabled={added}
                 className={cn(
                   "font-mono",
@@ -171,17 +172,17 @@ export function Level4_2() {
               {attempted && !nameValid && (
                 <p className="flex items-center gap-1 text-xs text-red-400">
                   <AlertCircle className="h-3 w-3" />
-                  Name must be at least 2 characters
+                  {t("form.nameError")}
                 </p>
               )}
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-sm font-medium">GPIO Pin</label>
+              <label className="text-sm font-medium">{t("form.pinLabel")}</label>
               <Input
                 value={lightPin}
                 onChange={(e) => setLightPin(e.target.value)}
-                placeholder="e.g. GPIO2"
+                placeholder={t("form.pinPlaceholder")}
                 disabled={added}
                 className={cn(
                   "font-mono",
@@ -190,12 +191,12 @@ export function Level4_2() {
                 )}
               />
               <p className="text-xs text-muted-foreground">
-                Must be different from GPIO4 (button) and GPIO5 (first light)
+                {t("form.pinHelp")}
               </p>
               {attempted && !pinValid && (
                 <p className="flex items-center gap-1 text-xs text-red-400">
                   <AlertCircle className="h-3 w-3" />
-                  Format must be GPIO followed by a number (e.g. GPIO2)
+                  {t("form.pinError")}
                 </p>
               )}
             </div>
@@ -206,7 +207,7 @@ export function Level4_2() {
                 className="w-full bg-purple-600 hover:bg-purple-700"
               >
                 <Plus className="mr-2 h-4 w-4" />
-                Add Light
+                {t("form.addButton")}
               </Button>
             )}
 
@@ -220,15 +221,15 @@ export function Level4_2() {
                   <div className="rounded-lg border border-green-500/30 bg-green-500/5 p-4 flex items-center gap-3">
                     <CheckCircle2 className="h-5 w-5 text-green-500 shrink-0" />
                     <div>
-                      <p className="text-sm font-medium text-green-400">Light added!</p>
+                      <p className="text-sm font-medium text-green-400">{t("success.title")}</p>
                       <p className="text-xs text-muted-foreground">
-                        The YAML now includes your second light component.
+                        {t("success.body")}
                       </p>
                     </div>
                   </div>
                   <Button asChild className="w-full">
                     <Link to="/app/level/4.3">
-                      Continue to Level 4.3
+                      {t("buttons.continue")}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -243,10 +244,10 @@ export function Level4_2() {
           <CardHeader>
             <div className="flex items-center gap-2">
               <Code2 className="h-4 w-4 text-muted-foreground" />
-              <CardTitle className="text-lg">Live Preview</CardTitle>
+              <CardTitle className="text-lg">{t("preview.title")}</CardTitle>
             </div>
             <CardDescription>
-              The new light component appears at the bottom when added
+              {t("preview.desc")}
             </CardDescription>
           </CardHeader>
           <CardContent>

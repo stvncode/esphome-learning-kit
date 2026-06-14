@@ -15,6 +15,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 import { FlowCanvas } from "@/components/flow"
@@ -35,7 +36,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "button",
     type: "button",
-    label: "Button",
+    label: "components.items.button",
     icon: CircleDot,
     color: "text-blue-400",
     bgColor: "bg-blue-500/20",
@@ -45,7 +46,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "light",
     type: "light",
-    label: "Light",
+    label: "components.items.light",
     icon: Lightbulb,
     color: "text-amber-400",
     bgColor: "bg-amber-500/20",
@@ -55,7 +56,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "turn_on",
     type: "action",
-    label: "Turn On",
+    label: "components.items.turnOn",
     icon: Power,
     color: "text-green-400",
     bgColor: "bg-green-500/20",
@@ -65,7 +66,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "turn_off",
     type: "action",
-    label: "Turn Off",
+    label: "components.items.turnOff",
     icon: Power,
     color: "text-red-400",
     bgColor: "bg-red-500/20",
@@ -75,7 +76,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "delay_5s",
     type: "delay",
-    label: "Wait 5s",
+    label: "components.items.wait5s",
     icon: Clock,
     color: "text-orange-400",
     bgColor: "bg-orange-500/20",
@@ -85,7 +86,7 @@ const availableComponents: DraggableComponent[] = [
   {
     id: "delay_1s",
     type: "delay",
-    label: "Wait 1s",
+    label: "components.items.wait1s",
     icon: Clock,
     color: "text-orange-400",
     bgColor: "bg-orange-500/20",
@@ -95,6 +96,7 @@ const availableComponents: DraggableComponent[] = [
 ]
 
 export function Level1_4() {
+  const t = useLevelT("1_4")
   const [nodes, setNodes] = useState<Node[]>([])
   const [edges, setEdges] = useState<Edge[]>([])
   const [isSimulating, setIsSimulating] = useState(false)
@@ -236,23 +238,23 @@ export function Level1_4() {
       <div className="mb-4 flex items-start justify-between">
         <div>
           <div className="mb-2 flex items-center gap-2">
-            <Badge className="bg-amber-500/20 text-amber-400">Phase 1</Badge>
-            <Badge variant="outline">Level 1.4</Badge>
+            <Badge className="bg-amber-500/20 text-amber-400">{t("header.phase", { n: 1 })}</Badge>
+            <Badge variant="outline">{t("header.level", { id: "1.4" })}</Badge>
             {isCompleted && (
               <Badge className="bg-green-500/20 text-green-400">
-                <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+                <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
               </Badge>
             )}
           </div>
-          <h1 className="text-2xl font-bold">Adding Timing</h1>
+          <h1 className="text-2xl font-bold">{t("header.title")}</h1>
           <p className="text-muted-foreground">
-            Learn how delays and durations work in automations.
+            {t("header.subtitle")}
           </p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm" onClick={resetCanvas}>
             <RotateCcw className="mr-2 h-4 w-4" />
-            Reset
+            {t("buttons.reset")}
           </Button>
           <Button
             size="sm"
@@ -260,7 +262,7 @@ export function Level1_4() {
             disabled={isSimulating || nodes.length < 2}
           >
             <Play className="mr-2 h-4 w-4" />
-            {isSimulating ? "Simulating..." : "Simulate"}
+            {isSimulating ? t("buttons.simulating") : t("buttons.simulate")}
           </Button>
         </div>
       </div>
@@ -293,7 +295,7 @@ export function Level1_4() {
                     <div className="flex items-center justify-between">
                       <CardTitle className="flex items-center gap-2 text-sm text-orange-400">
                         <Clock className="h-4 w-4" />
-                        Timing Concept
+                        {t("concept.title")}
                       </CardTitle>
                       <Button
                         variant="ghost"
@@ -307,18 +309,18 @@ export function Level1_4() {
                   </CardHeader>
                   <CardContent className="text-sm text-muted-foreground">
                     <p className="mb-3">
-                      Sometimes you want actions to happen after a delay, or for a specific duration.
+                      {t("concept.body")}
                     </p>
                     <div className="rounded-lg bg-background/50 p-3">
-                      <p className="mb-2 font-medium text-foreground">Example: Timed Light</p>
+                      <p className="mb-2 font-medium text-foreground">{t("concept.exampleTitle")}</p>
                       <div className="flex items-center gap-2 text-xs">
-                        <span className="rounded bg-blue-500/20 px-2 py-1 text-blue-400">Press</span>
+                        <span className="rounded bg-blue-500/20 px-2 py-1 text-blue-400">{t("concept.flow.press")}</span>
                         <span>→</span>
-                        <span className="rounded bg-green-500/20 px-2 py-1 text-green-400">On</span>
+                        <span className="rounded bg-green-500/20 px-2 py-1 text-green-400">{t("concept.flow.on")}</span>
                         <span>→</span>
                         <span className="rounded bg-orange-500/20 px-2 py-1 text-orange-400">5s</span>
                         <span>→</span>
-                        <span className="rounded bg-red-500/20 px-2 py-1 text-red-400">Off</span>
+                        <span className="rounded bg-red-500/20 px-2 py-1 text-red-400">{t("concept.flow.off")}</span>
                       </div>
                     </div>
                   </CardContent>
@@ -330,16 +332,16 @@ export function Level1_4() {
           {/* Components Panel */}
           <Card className="border-border/50 bg-card/50">
             <CardHeader className="pb-3">
-              <CardTitle className="text-sm">Components</CardTitle>
+              <CardTitle className="text-sm">{t("components.title")}</CardTitle>
               <CardDescription className="text-xs">
-                Click to add to canvas
+                {t("components.description")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {["Input", "Action", "Timing", "Output"].map((category) => (
                 <div key={category}>
                   <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                    {category}
+                    {t(`components.categories.${category}` as Parameters<typeof t>[0])}
                   </p>
                   <div className="space-y-2">
                     {availableComponents
@@ -362,7 +364,7 @@ export function Level1_4() {
                             >
                               <Icon className={cn("h-4 w-4", comp.color)} />
                             </div>
-                            <span className="text-sm">{comp.label}</span>
+                            <span className="text-sm">{t(comp.label as Parameters<typeof t>[0])}</span>
                           </motion.button>
                         )
                       })}
@@ -378,16 +380,16 @@ export function Level1_4() {
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2 text-sm">
                   <Sparkles className="h-4 w-4 text-amber-400" />
-                  Challenge
+                  {t("challenge.title")}
                 </CardTitle>
                 {challengeComplete && (
                   <Badge className="bg-green-500/20 text-green-400">
-                    <CheckCircle2 className="mr-1 h-3 w-3" /> Complete!
+                    <CheckCircle2 className="mr-1 h-3 w-3" /> {t("challenge.complete")}
                   </Badge>
                 )}
               </div>
               <CardDescription className="text-xs">
-                Create a timed light: button press turns on, waits 5 seconds, then turns off automatically.
+                {t("challenge.description")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -405,7 +407,7 @@ export function Level1_4() {
                   ) : (
                     <CircleDot className="h-3 w-3" />
                   )}
-                  Add a Button
+                  {t("challenge.tasks.addButton")}
                 </div>
                 <div
                   className={cn(
@@ -420,7 +422,7 @@ export function Level1_4() {
                   ) : (
                     <CircleDot className="h-3 w-3" />
                   )}
-                  Add Turn On action
+                  {t("challenge.tasks.addTurnOn")}
                 </div>
                 <div
                   className={cn(
@@ -435,7 +437,7 @@ export function Level1_4() {
                   ) : (
                     <CircleDot className="h-3 w-3" />
                   )}
-                  Add a Wait block
+                  {t("challenge.tasks.addWait")}
                 </div>
                 <div
                   className={cn(
@@ -450,7 +452,7 @@ export function Level1_4() {
                   ) : (
                     <CircleDot className="h-3 w-3" />
                   )}
-                  Add Turn Off action
+                  {t("challenge.tasks.addTurnOff")}
                 </div>
                 <div
                   className={cn(
@@ -465,7 +467,7 @@ export function Level1_4() {
                   ) : (
                     <CircleDot className="h-3 w-3" />
                   )}
-                  Connect all nodes ({edges.length}/5)
+                  {t("challenge.tasks.connectNodes", { n: edges.length, total: 5 })}
                 </div>
               </div>
 
@@ -476,7 +478,7 @@ export function Level1_4() {
                 >
                   <Button asChild className="w-full" size="sm">
                     <Link to="/app/level/2.1">
-                      Continue to Phase 2
+                      {t("buttons.continue")}
                       <ChevronRight className="ml-2 h-4 w-4" />
                     </Link>
                   </Button>
@@ -496,23 +498,23 @@ export function Level1_4() {
                 <Card className="border-orange-500/30 bg-orange-500/5">
                   <CardContent className="py-4">
                     <p className="mb-2 text-sm font-medium text-orange-400">
-                      Simulating timed sequence...
+                      {t("simulation.title")}
                     </p>
                     <div className="space-y-1 text-xs text-muted-foreground">
                       <p className={cn(simulationStep >= 1 && "text-blue-400 font-medium")}>
-                        1. Button pressed
+                        {t("simulation.steps.pressed")}
                       </p>
                       <p className={cn(simulationStep >= 2 && "text-green-400 font-medium")}>
-                        2. Light turns on
+                        {t("simulation.steps.on")}
                       </p>
                       <p className={cn(simulationStep >= 3 && "text-orange-400 font-medium")}>
-                        3. Waiting 5 seconds...
+                        {t("simulation.steps.waiting")}
                       </p>
                       <p className={cn(simulationStep >= 4 && "text-orange-400 font-medium")}>
-                        4. Wait complete
+                        {t("simulation.steps.waitComplete")}
                       </p>
                       <p className={cn(simulationStep >= 5 && "text-red-400 font-medium")}>
-                        5. Light turns off
+                        {t("simulation.steps.off")}
                       </p>
                     </div>
                   </CardContent>

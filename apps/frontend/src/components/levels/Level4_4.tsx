@@ -11,6 +11,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -51,6 +52,7 @@ const requirements: Requirement[] = [
 ]
 
 export function Level4_4() {
+  const t = useLevelT("4_4")
   const [code, setCode] = useState(INITIAL_VALUE)
   const [levelComplete, setLevelComplete] = useState(false)
 
@@ -73,17 +75,17 @@ export function Level4_4() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-purple-500/20 text-purple-400">Phase 4</Badge>
-          <Badge variant="outline">Level 4.4</Badge>
+          <Badge className="bg-purple-500/20 text-purple-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Write a Complete Config</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          The hardest challenge yet: write a full ESPHome config from scratch.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -94,10 +96,9 @@ export function Level4_4() {
             <FileCode className="h-5 w-5 text-purple-400" />
           </div>
           <div>
-            <p className="font-medium text-foreground">Build from scratch</p>
+            <p className="font-medium text-foreground">{t("info.title")}</p>
             <p className="text-sm text-muted-foreground">
-              Write a complete, valid-enough ESPHome config. The checklist on the right tracks which
-              required sections you've included. All 5 must be present to complete the level.
+              {t("info.desc")}
             </p>
           </div>
         </CardContent>
@@ -110,10 +111,10 @@ export function Level4_4() {
             <CardHeader>
               <div className="flex items-center gap-2">
                 <Code2 className="h-4 w-4 text-purple-400" />
-                <CardTitle className="text-lg">Your Config</CardTitle>
+                <CardTitle className="text-lg">{t("editor.title")}</CardTitle>
               </div>
               <CardDescription>
-                Type a complete ESPHome YAML configuration below
+                {t("editor.description")}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -128,7 +129,7 @@ export function Level4_4() {
                 )}
                 rows={28}
                 spellCheck={false}
-                placeholder="Continue writing your ESPHome config here..."
+                placeholder={t("editor.placeholder")}
               />
             </CardContent>
           </Card>
@@ -140,10 +141,10 @@ export function Level4_4() {
             <CardHeader className="pb-3">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-amber-400" />
-                <CardTitle className="text-sm">Requirements</CardTitle>
+                <CardTitle className="text-sm">{t("checklist.title")}</CardTitle>
               </div>
               <CardDescription className="text-xs">
-                All 5 must be present to complete
+                {t("checklist.description")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
@@ -181,9 +182,9 @@ export function Level4_4() {
 
               <div className="mt-2 rounded-lg border border-border/50 bg-muted/20 p-3">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-muted-foreground">Progress</span>
+                  <span className="text-muted-foreground">{t("checklist.progress")}</span>
                   <span className="font-medium">
-                    {passedCount} / {requirements.length}
+                    {t("checklist.count", { n: passedCount, total: requirements.length })}
                   </span>
                 </div>
                 <div className="mt-2 h-1.5 w-full rounded-full bg-border/50">
@@ -204,14 +205,14 @@ export function Level4_4() {
                   >
                     <div className="rounded-lg border border-green-500/30 bg-green-500/5 p-3 text-center">
                       <CheckCircle2 className="h-8 w-8 text-green-500 mx-auto mb-2" />
-                      <p className="text-sm font-semibold text-green-400">Phase 4 Complete!</p>
+                      <p className="text-sm font-semibold text-green-400">{t("complete.title")}</p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        You can write a full ESPHome config from scratch.
+                        {t("complete.desc")}
                       </p>
                     </div>
                     <Button asChild className="w-full">
                       <Link to="/app/level/5.1">
-                        Continue to Phase 5
+                        {t("complete.continue")}
                         <ChevronRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>

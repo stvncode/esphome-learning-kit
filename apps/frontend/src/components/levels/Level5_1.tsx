@@ -13,6 +13,7 @@ import {
   Terminal,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useRecordQuizScore } from "@/lib/useQuizScore"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
@@ -45,17 +46,17 @@ interface RadioOption {
 const radioOptions: RadioOption[] = [
   {
     id: "a",
-    text: "WiFi failed to connect to the network",
+    text: "quiz.options.a",
     correct: false,
   },
   {
     id: "b",
-    text: "GPIO34 is input-only and can't be used as output",
+    text: "quiz.options.b",
     correct: true,
   },
   {
     id: "c",
-    text: "The light brightness was set too high",
+    text: "quiz.options.c",
     correct: false,
   },
 ]
@@ -79,6 +80,8 @@ export function Level5_1() {
   const [submitted, setSubmitted] = useState(false)
   const [levelComplete, setLevelComplete] = useState(false)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
+
+  const t = useLevelT("5_1")
 
   const { completeLevel, completedLevels } = useProgressStore()
   const recordQuizScore = useRecordQuizScore()
@@ -130,17 +133,17 @@ export function Level5_1() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-cyan-500/20 text-cyan-400">Phase 5</Badge>
-          <Badge variant="outline">Level 5.1</Badge>
+          <Badge className="bg-cyan-500/20 text-cyan-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Debug with Logs</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          Read a simulated ESPHome log and identify what went wrong.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -151,13 +154,13 @@ export function Level5_1() {
             <Terminal className="h-5 w-5 text-cyan-400" />
           </div>
           <div>
-            <p className="font-medium text-foreground">Reading ESPHome logs</p>
+            <p className="font-medium text-foreground">{t("info.title")}</p>
             <p className="text-sm text-muted-foreground">
-              Logs have three levels:{" "}
-              <span className="text-blue-400 font-mono">[I]</span> INFO — normal operation,{" "}
-              <span className="text-yellow-400 font-mono">[W]</span> WARNING — something may be wrong,{" "}
-              <span className="text-red-400 font-mono">[E]</span> ERROR — something failed.
-              Errors are the first place to look when a device isn't working.
+              {t("info.levelsIntro")}{" "}
+              <span className="text-blue-400 font-mono">[I]</span> {t("info.infoLevel")},{" "}
+              <span className="text-yellow-400 font-mono">[W]</span> {t("info.warnLevel")},{" "}
+              <span className="text-red-400 font-mono">[E]</span> {t("info.errorLevel")}{" "}
+              {t("info.errorsFirst")}
             </p>
           </div>
         </CardContent>
@@ -169,7 +172,7 @@ export function Level5_1() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Terminal className="h-4 w-4 text-muted-foreground" />
-              <CardTitle className="text-sm">Simulated Log Output</CardTitle>
+              <CardTitle className="text-sm">{t("logViewer.title")}</CardTitle>
             </div>
             <Button
               size="sm"
@@ -178,11 +181,11 @@ export function Level5_1() {
               disabled={playing || logsFinished}
             >
               <Play className="mr-2 h-3 w-3" />
-              {logsFinished ? "Log complete" : playing ? "Playing…" : "Play logs"}
+              {logsFinished ? t("logViewer.complete") : playing ? t("logViewer.playing") : t("logViewer.play")}
             </Button>
           </div>
           <CardDescription className="text-xs">
-            Watch the log stream in real time
+            {t("logViewer.desc")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -206,7 +209,7 @@ export function Level5_1() {
             ))}
             {visibleCount === 0 && (
               <p className="text-muted-foreground/40 text-center pt-8">
-                Press "Play logs" to start the simulation
+                {t("logViewer.empty")}
               </p>
             )}
           </div>
@@ -222,9 +225,9 @@ export function Level5_1() {
           >
             <Card className="border-border/50 bg-card/50">
               <CardHeader>
-                <CardTitle className="text-base">What went wrong?</CardTitle>
+                <CardTitle className="text-base">{t("quiz.title")}</CardTitle>
                 <CardDescription>
-                  Based on the ERROR line in the log above, select the correct diagnosis.
+                  {t("quiz.desc")}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
@@ -267,7 +270,7 @@ export function Level5_1() {
                         {showCorrect && <CheckCircle2 className="h-3 w-3 text-green-500" />}
                         {showWrong && <XCircle className="h-3 w-3 text-red-500" />}
                       </div>
-                      {option.text}
+                      {t(option.text as Parameters<typeof t>[0])}
                     </motion.button>
                   )
                 })}
@@ -278,7 +281,7 @@ export function Level5_1() {
                     disabled={!selectedAnswer}
                     className="w-full mt-2"
                   >
-                    Submit Answer
+                    {t("quiz.submit")}
                   </Button>
                 )}
 
@@ -299,20 +302,23 @@ export function Level5_1() {
                       >
                         {levelComplete ? (
                           <>
-                            <p className="font-medium mb-1">Correct!</p>
+                            <p className="font-medium mb-1">{t("result.correctTitle")}</p>
                             <p className="text-xs text-muted-foreground">
-                              The ERROR line{" "}
+                              {t("result.correctBefore")}{" "}
                               <code className="font-mono">[E][gpio:102]: Pin GPIO34 is input-only!</code>{" "}
-                              means you tried to use GPIO34 as an output pin, but it only supports input.
-                              Use a different GPIO pin for your light.
+                              {t("result.correctAfter")}
                             </p>
                           </>
                         ) : (
                           <>
-                            <p className="font-medium mb-1">Not quite.</p>
+                            <p className="font-medium mb-1">{t("result.wrongTitle")}</p>
                             <p className="text-xs">
-                              Look at the red ERROR line in the log. The correct answer is:{" "}
-                              <span className="font-medium">{correctOption?.text}</span>
+                              {t("result.wrongBody")}{" "}
+                              <span className="font-medium">
+                                {correctOption
+                                  ? t(correctOption.text as Parameters<typeof t>[0])
+                                  : ""}
+                              </span>
                             </p>
                           </>
                         )}
@@ -321,7 +327,7 @@ export function Level5_1() {
                       {levelComplete && (
                         <Button asChild className="w-full">
                           <Link to="/app/level/5.2">
-                            Continue to Level 5.2
+                            {t("buttons.continue")}
                             <ChevronRight className="ml-2 h-4 w-4" />
                           </Link>
                         </Button>

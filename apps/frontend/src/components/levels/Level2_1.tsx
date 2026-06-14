@@ -21,6 +21,7 @@ import {
   Sparkles,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { Link } from "react-router-dom"
 
@@ -40,7 +41,7 @@ const visualBlocks: VisualBlock[] = [
   {
     id: "button",
     type: "button",
-    label: "Button",
+    label: "blocks.button.label",
     icon: CircleDot,
     color: "text-blue-400",
     bgColor: "bg-blue-500/20",
@@ -50,7 +51,7 @@ const visualBlocks: VisualBlock[] = [
   {
     id: "automation",
     type: "automation",
-    label: "When Pressed",
+    label: "blocks.automation.label",
     icon: MousePointerClick,
     color: "text-green-400",
     bgColor: "bg-green-500/20",
@@ -60,7 +61,7 @@ const visualBlocks: VisualBlock[] = [
   {
     id: "light",
     type: "light",
-    label: "Light",
+    label: "blocks.light.label",
     icon: Lightbulb,
     color: "text-amber-400",
     bgColor: "bg-amber-500/20",
@@ -83,56 +84,56 @@ const yamlLines: YamlLine[] = [
     content: "# 🔵 This defines your button",
     color: "text-blue-400",
     blockId: "button",
-    explanation: "A comment explaining this section",
+    explanation: "yaml.l1",
   },
   {
     number: 2,
     content: "binary_sensor:",
     color: "text-blue-400",
     blockId: "button",
-    explanation: "A category for things that are either ON or OFF — like buttons, motion sensors, door contacts",
+    explanation: "yaml.l2",
   },
   {
     number: 3,
     content: "  - platform: gpio",
     color: "text-blue-400",
     blockId: "button",
-    explanation: "This sensor is connected directly to a pin on the board (GPIO = General Purpose Input/Output)",
+    explanation: "yaml.l3",
   },
   {
     number: 4,
     content: '    pin: GPIO4',
     color: "text-blue-400",
     blockId: "button",
-    explanation: "Which physical pin on the board — GPIO4 is the 4th general-purpose pin",
+    explanation: "yaml.l4",
   },
   {
     number: 5,
     content: '    name: "My Button"',
     color: "text-blue-400",
     blockId: "button",
-    explanation: "The friendly name you'll see in Home Assistant",
+    explanation: "yaml.l5",
   },
   {
     number: 6,
     content: "    on_press:",
     color: "text-green-400",
     blockId: "automation",
-    explanation: "What should happen when someone presses this button?",
+    explanation: "yaml.l6",
   },
   {
     number: 7,
     content: "      then:",
     color: "text-green-400",
     blockId: "automation",
-    explanation: "Here comes the list of actions to perform...",
+    explanation: "yaml.l7",
   },
   {
     number: 8,
     content: "        - light.turn_on: my_light",
     color: "text-green-400",
     blockId: "automation",
-    explanation: "Turn on the light that has the ID 'my_light'",
+    explanation: "yaml.l8",
   },
   {
     number: 9,
@@ -145,42 +146,42 @@ const yamlLines: YamlLine[] = [
     content: "# 🟡 This defines your light",
     color: "text-amber-400",
     blockId: "light",
-    explanation: "A comment explaining this section",
+    explanation: "yaml.l10",
   },
   {
     number: 11,
     content: "light:",
     color: "text-amber-400",
     blockId: "light",
-    explanation: "A category for light components — LEDs, bulbs, RGB strips",
+    explanation: "yaml.l11",
   },
   {
     number: 12,
     content: "  - platform: binary",
     color: "text-amber-400",
     blockId: "light",
-    explanation: "A simple on/off light (as opposed to dimmable)",
+    explanation: "yaml.l12",
   },
   {
     number: 13,
     content: '    name: "My Light"',
     color: "text-amber-400",
     blockId: "light",
-    explanation: "The friendly name you'll see in Home Assistant",
+    explanation: "yaml.l13",
   },
   {
     number: 14,
     content: "    id: my_light",
     color: "text-amber-400",
     blockId: "light",
-    explanation: "A short internal name so other parts of the config can reference this light",
+    explanation: "yaml.l14",
   },
   {
     number: 15,
     content: "    output: light_output",
     color: "text-amber-400",
     blockId: "light",
-    explanation: "Which output pin this light is connected to",
+    explanation: "yaml.l15",
   },
   {
     number: 16,
@@ -193,32 +194,33 @@ const yamlLines: YamlLine[] = [
     content: "output:",
     color: "text-amber-400",
     blockId: "light",
-    explanation: "Physical output pins configuration",
+    explanation: "yaml.l17",
   },
   {
     number: 18,
     content: "  - platform: gpio",
     color: "text-amber-400",
     blockId: "light",
-    explanation: "This output is a GPIO pin",
+    explanation: "yaml.l18",
   },
   {
     number: 19,
     content: "    pin: GPIO5",
     color: "text-amber-400",
     blockId: "light",
-    explanation: "Connected to pin GPIO5",
+    explanation: "yaml.l19",
   },
   {
     number: 20,
     content: "    id: light_output",
     color: "text-amber-400",
     blockId: "light",
-    explanation: "Internal ID referenced by the light above",
+    explanation: "yaml.l20",
   },
 ]
 
 export function Level2_1() {
+  const t = useLevelT("2_1")
   const [hoveredBlock, setHoveredBlock] = useState<string | null>(null)
   const [hoveredLine, setHoveredLine] = useState<number | null>(null)
   const [revealedLines, setRevealedLines] = useState<number[]>([])
@@ -282,17 +284,17 @@ export function Level2_1() {
         {/* Header */}
         <div className="mb-4">
           <div className="mb-2 flex items-center gap-2">
-            <Badge className="bg-blue-500/20 text-blue-400">Phase 2</Badge>
-            <Badge variant="outline">Level 2.1</Badge>
+            <Badge className="bg-blue-500/20 text-blue-400">{t("header.phase")}</Badge>
+            <Badge variant="outline">{t("header.level")}</Badge>
             {isCompleted && (
               <Badge className="bg-green-500/20 text-green-400">
-                <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+                <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
               </Badge>
             )}
           </div>
-          <h1 className="text-2xl font-bold">The YAML Behind the Magic</h1>
+          <h1 className="text-2xl font-bold">{t("header.title")}</h1>
           <p className="text-muted-foreground">
-            Every visual block has a text representation. Hover to explore the connection.
+            {t("header.subtitle")}
           </p>
         </div>
 
@@ -303,10 +305,10 @@ export function Level2_1() {
             <CardHeader className="pb-3 shrink-0">
               <div className="flex items-center gap-2">
                 <Eye className="h-4 w-4 text-muted-foreground" />
-                <CardTitle className="text-sm">Visual Flow</CardTitle>
+                <CardTitle className="text-sm">{t("visual.title")}</CardTitle>
               </div>
               <CardDescription className="text-xs">
-                Hover over blocks to highlight their YAML
+                {t("visual.desc")}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex-1 overflow-y-auto min-h-0">
@@ -333,10 +335,10 @@ export function Level2_1() {
                   <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-500/20">
                     <CircleDot className="h-6 w-6 text-blue-400" />
                   </div>
-                  <span className="text-sm font-medium text-blue-100">Button</span>
+                  <span className="text-sm font-medium text-blue-100">{t("blocks.button.label")}</span>
                   <span className="text-xs text-blue-400/70">GPIO4</span>
                   <Badge className="absolute -top-2 bg-blue-500 text-[10px]">
-                    Input
+                    {t("blocks.button.badge")}
                   </Badge>
                 </motion.div>
 
@@ -362,10 +364,10 @@ export function Level2_1() {
                   <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-green-500/20">
                     <MousePointerClick className="h-6 w-6 text-green-400" />
                   </div>
-                  <span className="text-sm font-medium text-green-100">When Pressed</span>
+                  <span className="text-sm font-medium text-green-100">{t("blocks.automation.label")}</span>
                   <span className="text-xs text-green-400/70">then → turn_on</span>
                   <Badge className="absolute -top-2 bg-green-500 text-[10px]">
-                    Automation
+                    {t("blocks.automation.badge")}
                   </Badge>
                 </motion.div>
 
@@ -391,10 +393,10 @@ export function Level2_1() {
                   <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-lg bg-amber-500/20">
                     <Lightbulb className="h-6 w-6 text-amber-400" />
                   </div>
-                  <span className="text-sm font-medium text-amber-100">Light</span>
+                  <span className="text-sm font-medium text-amber-100">{t("blocks.light.label")}</span>
                   <span className="text-xs text-amber-400/70">GPIO5</span>
                   <Badge className="absolute -top-2 bg-amber-500 text-[10px]">
-                    Output
+                    {t("blocks.light.badge")}
                   </Badge>
                 </motion.div>
               </div>
@@ -407,7 +409,7 @@ export function Level2_1() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Code2 className="h-4 w-4 text-muted-foreground" />
-                  <CardTitle className="text-sm">Generated YAML</CardTitle>
+                  <CardTitle className="text-sm">{t("code.title")}</CardTitle>
                 </div>
                 {!hasRevealedAll && (
                   <Button
@@ -416,12 +418,12 @@ export function Level2_1() {
                     disabled={isRevealing}
                   >
                     <Sparkles className="mr-2 h-3 w-3" />
-                    {isRevealing ? "Revealing..." : "Reveal Code"}
+                    {isRevealing ? t("code.revealing") : t("code.reveal")}
                   </Button>
                 )}
               </div>
               <CardDescription className="text-xs">
-                Hover over lines to see explanations
+                {t("code.desc")}
               </CardDescription>
             </CardHeader>
             <CardContent className="flex-1 overflow-hidden min-h-0">
@@ -480,7 +482,7 @@ export function Level2_1() {
                             side="right"
                             className="max-w-xs bg-gray-900 text-sm"
                           >
-                            <p>{line.explanation}</p>
+                            <p>{t(line.explanation as Parameters<typeof t>[0])}</p>
                           </TooltipContent>
                         )}
                       </Tooltip>
@@ -497,15 +499,15 @@ export function Level2_1() {
           <div className="flex gap-4">
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded bg-blue-500" />
-              <span className="text-xs text-muted-foreground">Input (binary_sensor)</span>
+              <span className="text-xs text-muted-foreground">{t("legend.input")}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded bg-green-500" />
-              <span className="text-xs text-muted-foreground">Automation (on_press)</span>
+              <span className="text-xs text-muted-foreground">{t("legend.automation")}</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="h-3 w-3 rounded bg-amber-500" />
-              <span className="text-xs text-muted-foreground">Output (light + output)</span>
+              <span className="text-xs text-muted-foreground">{t("legend.output")}</span>
             </div>
           </div>
 
@@ -516,7 +518,7 @@ export function Level2_1() {
             >
               <Button asChild>
                 <Link to="/app/level/2.2">
-                  Continue to Level 2.2
+                  {t("buttons.continue")}
                   <ChevronRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>

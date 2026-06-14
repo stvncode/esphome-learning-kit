@@ -13,6 +13,7 @@ import {
   Home,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { useRecordQuizScore } from "@/lib/useQuizScore"
 import { Link } from "react-router-dom"
@@ -25,10 +26,12 @@ interface Question {
   explanation: string
 }
 
+// Note: text fields below are i18n KEY strings, resolved with t() at render time.
+// Code-token answers (e.g. "if:", "condition:") are kept literal and not translated.
 const questions: Question[] = [
   {
     id: "q1",
-    question: "Which YAML keyword do you use to add a condition to an ESPHome automation?",
+    question: "quiz.q1.question",
     answers: [
       { id: "a", text: "if:" },
       { id: "b", text: "condition:" },
@@ -36,36 +39,36 @@ const questions: Question[] = [
       { id: "d", text: "check:" },
     ],
     correctId: "b",
-    explanation:
-      "ESPHome uses condition: inside an automation to check a state before running actions. It's different from many programming languages that use if.",
+    explanation: "quiz.q1.explanation",
   },
   {
     id: "q2",
-    question: "Where does the condition: block go in an ESPHome automation?",
+    question: "quiz.q2.question",
     answers: [
-      { id: "a", text: "At the top of the YAML file, before any components" },
-      { id: "b", text: "Inside the on_press block, alongside then:" },
-      { id: "c", text: "After the light: section" },
-      { id: "d", text: "Inside the output: block" },
+      { id: "a", text: "quiz.q2.answers.a" },
+      { id: "b", text: "quiz.q2.answers.b" },
+      { id: "c", text: "quiz.q2.answers.c" },
+      { id: "d", text: "quiz.q2.answers.d" },
     ],
     correctId: "b",
-    explanation:
-      "condition: sits inside the automation trigger (like on_press), at the same level as then:. The automation checks the condition first, then runs then: only if it passes.",
+    explanation: "quiz.q2.explanation",
   },
   {
     id: "q3",
-    question: "If a condition: evaluates to false, what happens to the actions in then:?",
+    question: "quiz.q3.question",
     answers: [
-      { id: "a", text: "They run anyway, but more slowly" },
-      { id: "b", text: "The device reboots to re-evaluate" },
-      { id: "c", text: "They are skipped entirely" },
-      { id: "d", text: "They run once and then stop" },
+      { id: "a", text: "quiz.q3.answers.a" },
+      { id: "b", text: "quiz.q3.answers.b" },
+      { id: "c", text: "quiz.q3.answers.c" },
+      { id: "d", text: "quiz.q3.answers.d" },
     ],
     correctId: "c",
-    explanation:
-      "When a condition is false, ESPHome skips the then: block completely. No actions are executed — it's as if the button press never triggered anything.",
+    explanation: "quiz.q3.explanation",
   },
 ]
+
+// Answer ids whose text is a literal code token (not an i18n key)
+const codeAnswerQuestionIds = new Set(["q1"])
 
 const exampleYaml = `binary_sensor:
   - platform: gpio
@@ -98,6 +101,7 @@ const getLineColor = (line: string) => {
 }
 
 export function Level3_5() {
+  const t = useLevelT("3_5")
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [submitted, setSubmitted] = useState<Record<string, boolean>>({})
   const [, setLevelComplete] = useState(false)
@@ -138,17 +142,17 @@ export function Level3_5() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-green-500/20 text-green-400">Phase 3</Badge>
-          <Badge variant="outline">Level 3.5</Badge>
+          <Badge className="bg-green-500/20 text-green-400">{t("header.phase", { n: 3 })}</Badge>
+          <Badge variant="outline">{t("header.level", { n: "3.5" })}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">Conditions</h1>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
         <p className="text-lg text-muted-foreground">
-          Learn how to add conditions so automations only run when it makes sense.
+          {t("header.subtitle")}
         </p>
       </div>
 
@@ -159,11 +163,11 @@ export function Level3_5() {
             <GitBranch className="h-5 w-5 text-green-400" />
           </div>
           <div>
-            <p className="font-medium text-foreground">What is a condition?</p>
+            <p className="font-medium text-foreground">{t("explanation.title")}</p>
             <p className="text-sm text-muted-foreground">
-              A condition lets your automation check the current state of your device before acting.
-              For example: "only turn on the light if the door sensor is OFF (door is closed)."
-              If the condition isn't met, the entire <code className="rounded bg-muted px-1 font-mono text-xs">then:</code> block is skipped.
+              {t("explanation.body1")}{" "}
+              <code className="rounded bg-muted px-1 font-mono text-xs">then:</code>{" "}
+              {t("explanation.body2")}
             </p>
           </div>
         </CardContent>
@@ -174,10 +178,10 @@ export function Level3_5() {
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2">
             <Code2 className="h-4 w-4 text-muted-foreground" />
-            <CardTitle className="text-sm">Example: condition in action</CardTitle>
+            <CardTitle className="text-sm">{t("example.title")}</CardTitle>
           </div>
           <CardDescription className="text-xs">
-            The light only turns on when the door sensor is OFF
+            {t("example.description")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -196,8 +200,11 @@ export function Level3_5() {
           <div className="mt-3 flex items-start gap-2 rounded-lg border border-yellow-500/30 bg-yellow-500/5 p-3">
             <Lightbulb className="mt-0.5 h-4 w-4 shrink-0 text-yellow-400" />
             <p className="text-xs text-muted-foreground">
-              Line 6–7: <span className="text-yellow-400 font-mono">condition:</span> checks if <code className="font-mono">door_sensor</code> is OFF.
-              If the door is open (sensor is ON), the condition fails and the light stays off.
+              {t("example.hint1")}{" "}
+              <span className="text-yellow-400 font-mono">condition:</span>{" "}
+              {t("example.hint2")}{" "}
+              <code className="font-mono">door_sensor</code>{" "}
+              {t("example.hint3")}
             </p>
           </div>
         </CardContent>
@@ -205,7 +212,7 @@ export function Level3_5() {
 
       {/* Quiz */}
       <div className="space-y-6">
-        <h2 className="text-lg font-semibold">Quiz — answer all 3 correctly to complete</h2>
+        <h2 className="text-lg font-semibold">{t("quiz.heading", { n: questions.length })}</h2>
 
         {questions.map((q, qi) => {
           const userAnswer = answers[q.id]
@@ -227,7 +234,7 @@ export function Level3_5() {
                   )}>
                     {qi + 1}
                   </div>
-                  <CardTitle className="text-sm leading-relaxed">{q.question}</CardTitle>
+                  <CardTitle className="text-sm leading-relaxed">{t(q.question as Parameters<typeof t>[0])}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
@@ -268,7 +275,9 @@ export function Level3_5() {
                             answer.id.toUpperCase()
                           )}
                         </div>
-                        {answer.text}
+                        {codeAnswerQuestionIds.has(q.id)
+                          ? answer.text
+                          : t(answer.text as Parameters<typeof t>[0])}
                       </motion.button>
                     )
                   })}
@@ -288,9 +297,9 @@ export function Level3_5() {
                           : "border border-red-500/30 bg-red-500/5 text-red-300"
                       )}>
                         <span className="font-medium">
-                          {userAnswer === q.correctId ? "Correct! " : "Not quite — "}
+                          {userAnswer === q.correctId ? t("quiz.correctPrefix") : t("quiz.wrongPrefix")}
                         </span>
-                        {q.explanation}
+                        {t(q.explanation as Parameters<typeof t>[0])}
                       </div>
                     </motion.div>
                   )}
@@ -327,24 +336,24 @@ export function Level3_5() {
                   )}
                 </div>
                 <h3 className="mb-2 text-xl font-bold">
-                  {allCorrect ? "Perfect score!" : `${correctCount} of ${questions.length} correct`}
+                  {allCorrect ? t("results.perfectTitle") : t("results.scoreTitle", { n: correctCount, total: questions.length })}
                 </h3>
                 <p className="mb-6 text-sm text-muted-foreground">
                   {allCorrect
-                    ? "You understand ESPHome conditions. You're ready to build real projects!"
-                    : "Review the explanations above and try again to get all 3 correct."}
+                    ? t("results.perfectBody")
+                    : t("results.retryBody", { total: questions.length })}
                 </p>
                 <div className="flex justify-center gap-3">
                   {!allCorrect && (
                     <Button variant="outline" onClick={reset}>
-                      Try Again
+                      {t("buttons.tryAgain")}
                     </Button>
                   )}
                   {allCorrect && (
                     <Button asChild>
                       <Link to="/">
                         <Home className="mr-2 h-4 w-4" />
-                        Back to Home
+                        {t("buttons.backToHome")}
                         <ChevronRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>

@@ -5,7 +5,7 @@ import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { authClient } from "@/lib/auth-client"
 import { useMutation } from "@tanstack/react-query"
-import { ArrowLeft, CheckCircle2, Cpu, Loader2 } from "lucide-react"
+import { ArrowLeft, CheckCircle2, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { toast } from "sonner"
@@ -36,10 +36,8 @@ export function ForgotPassword() {
       </Link>
       <div className="relative z-10 flex w-full max-w-sm flex-col gap-6">
         <Link to="/" className="flex items-center gap-2 self-center font-medium text-foreground">
-          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-gradient-to-br from-blue-500 to-cyan-400">
-            <Cpu className="h-3.5 w-3.5 text-white" />
-          </div>
-          ESPHome Learn
+          <img src="/esp32.png" className="h-10 w-10" />
+          ESPHome Learning
         </Link>
 
         <Card className="border-border bg-card shadow-none">
@@ -56,8 +54,9 @@ export function ForgotPassword() {
               <div className="flex flex-col items-center gap-3 py-2 text-center">
                 <CheckCircle2 className="h-10 w-10 text-green-500" />
                 <p className="text-sm text-muted-foreground">
-                  If an account exists for <span className="font-medium text-foreground">{email}</span>,
-                  a password reset link is on its way.
+                  If an account exists for{" "}
+                  <span className="font-medium text-foreground">{email}</span>, a password reset
+                  link is on its way.
                 </p>
               </div>
             ) : (

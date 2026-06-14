@@ -6,7 +6,7 @@ import { createPortal } from "react-dom"
 import { CANVAS_CATEGORIES, LOGIC_CATEGORIES } from "./constants"
 import { NodePalette } from "./NodePalette"
 import type { ComponentItem, ConnectMenu, NodeMenu } from "./types"
-import { useWorkspaceT } from "./workspace.i18n"
+import { useWorkspaceT } from "@/lib/i18n"
 
 interface WorkspaceContextMenusProps {
   connectMenu: ConnectMenu | null

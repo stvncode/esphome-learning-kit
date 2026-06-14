@@ -15,7 +15,7 @@ import {
   STARTER_KIT_NODES,
 } from "@/components/workspace/constants"
 import type { SavedProject } from "@/components/workspace/types"
-import { useWorkspaceT } from "@/components/workspace/workspace.i18n"
+import { useWorkspaceT } from "@/lib/i18n"
 import { listProjects } from "@/lib/api"
 import { useQuery } from "@tanstack/react-query"
 import { motion } from "framer-motion"

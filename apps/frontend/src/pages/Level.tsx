@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { LEVEL_ORDER, levelIndex, levelMeta, TOTAL_LEVELS } from "@/lib/curriculum"
-import { useTranslation } from "@/lib/i18n"
-import { useCurriculumLabels } from "@/lib/i18n/curriculum.i18n"
+import { useCurriculumLabels, useTranslation } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
 import { lazy, Suspense, useEffect, type ComponentType } from "react"

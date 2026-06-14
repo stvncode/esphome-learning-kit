@@ -12,6 +12,7 @@ import {
   Radio,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { useLevelT } from "@/lib/i18n"
 import { useRecordQuizScore } from "@/lib/useQuizScore"
 import { useProgressStore } from "@/stores/progressStore"
 
@@ -56,7 +57,7 @@ interface Question {
 const questions: Question[] = [
   {
     id: "q1",
-    question: "Which two pins does I2C use?",
+    question: "quiz.q1.question",
     answers: [
       { id: "a", text: "TX and RX" },
       { id: "b", text: "MOSI and MISO" },
@@ -64,12 +65,11 @@ const questions: Question[] = [
       { id: "d", text: "CLK and DATA" },
     ],
     correctId: "c",
-    explanation:
-      "I2C uses SDA (Serial Data) and SCL (Serial Clock). On the ESP32, these are typically GPIO21 and GPIO22 by default, though any GPIO pair can be configured.",
+    explanation: "quiz.q1.explanation",
   },
   {
     id: "q2",
-    question: "Which ESPHome platform would you use for a BME280 sensor?",
+    question: "quiz.q2.question",
     answers: [
       { id: "a", text: "platform: gpio" },
       { id: "b", text: "platform: bme280_i2c" },
@@ -77,21 +77,19 @@ const questions: Question[] = [
       { id: "d", text: "platform: custom" },
     ],
     correctId: "b",
-    explanation:
-      "ESPHome ships with a dedicated bme280_i2c platform. You just declare the i2c: bus, point the sensor at the right address, and ESPHome handles all the register reads automatically.",
+    explanation: "quiz.q2.explanation",
   },
   {
     id: "q3",
-    question: "What does the scan: true option do in the i2c: block?",
+    question: "quiz.q3.question",
     answers: [
-      { id: "a", text: "Enables encryption on the I2C bus" },
-      { id: "b", text: "Scans and logs all detected I2C addresses on boot" },
-      { id: "c", text: "Continuously polls sensors for new data" },
-      { id: "d", text: "Enables multi-master mode" },
+      { id: "a", text: "quiz.q3.answers.a" },
+      { id: "b", text: "quiz.q3.answers.b" },
+      { id: "c", text: "quiz.q3.answers.c" },
+      { id: "d", text: "quiz.q3.answers.d" },
     ],
     correctId: "b",
-    explanation:
-      "With scan: true, ESPHome logs all I2C addresses it detects at boot. This is invaluable for debugging wiring — if your sensor doesn't appear, something is wrong with the physical connection or address.",
+    explanation: "quiz.q3.explanation",
   },
 ]
 
@@ -99,40 +97,41 @@ const busCards = [
   {
     id: "i2c",
     label: "I2C",
-    subtitle: "Two-wire synchronous bus",
+    subtitle: "buses.i2c.subtitle",
     icon: Radio,
     color: "text-pink-400",
     bg: "bg-pink-500/20",
     border: "border-pink-500/30",
     pins: [
-      { name: "SDA", desc: "Serial Data", pin: "GPIO21" },
-      { name: "SCL", desc: "Serial Clock", pin: "GPIO22" },
+      { name: "SDA", desc: "buses.i2c.pins.sda", pin: "GPIO21" },
+      { name: "SCL", desc: "buses.i2c.pins.scl", pin: "GPIO22" },
     ],
-    pros: ["Only 2 wires", "Up to 127 devices per bus", "Built-in addressing"],
-    cons: ["Slower than SPI", "Shorter cable distances"],
-    example: "BME280, SHT31, OLED displays, RTC modules",
+    pros: ["buses.i2c.pros.0", "buses.i2c.pros.1", "buses.i2c.pros.2"],
+    cons: ["buses.i2c.cons.0", "buses.i2c.cons.1"],
+    example: "buses.i2c.example",
   },
   {
     id: "spi",
     label: "SPI",
-    subtitle: "Four-wire synchronous bus",
+    subtitle: "buses.spi.subtitle",
     icon: Activity,
     color: "text-violet-400",
     bg: "bg-violet-500/20",
     border: "border-violet-500/30",
     pins: [
-      { name: "CLK", desc: "Clock", pin: "GPIO18" },
-      { name: "MOSI", desc: "Controller → Device", pin: "GPIO23" },
-      { name: "MISO", desc: "Device → Controller", pin: "GPIO19" },
-      { name: "CS", desc: "Chip Select (per device)", pin: "GPIO5" },
+      { name: "CLK", desc: "buses.spi.pins.clk", pin: "GPIO18" },
+      { name: "MOSI", desc: "buses.spi.pins.mosi", pin: "GPIO23" },
+      { name: "MISO", desc: "buses.spi.pins.miso", pin: "GPIO19" },
+      { name: "CS", desc: "buses.spi.pins.cs", pin: "GPIO5" },
     ],
-    pros: ["Fast — up to 80 MHz", "Full-duplex", "Simple protocol"],
-    cons: ["One CS pin per device", "More wires"],
-    example: "Color TFT displays, SD cards, high-speed ADCs",
+    pros: ["buses.spi.pros.0", "buses.spi.pros.1", "buses.spi.pros.2"],
+    cons: ["buses.spi.cons.0", "buses.spi.cons.1"],
+    example: "buses.spi.example",
   },
 ]
 
 export function Level6_3() {
+  const t = useLevelT("6_3")
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [submitted, setSubmitted] = useState<Record<string, boolean>>({})
 
@@ -168,18 +167,16 @@ export function Level6_3() {
       {/* Header */}
       <div className="mb-8">
         <div className="mb-4 flex items-center gap-2">
-          <Badge className="bg-pink-500/20 text-pink-400">Phase 6</Badge>
-          <Badge variant="outline">Level 6.3</Badge>
+          <Badge className="bg-pink-500/20 text-pink-400">{t("header.phase")}</Badge>
+          <Badge variant="outline">{t("header.level")}</Badge>
           {isCompleted && (
             <Badge className="bg-green-500/20 text-green-400">
-              <CheckCircle2 className="mr-1 h-3 w-3" /> Completed
+              <CheckCircle2 className="mr-1 h-3 w-3" /> {t("header.completed")}
             </Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">I2C and SPI Devices</h1>
-        <p className="text-lg text-muted-foreground">
-          Connect sensors and displays over the two most common hardware buses.
-        </p>
+        <h1 className="mb-2 text-3xl font-bold">{t("header.title")}</h1>
+        <p className="text-lg text-muted-foreground">{t("header.subtitle")}</p>
       </div>
 
       {/* Bus comparison */}
@@ -201,7 +198,9 @@ export function Level6_3() {
                     </div>
                     <div>
                       <CardTitle className="text-base">{bus.label}</CardTitle>
-                      <CardDescription className="text-xs">{bus.subtitle}</CardDescription>
+                      <CardDescription className="text-xs">
+                        {t(bus.subtitle as Parameters<typeof t>[0])}
+                      </CardDescription>
                     </div>
                   </div>
                 </CardHeader>
@@ -209,7 +208,7 @@ export function Level6_3() {
                   {/* Pins */}
                   <div>
                     <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      Pins
+                      {t("buses.pinsLabel")}
                     </p>
                     <div className="space-y-1">
                       {bus.pins.map((pin) => (
@@ -217,7 +216,9 @@ export function Level6_3() {
                           <code className={cn("w-12 rounded px-1 font-mono font-bold", bus.bg, bus.color)}>
                             {pin.name}
                           </code>
-                          <span className="text-muted-foreground">{pin.desc}</span>
+                          <span className="text-muted-foreground">
+                            {t(pin.desc as Parameters<typeof t>[0])}
+                          </span>
                           <span className="ml-auto font-mono text-muted-foreground/60">{pin.pin}</span>
                         </div>
                       ))}
@@ -226,21 +227,25 @@ export function Level6_3() {
                   {/* Pros/cons */}
                   <div className="grid grid-cols-2 gap-2 text-xs">
                     <div>
-                      <p className="mb-1 font-medium text-green-400">Pros</p>
+                      <p className="mb-1 font-medium text-green-400">{t("buses.prosLabel")}</p>
                       {bus.pros.map((p) => (
-                        <p key={p} className="text-muted-foreground">• {p}</p>
+                        <p key={p} className="text-muted-foreground">
+                          • {t(p as Parameters<typeof t>[0])}
+                        </p>
                       ))}
                     </div>
                     <div>
-                      <p className="mb-1 font-medium text-amber-400">Cons</p>
+                      <p className="mb-1 font-medium text-amber-400">{t("buses.consLabel")}</p>
                       {bus.cons.map((c) => (
-                        <p key={c} className="text-muted-foreground">• {c}</p>
+                        <p key={c} className="text-muted-foreground">
+                          • {t(c as Parameters<typeof t>[0])}
+                        </p>
                       ))}
                     </div>
                   </div>
                   <p className="text-xs text-muted-foreground">
-                    <span className="font-medium text-foreground/60">Common devices: </span>
-                    {bus.example}
+                    <span className="font-medium text-foreground/60">{t("buses.commonDevices")} </span>
+                    {t(bus.example as Parameters<typeof t>[0])}
                   </p>
                 </CardContent>
               </Card>
@@ -253,8 +258,8 @@ export function Level6_3() {
       <div className="mb-8 grid gap-4 md:grid-cols-2">
         <Card className="border-border/50 bg-card/50">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm">BME280 over I2C</CardTitle>
-            <CardDescription className="text-xs">Temperature, pressure and humidity</CardDescription>
+            <CardTitle className="text-sm">{t("configs.i2c.title")}</CardTitle>
+            <CardDescription className="text-xs">{t("configs.i2c.desc")}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="rounded-lg border border-border/50 bg-gray-950 p-3">
@@ -266,8 +271,8 @@ export function Level6_3() {
         </Card>
         <Card className="border-border/50 bg-card/50">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm">ILI9341 TFT over SPI</CardTitle>
-            <CardDescription className="text-xs">Color display with a custom lambda</CardDescription>
+            <CardTitle className="text-sm">{t("configs.spi.title")}</CardTitle>
+            <CardDescription className="text-xs">{t("configs.spi.desc")}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="rounded-lg border border-border/50 bg-gray-950 p-3">
@@ -283,7 +288,7 @@ export function Level6_3() {
       <div className="space-y-6">
         <div className="flex items-center gap-3">
           <Cpu className="h-5 w-5 text-pink-400" />
-          <h2 className="text-lg font-semibold">Quiz — answer all three to complete Phase 6</h2>
+          <h2 className="text-lg font-semibold">{t("quiz.heading")}</h2>
         </div>
 
         {questions.map((q, qi) => {
@@ -312,7 +317,9 @@ export function Level6_3() {
                   >
                     {qi + 1}
                   </div>
-                  <CardTitle className="text-sm leading-relaxed">{q.question}</CardTitle>
+                  <CardTitle className="text-sm leading-relaxed">
+                    {t(q.question as Parameters<typeof t>[0])}
+                  </CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
@@ -354,7 +361,7 @@ export function Level6_3() {
                             answer.id.toUpperCase()
                           )}
                         </div>
-                        {answer.text}
+                        {t(answer.text as Parameters<typeof t>[0])}
                       </motion.button>
                     )
                   })}
@@ -375,9 +382,9 @@ export function Level6_3() {
                         )}
                       >
                         <span className="font-medium">
-                          {userAnswer === q.correctId ? "Correct! " : "Not quite — "}
+                          {userAnswer === q.correctId ? t("quiz.correct") : t("quiz.notQuite")}
                         </span>
-                        {q.explanation}
+                        {t(q.explanation as Parameters<typeof t>[0])}
                       </div>
                     </motion.div>
                   )}
@@ -401,25 +408,25 @@ export function Level6_3() {
                     >
                       <Sparkles className="h-10 w-10 text-pink-400" />
                     </motion.div>
-                    <h3 className="mb-2 text-2xl font-bold">Phase 6 Complete!</h3>
-                    <p className="mb-2 text-muted-foreground">
-                      You've mastered the advanced ESPHome topics:
-                    </p>
+                    <h3 className="mb-2 text-2xl font-bold">{t("outcome.title")}</h3>
+                    <p className="mb-2 text-muted-foreground">{t("outcome.mastered")}</p>
                     <div className="my-6 flex flex-wrap justify-center gap-2">
-                      {["Lambdas", "Custom components", "I2C devices", "SPI devices"].map((item) => (
+                      {[
+                        "outcome.topics.lambdas",
+                        "outcome.topics.customComponents",
+                        "outcome.topics.i2c",
+                        "outcome.topics.spi",
+                      ].map((item) => (
                         <Badge key={item} className="bg-pink-500/20 text-pink-300">
                           <CheckCircle2 className="mr-1 h-3 w-3" />
-                          {item}
+                          {t(item as Parameters<typeof t>[0])}
                         </Badge>
                       ))}
                     </div>
-                    <p className="mb-6 text-sm text-muted-foreground">
-                      You now have the full ESPHome toolkit — from your first visual flow all the way
-                      to custom C++ components. Go build something amazing.
-                    </p>
+                    <p className="mb-6 text-sm text-muted-foreground">{t("outcome.toolkit")}</p>
                     <div className="flex justify-center">
                       <Badge className="bg-gradient-to-r from-pink-500/20 to-violet-500/20 px-4 py-2 text-base text-pink-300">
-                        🎓 ESPHome Graduate
+                        🎓 {t("outcome.graduate")}
                       </Badge>
                     </div>
                   </CardContent>
@@ -427,11 +434,9 @@ export function Level6_3() {
               ) : (
                 <Card className="border-amber-500/30 bg-amber-500/5">
                   <CardContent className="py-6 text-center">
-                    <p className="mb-4 text-sm text-muted-foreground">
-                      Review the explanations above and try again.
-                    </p>
+                    <p className="mb-4 text-sm text-muted-foreground">{t("outcome.reviewHint")}</p>
                     <Button variant="outline" onClick={reset}>
-                      Try Again
+                      {t("buttons.tryAgain")}
                     </Button>
                   </CardContent>
                 </Card>

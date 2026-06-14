@@ -2,14 +2,33 @@ import { CommandPalette } from "@/components/CommandPalette"
 import { OnboardingDialog } from "@/components/OnboardingDialog"
 import { Button } from "@/components/ui/button"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { Skeleton } from "@/components/ui/skeleton"
 import { getProgress } from "@/lib/api"
 import { useProgressStore } from "@/stores/progressStore"
 import { useQuery } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 import { Outlet } from "react-router-dom"
 import { AppSidebar } from "./AppSidebar"
 import { Header } from "./Header"
+
+/** Page-shaped placeholder shown while a lazy route chunk loads. */
+function PageSkeleton() {
+  return (
+    <div className="mx-auto w-full max-w-4xl space-y-6 p-8">
+      <div className="space-y-2">
+        <Skeleton className="h-8 w-64" />
+        <Skeleton className="h-4 w-96 max-w-full" />
+      </div>
+      <Skeleton className="h-48 w-full rounded-xl" />
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Skeleton className="h-24 rounded-xl" />
+        <Skeleton className="h-24 rounded-xl" />
+        <Skeleton className="h-24 rounded-xl" />
+      </div>
+    </div>
+  )
+}
 
 export function AppShell() {
   const hydrate = useProgressStore((s) => s.hydrate)
@@ -51,8 +70,10 @@ export function AppShell() {
       <AppSidebar variant="inset" />
       <SidebarInset>
         <Header />
-        <div className="flex flex-1 flex-col">
-          <Outlet />
+        <div className="flex-1 min-w-0">
+          <Suspense fallback={<PageSkeleton />}>
+            <Outlet />
+          </Suspense>
         </div>
       </SidebarInset>
     </SidebarProvider>

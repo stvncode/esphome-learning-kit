@@ -15,11 +15,22 @@ import {
   STARTER_KIT_NODES,
 } from "@/components/workspace/constants"
 import type { SavedProject } from "@/components/workspace/types"
-import { useWorkspaceT } from "@/lib/i18n"
 import { listProjects } from "@/lib/api"
+import { useWorkspaceT } from "@/lib/i18n"
 import { useQuery } from "@tanstack/react-query"
 import { motion } from "framer-motion"
-import { Bell, ChevronRight, Clock, Cpu, Droplets, FolderOpen, Plus, Radio, Sparkles, Wrench } from "lucide-react"
+import {
+  Bell,
+  ChevronRight,
+  Clock,
+  Cpu,
+  Droplets,
+  FolderOpen,
+  Plus,
+  Radio,
+  Sparkles,
+  Wrench,
+} from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -44,7 +55,9 @@ export function WorkspaceHome() {
     queryKey: ["projects", "workspace"],
     queryFn: () => listProjects("workspace"),
   })
-  const savedProjects: SavedProject[] = (projects ?? []).map((p) => p.data as unknown as SavedProject)
+  const savedProjects: SavedProject[] = (projects ?? []).map(
+    (p) => p.data as unknown as SavedProject,
+  )
 
   function handleCreate() {
     const name = projectName.trim() || (template === "starter-kit" ? "starter-kit" : "my-device")
@@ -76,14 +89,18 @@ export function WorkspaceHome() {
 
   function formatDate(iso: string) {
     try {
-      return new Date(iso).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })
+      return new Date(iso).toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
     } catch {
       return iso
     }
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-10 px-6 py-10">
+    <div className="mx-auto max-w-7xl space-y-10 px-4 py-10">
       {/* Header */}
       <div className="space-y-1">
         <div className="flex items-center gap-2">
@@ -119,7 +136,10 @@ export function WorkspaceHome() {
                 <div className="flex items-start justify-between">
                   <CardTitle className="text-sm">{t("home.starterKit")}</CardTitle>
                   {template === "starter-kit" && (
-                    <Badge variant="outline" className="border-emerald-500/40 text-emerald-400 text-[10px]">
+                    <Badge
+                      variant="outline"
+                      className="border-emerald-500/40 text-emerald-400 text-[10px]"
+                    >
                       {t("home.selected")}
                     </Badge>
                   )}
@@ -154,7 +174,10 @@ export function WorkspaceHome() {
                 <div className="flex items-start justify-between">
                   <CardTitle className="text-sm">{t("home.blank")}</CardTitle>
                   {template === "blank" && (
-                    <Badge variant="outline" className="border-blue-500/40 text-blue-400 text-[10px]">
+                    <Badge
+                      variant="outline"
+                      className="border-blue-500/40 text-blue-400 text-[10px]"
+                    >
                       {t("home.selected")}
                     </Badge>
                   )}
@@ -235,9 +258,13 @@ export function WorkspaceHome() {
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-medium">{project.name}</p>
                         <p className="text-xs text-muted-foreground">
-                          {BOARD_OPTIONS.find((b) => b.value === project.board)?.label ?? project.board ?? "ESP32"}
+                          {BOARD_OPTIONS.find((b) => b.value === project.board)?.label ??
+                            project.board ??
+                            "ESP32"}
                           {" · "}
-                          {t(project.nodes.length === 1 ? "home.node" : "home.nodes", { n: project.nodes.length })}
+                          {t(project.nodes.length === 1 ? "home.node" : "home.nodes", {
+                            n: project.nodes.length,
+                          })}
                         </p>
                       </div>
                       <div className="flex shrink-0 items-center gap-1 text-xs text-muted-foreground">

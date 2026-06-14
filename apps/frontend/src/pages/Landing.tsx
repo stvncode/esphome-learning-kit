@@ -14,6 +14,8 @@ export function Landing() {
   const heroOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0])
   const heroY = useTransform(scrollYProgress, [0, 0.6], [0, 60])
 
+  console.log(import.meta.env.VITE_API_URL)
+
   return (
     <div ref={heroRef} className="min-h-screen bg-background text-foreground">
       <LandingHeader />

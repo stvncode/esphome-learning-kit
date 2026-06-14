@@ -1,5 +1,6 @@
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute"
 import { AppShell } from "@/components/layout"
+import { MotionConfig } from "framer-motion"
 import { Loader2 } from "lucide-react"
 import { lazy, Suspense } from "react"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
@@ -39,8 +40,9 @@ function PageFallback() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Suspense fallback={<PageFallback />}>
+    <MotionConfig reducedMotion="user">
+      <BrowserRouter>
+        <Suspense fallback={<PageFallback />}>
         <Routes>
           {/* Public routes — no AppShell */}
           <Route path="/" element={<Landing />} />
@@ -69,7 +71,8 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-    </BrowserRouter>
+      </BrowserRouter>
+    </MotionConfig>
   )
 }
 

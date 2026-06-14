@@ -5,6 +5,7 @@ import * as schema from "./db/schema.ts";
 import { sendEmail } from "./email.ts";
 
 export const auth = betterAuth({
+  baseURL: process.env.BETTER_AUTH_URL,
   database: drizzleAdapter(db, {
     provider: "pg",
     schema,

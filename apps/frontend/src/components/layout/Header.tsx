@@ -10,12 +10,13 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Progress } from "@/components/ui/progress"
 import { ACHIEVEMENTS } from "@/lib/achievements"
+import { getClassroom } from "@/lib/api"
 import { signOut, useSession } from "@/lib/auth-client"
 import { useCurriculumLabels, useTranslation } from "@/lib/i18n"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { useProgressStore } from "@/stores/progressStore"
-import { useQueryClient } from "@tanstack/react-query"
+import { useQuery, useQueryClient } from "@tanstack/react-query"
 import {
   ChevronRight,
   Flame,
@@ -42,10 +43,18 @@ const PHASE_META: Record<number, { color: string }> = {
 
 function Breadcrumb() {
   const location = useLocation()
-  const params = useParams<{ levelId?: string }>()
+  const params = useParams<{ levelId?: string; id?: string }>()
   const { t } = useTranslation()
   const { levelTitle, phaseLabel } = useCurriculumLabels()
   const path = location.pathname
+
+  // On a classroom page, reuse the cached class so we can show its name.
+  const classId = path.startsWith("/app/classes/") ? params.id : undefined
+  const { data: room } = useQuery({
+    queryKey: ["classroom", classId],
+    queryFn: () => getClassroom(classId!),
+    enabled: !!classId,
+  })
 
   type Crumb = { label: string; to?: string; color?: string }
   const crumbs: Crumb[] = [{ label: t("nav.dashboard"), to: "/app" }]
@@ -57,6 +66,9 @@ function Breadcrumb() {
     crumbs.push({ label: t("nav.builder") })
   } else if (path === "/app/classes") {
     crumbs.push({ label: t("nav.classes") })
+  } else if (classId) {
+    crumbs.push({ label: t("nav.classes"), to: "/app/classes" })
+    crumbs.push({ label: room?.name ?? "…" })
   } else if (path === "/app/glossary") {
     crumbs.push({ label: t("nav.glossary") })
   } else if (path === "/app/settings") {

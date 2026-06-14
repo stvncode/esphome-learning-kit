@@ -13,12 +13,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { createClassroom, listClassrooms } from "@/lib/api"
 import { useRole } from "@/lib/auth-client"
+import { useClassesT } from "@/lib/i18n"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { GraduationCap, Loader2, Plus, Users } from "lucide-react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
-import { useClassesT } from "@/lib/i18n"
 
 export function Classes() {
   const navigate = useNavigate()
@@ -29,7 +29,10 @@ export function Classes() {
   const [createOpen, setCreateOpen] = useState(false)
   const [className, setClassName] = useState("")
 
-  const { data: classes, isLoading } = useQuery({ queryKey: ["classrooms"], queryFn: listClassrooms })
+  const { data: classes, isLoading } = useQuery({
+    queryKey: ["classrooms"],
+    queryFn: listClassrooms,
+  })
 
   const memberCount = (n: number) => t(n === 1 ? "student" : "students", { n })
 
@@ -46,7 +49,7 @@ export function Classes() {
   })
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8 px-6 py-10">
+    <div className="mx-auto max-w-7xl space-y-8 px-4 py-10">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
@@ -77,7 +80,10 @@ export function Classes() {
                 onKeyDown={(e) => e.key === "Enter" && className.trim() && createMutation.mutate()}
               />
               <DialogFooter>
-                <Button onClick={() => createMutation.mutate()} disabled={!className.trim() || createMutation.isPending}>
+                <Button
+                  onClick={() => createMutation.mutate()}
+                  disabled={!className.trim() || createMutation.isPending}
+                >
                   {createMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
                   {t("createBtn")}
                 </Button>
@@ -101,9 +107,13 @@ export function Classes() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 [grid-template-columns:repeat(auto-fill,minmax(320px,1fr))]">
           {classes.map((room) => (
-            <button key={room.id} onClick={() => navigate(`/app/classes/${room.id}`)} className="text-left">
+            <button
+              key={room.id}
+              onClick={() => navigate(`/app/classes/${room.id}`)}
+              className="text-left"
+            >
               <Card className="h-full cursor-pointer border-border/50 transition-all hover:border-border">
                 <CardHeader className="pb-3">
                   <div className="flex items-start justify-between">
@@ -118,7 +128,9 @@ export function Classes() {
                       {memberCount(room.memberCount)}
                     </span>
                     {room.role === "teacher" && (
-                      <span className="font-mono tracking-widest text-foreground/70">{room.code}</span>
+                      <span className="font-mono tracking-widest text-foreground/70">
+                        {room.code}
+                      </span>
                     )}
                   </CardDescription>
                 </CardHeader>

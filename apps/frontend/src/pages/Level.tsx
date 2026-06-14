@@ -4,7 +4,7 @@ import { useCurriculumLabels, useTranslation } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
 import { lazy, Suspense, useEffect, type ComponentType } from "react"
-import { Link, Navigate, useParams } from "react-router-dom"
+import { Link, Navigate, useNavigate, useParams } from "react-router-dom"
 
 // Each level is code-split into its own chunk and only loaded when visited.
 const levelComponents: Record<string, ComponentType> = {
@@ -41,7 +41,7 @@ function LevelNav({ levelId }: { levelId: string }) {
   const next = LEVEL_ORDER[idx + 1]
 
   return (
-    <div className="sticky top-16 z-10 flex items-center justify-between gap-2 border-b border-border/50 bg-background/80 px-6 py-2 backdrop-blur-sm">
+    <div className="sticky top-0 z-10 flex items-center justify-between gap-2 border-b border-border/50 bg-background/80 px-6 py-2 backdrop-blur-sm">
       <Button asChild variant="ghost" size="sm" disabled={!prev} className="gap-1">
         {prev ? (
           <Link to={`/app/level/${prev.id}`}>
@@ -82,11 +82,30 @@ function LevelNav({ levelId }: { levelId: string }) {
 export function Level() {
   const { levelId } = useParams<{ levelId: string }>()
   const setCurrentLevel = useProgressStore((s) => s.setCurrentLevel)
+  const navigate = useNavigate()
 
   // Remember the last level visited so the dashboard can offer "Continue".
   useEffect(() => {
     if (levelId && levelMeta(levelId)) setCurrentLevel(levelId)
   }, [levelId, setCurrentLevel])
+
+  // ←/→ move between levels, unless the user is typing in a field.
+  useEffect(() => {
+    if (!levelId) return
+    const idx = levelIndex(levelId)
+    if (idx === -1) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return
+      const el = e.target as HTMLElement | null
+      if (el && (el.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))) return
+      const prev = LEVEL_ORDER[idx - 1]
+      const next = LEVEL_ORDER[idx + 1]
+      if (e.key === "ArrowLeft" && prev) navigate(`/app/level/${prev.id}`)
+      else if (e.key === "ArrowRight" && next) navigate(`/app/level/${next.id}`)
+    }
+    window.addEventListener("keydown", onKey)
+    return () => window.removeEventListener("keydown", onKey)
+  }, [levelId, navigate])
 
   if (!levelId) {
     return <Navigate to="/" replace />

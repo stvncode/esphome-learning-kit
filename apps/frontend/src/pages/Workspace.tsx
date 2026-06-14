@@ -439,7 +439,7 @@ export function Workspace() {
 
   // ─── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="flex h-[calc(100svh-4rem)] flex-col p-6">
+    <div className="flex h-[calc(100svh-4rem)] flex-col px-4 py-6">
       <WorkspaceHeader
         deviceName={deviceName}
         onDeviceNameChange={setDeviceName}

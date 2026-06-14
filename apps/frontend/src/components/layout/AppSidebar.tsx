@@ -13,8 +13,11 @@ import {
 } from "@/components/ui/sidebar"
 import { useCurriculumLabels, useTranslation } from "@/lib/i18n"
 import { cn } from "@/lib/utils"
+import { useProgressStore } from "@/stores/progressStore"
 import {
   BookOpen,
+  Check,
+  CheckCircle2,
   Code2,
   GraduationCap,
   Hammer,
@@ -26,7 +29,7 @@ import {
   Wrench,
 } from "lucide-react"
 import type { LucideIcon } from "lucide-react"
-import { Fragment } from "react"
+import { Fragment, useEffect, useRef } from "react"
 import { Link, useLocation } from "react-router-dom"
 
 const phases = [
@@ -78,7 +81,25 @@ export function AppSidebar({ variant = "inset", ...props }: React.ComponentProps
   const { pathname } = useLocation()
   const { t } = useTranslation()
   const { levelTitle, phaseLabel } = useCurriculumLabels()
-  const { setOpenMobile, isMobile } = useSidebar()
+  const { setOpen, setOpenMobile, isMobile } = useSidebar()
+  const completedLevels = useProgressStore((s) => s.completedLevels)
+  const isDone = (id: string) => completedLevels.includes(id)
+
+  // Keep the active level scrolled into view in the sidebar as you navigate.
+  const activeRef = useRef<HTMLAnchorElement>(null)
+  useEffect(() => {
+    activeRef.current?.scrollIntoView({ block: "nearest" })
+  }, [pathname])
+
+  // Collapse to the icon rail on tablet widths (below `lg`); expand on desktop.
+  // Below 768px the sidebar becomes the mobile drawer (handled by the provider).
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 1023px)")
+    if (mql.matches) setOpen(false)
+    const onChange = (e: MediaQueryListEvent) => setOpen(!e.matches)
+    mql.addEventListener("change", onChange)
+    return () => mql.removeEventListener("change", onChange)
+  }, [setOpen])
 
   // Close the mobile drawer after navigating.
   const close = () => {
@@ -139,6 +160,9 @@ export function AppSidebar({ variant = "inset", ...props }: React.ComponentProps
             <SidebarMenu>
               {phases.map((phase) => {
                 const Icon = phase.icon
+                const done = phase.levels.filter(isDone).length
+                const total = phase.levels.length
+                const phaseDone = done === total
                 return (
                   <Fragment key={phase.id}>
                     <SidebarMenuItem>
@@ -151,29 +175,54 @@ export function AppSidebar({ variant = "inset", ...props }: React.ComponentProps
                         )}
                       >
                         <Icon className="size-3.5 shrink-0" />
-                        <span className="truncate group-data-[collapsible=icon]:hidden">
+                        <span className="flex-1 truncate group-data-[collapsible=icon]:hidden">
                           {phaseLabel(phase.id)}
                         </span>
+                        {phaseDone ? (
+                          <CheckCircle2 className="size-3.5 shrink-0 text-emerald-500 group-data-[collapsible=icon]:hidden" />
+                        ) : (
+                          <span className="shrink-0 tabular-nums text-[10px] font-normal text-muted-foreground group-data-[collapsible=icon]:hidden">
+                            {done}/{total}
+                          </span>
+                        )}
                       </div>
                     </SidebarMenuItem>
-                    {phase.levels.map((id) => (
-                      <SidebarMenuItem key={id}>
-                        <SidebarMenuButton
-                          asChild
-                          size="sm"
-                          isActive={pathname === `/app/level/${id}`}
-                          tooltip={levelTitle(id)}
-                          className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0!"
-                        >
-                          <Link to={`/app/level/${id}`} onClick={close}>
-                            <span className="shrink-0 font-mono text-xs opacity-60">{id}</span>
-                            <span className="truncate group-data-[collapsible=icon]:hidden">
-                              {levelTitle(id)}
-                            </span>
-                          </Link>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
+                    {phase.levels.map((id) => {
+                      const active = pathname === `/app/level/${id}`
+                      const done = isDone(id)
+                      return (
+                        <SidebarMenuItem key={id}>
+                          <SidebarMenuButton
+                            asChild
+                            size="sm"
+                            isActive={active}
+                            tooltip={levelTitle(id)}
+                            className="group-data-[collapsible=icon]:mx-auto group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:p-0!"
+                          >
+                            <Link
+                              to={`/app/level/${id}`}
+                              onClick={close}
+                              ref={active ? activeRef : undefined}
+                            >
+                              <span
+                                className={cn(
+                                  "shrink-0 font-mono text-xs",
+                                  done ? "text-emerald-500" : "opacity-60",
+                                )}
+                              >
+                                {id}
+                              </span>
+                              <span className="flex-1 truncate group-data-[collapsible=icon]:hidden">
+                                {levelTitle(id)}
+                              </span>
+                              {done && (
+                                <Check className="size-3.5 shrink-0 text-emerald-500 group-data-[collapsible=icon]:hidden" />
+                              )}
+                            </Link>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      )
+                    })}
                   </Fragment>
                 )
               })}

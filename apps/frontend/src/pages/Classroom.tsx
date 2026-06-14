@@ -21,10 +21,10 @@ import {
   removeClassroomMember,
   renameClassroom,
 } from "@/lib/api"
-import { useCurriculumLabels, useClassesT } from "@/lib/i18n"
+import { useClassesT, useCurriculumLabels } from "@/lib/i18n"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { AnimatePresence, motion } from "framer-motion"
-import { ArrowLeft, Check, Copy, Loader2, LogOut, Mail, Pencil, Trash2, Trophy, UserX } from "lucide-react"
+import { Check, Copy, Loader2, LogOut, Mail, Pencil, Trash2, Trophy, UserX } from "lucide-react"
 import { useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
@@ -44,7 +44,11 @@ export function Classroom() {
   const [viewing, setViewing] = useState<{ userId: string; name: string } | null>(null)
   const { confirm, dialog: confirmDialog } = useDeleteConfirm()
 
-  const { data: room, isLoading, isError } = useQuery({
+  const {
+    data: room,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["classroom", id],
     queryFn: () => getClassroom(id!),
     enabled: !!id,
@@ -96,7 +100,10 @@ export function Classroom() {
 
   const inviteMutation = useMutation({
     mutationFn: () => {
-      const emails = emailsText.split(/[\s,;]+/).map((e) => e.trim()).filter(Boolean)
+      const emails = emailsText
+        .split(/[\s,;]+/)
+        .map((e) => e.trim())
+        .filter(Boolean)
       if (emails.length === 0) throw new Error("Enter at least one email address")
       return inviteStudents(id!, emails)
     },
@@ -118,7 +125,7 @@ export function Classroom() {
 
   if (isError || !room) {
     return (
-      <div className="mx-auto max-w-4xl px-6 py-10 text-center">
+      <div className="mx-auto max-w-7xl px-4 py-10 text-center">
         <p className="text-muted-foreground">{t("notLoaded")}</p>
         <Button asChild variant="outline" className="mt-4">
           <Link to="/app/classes">{t("backBtn")}</Link>
@@ -137,15 +144,8 @@ export function Classroom() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8 px-6 py-10">
+    <div className="mx-auto max-w-7xl space-y-8 px-4 py-10">
       <div>
-        <Link
-          to="/app/classes"
-          className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {t("back")}
-        </Link>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
@@ -177,8 +177,16 @@ export function Classroom() {
                 <Mail className="h-4 w-4" />
                 {t("invite")}
               </Button>
-              <Button variant="outline" className="gap-2 font-mono tracking-widest" onClick={copyCode}>
-                {copied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
+              <Button
+                variant="outline"
+                className="gap-2 font-mono tracking-widest"
+                onClick={copyCode}
+              >
+                {copied ? (
+                  <Check className="h-4 w-4 text-green-500" />
+                ) : (
+                  <Copy className="h-4 w-4" />
+                )}
                 {room.code}
               </Button>
               <Button
@@ -198,7 +206,11 @@ export function Classroom() {
               </Button>
             </div>
           ) : (
-            <Button variant="outline" className="gap-2 text-red-400" onClick={() => leaveMutation.mutate()}>
+            <Button
+              variant="outline"
+              className="gap-2 text-red-400"
+              onClick={() => leaveMutation.mutate()}
+            >
               <LogOut className="h-4 w-4" />
               {t("leave")}
             </Button>
@@ -301,7 +313,10 @@ export function Classroom() {
             className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
           />
           <DialogFooter>
-            <Button onClick={() => inviteMutation.mutate()} disabled={!emailsText.trim() || inviteMutation.isPending}>
+            <Button
+              onClick={() => inviteMutation.mutate()}
+              disabled={!emailsText.trim() || inviteMutation.isPending}
+            >
               {inviteMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
               {t("inviteBtn")}
             </Button>
@@ -321,7 +336,10 @@ export function Classroom() {
             onKeyDown={(e) => e.key === "Enter" && newName.trim() && renameMutation.mutate()}
           />
           <DialogFooter>
-            <Button onClick={() => renameMutation.mutate()} disabled={!newName.trim() || renameMutation.isPending}>
+            <Button
+              onClick={() => renameMutation.mutate()}
+              disabled={!newName.trim() || renameMutation.isPending}
+            >
               {renameMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
               {t("save")}
             </Button>
@@ -368,12 +386,16 @@ function StudentDetailDialog({
         ) : (
           <div className="space-y-4">
             <div className="flex gap-4 text-sm">
-              <span>{t("levelsOf", { done: data.completedLevels.length, total: TOTAL_LEVELS })}</span>
+              <span>
+                {t("levelsOf", { done: data.completedLevels.length, total: TOTAL_LEVELS })}
+              </span>
               <span>🏆 {t("achievementsCount", { n: data.achievementCount })}</span>
             </div>
 
             <div>
-              <p className="mb-1 text-xs font-medium text-muted-foreground">{t("completedLevels")}</p>
+              <p className="mb-1 text-xs font-medium text-muted-foreground">
+                {t("completedLevels")}
+              </p>
               {data.completedLevels.length === 0 ? (
                 <p className="text-xs text-muted-foreground">{t("noneYet")}</p>
               ) : (

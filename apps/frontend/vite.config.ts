@@ -15,12 +15,25 @@ export default defineConfig({
     rollupOptions: {
       output: {
         // Split large, stable vendors into their own long-cached chunks.
-        manualChunks: {
-          "react-vendor": ["react", "react-dom", "react-router-dom"],
-          motion: ["framer-motion"],
-          editor: ["@monaco-editor/react"],
-          auth: ["better-auth"],
-          validation: ["zod"],
+        manualChunks(id) {
+          if (!id.includes("node_modules")) return
+          if (
+            id.includes("/react/") ||
+            id.includes("/react-dom/") ||
+            id.includes("/react-router/") ||
+            id.includes("/react-router-dom/") ||
+            id.includes("/scheduler/")
+          )
+            return "react-vendor"
+          if (
+            id.includes("/framer-motion/") ||
+            id.includes("/motion-dom/") ||
+            id.includes("/motion-utils/")
+          )
+            return "motion"
+          if (id.includes("@monaco-editor")) return "editor"
+          if (id.includes("better-auth")) return "auth"
+          if (id.includes("/zod/")) return "validation"
         },
       },
     },

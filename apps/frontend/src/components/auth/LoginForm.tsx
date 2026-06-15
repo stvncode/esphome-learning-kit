@@ -23,7 +23,8 @@ export function LoginForm({ onSwitchToSignup, inviteToken }: LoginFormProps) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
-  const redirectTo = (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? "/app"
+  const redirectTo =
+    (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? "/app"
 
   const mutation = useMutation({
     mutationFn: async () => {
@@ -37,7 +38,7 @@ export function LoginForm({ onSwitchToSignup, inviteToken }: LoginFormProps) {
         toast.success("You've joined the class!")
         navigate("/app/classes", { replace: true })
       } else {
-        toast.success("Welcome back!")
+        toast.success("Welcome !")
         navigate(redirectTo, { replace: true })
       }
     },

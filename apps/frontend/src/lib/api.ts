@@ -182,3 +182,29 @@ export function acceptInvite(token: string): Promise<Classroom> {
 export function deleteAccount(): Promise<void> {
   return apiFetch("/api/account", () => undefined, { method: "DELETE" })
 }
+
+// ── Avatar ──────────────────────────────────────────────────────────────────
+
+/**
+ * Upload an avatar image and get back a URL to store on the user.
+ * Uses FormData directly (not apiFetch) so the browser sets the multipart
+ * Content-Type with its boundary instead of forcing application/json.
+ */
+export async function uploadAvatar(file: File): Promise<{ url: string }> {
+  const form = new FormData()
+  form.append("file", file)
+  const res = await fetch(`${API_URL}/api/avatar`, {
+    method: "POST",
+    credentials: "include",
+    body: form,
+  })
+  if (!res.ok) {
+    const message = await res
+      .clone()
+      .json()
+      .then((body) => (body && typeof body.error === "string" ? body.error : null))
+      .catch(() => null)
+    throw new Error(message ?? `Avatar upload failed: ${res.status} ${res.statusText}`)
+  }
+  return res.json() as Promise<{ url: string }>
+}

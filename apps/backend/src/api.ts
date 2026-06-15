@@ -23,6 +23,7 @@ import {
 } from "./db/schema.ts";
 import { appUrl, sendEmail } from "./email.ts";
 import { buildStandings, generateCode } from "./standings.ts";
+import { avatarKey, backendUrl, s3 } from "./storage.ts";
 
 type Variables = {
   userId: string;
@@ -150,6 +151,30 @@ api.delete("/projects", async (c) => {
       ),
     );
   return c.json({ success: true });
+});
+
+// ── Avatar ──────────────────────────────────────────────────────────────────
+
+const MAX_AVATAR_BYTES = 2 * 1024 * 1024; // 2 MB
+
+// Upload the current user's avatar to R2 and return a proxy URL the client
+// stores on the user (via better-auth updateUser). The bytes are served back
+// by the public GET /api/avatar/:userId route in index.ts.
+api.post("/avatar", async (c) => {
+  if (!s3) return c.json({ error: "Image storage is not configured" }, 500);
+  const userId = c.get("userId");
+
+  const body = await c.req.parseBody();
+  const file = body["file"];
+  if (!(file instanceof File)) return c.json({ error: "No file uploaded" }, 400);
+  if (!file.type.startsWith("image/")) return c.json({ error: "File must be an image" }, 400);
+  if (file.size > MAX_AVATAR_BYTES) return c.json({ error: "Image must be 2MB or smaller" }, 400);
+
+  await s3.write(avatarKey(userId), await file.arrayBuffer(), { type: file.type });
+
+  // The key is stable per user, so re-uploads reuse the same URL — the `v`
+  // query param busts any cached copy of the previous image.
+  return c.json({ url: `${backendUrl()}/api/avatar/${userId}?v=${Date.now()}` });
 });
 
 // ── Account ───────────────────────────────────────────────────────────────────

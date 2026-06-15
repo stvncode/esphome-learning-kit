@@ -6,6 +6,7 @@ import { api } from "./api.ts";
 import { auth } from "./auth.ts";
 import { db } from "./db/index.ts";
 import { classroom, classroomInvite } from "./db/schema.ts";
+import { avatarKey, s3 } from "./storage.ts";
 
 const trustedOrigins = process.env.TRUSTED_ORIGINS?.split(",").map((o) => o.trim()) ?? [
   "http://localhost:5173",
@@ -45,6 +46,20 @@ app.get("/api/invites/:token", async (c) => {
     return c.json({ error: "Invalid or used invite" }, 404);
   }
   return c.json({ classroomName: invite.classroomName, email: invite.email });
+});
+
+// Public: stream a user's avatar from R2. Registered before the gated /api
+// router so <img> tags (which don't carry the session cookie) can load it.
+app.get("/api/avatar/:userId", async (c) => {
+  if (!s3) return c.json({ error: "Image storage is not configured" }, 500);
+  const file = s3.file(avatarKey(c.req.param("userId")));
+  if (!(await file.exists())) return c.json({ error: "Not found" }, 404);
+  return new Response(file, {
+    headers: {
+      "Content-Type": file.type || "image/jpeg",
+      "Cache-Control": "public, max-age=3600",
+    },
+  });
 });
 
 // Authenticated app data (progress, projects, classrooms).

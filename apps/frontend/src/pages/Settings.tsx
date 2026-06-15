@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { deleteAccount } from "@/lib/api"
+import { deleteAccount, uploadAvatar } from "@/lib/api"
 import { authClient, signOut, useSession } from "@/lib/auth-client"
 import { LOCALES, LOCALE_LABELS, useTranslation } from "@/lib/i18n"
 import { useProgressStore } from "@/stores/progressStore"
@@ -33,16 +33,27 @@ export function Settings() {
 
   const [name, setName] = useState(session?.user?.name ?? "")
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null)
+  const [avatarFile, setAvatarFile] = useState<File | null>(null)
   const [currentPassword, setCurrentPassword] = useState("")
   const [newPassword, setNewPassword] = useState("")
   const fileRef = useRef<HTMLInputElement>(null)
 
   const profileMutation = useMutation({
     mutationFn: async () => {
-      const { error } = await authClient.updateUser({ name: name.trim() })
+      const trimmed = name.trim()
+      // Upload the picked file first (if any), then persist name + image in one
+      // updateUser call so the session reflects both immediately.
+      const image = avatarFile ? (await uploadAvatar(avatarFile)).url : undefined
+      const { error } = await authClient.updateUser({
+        ...(trimmed && trimmed !== session?.user?.name ? { name: trimmed } : {}),
+        ...(image ? { image } : {}),
+      })
       if (error) throw new Error(error.message ?? "Failed to update profile")
     },
-    onSuccess: () => toast.success(t("settings.toast.profileSaved")),
+    onSuccess: () => {
+      setAvatarFile(null)
+      toast.success(t("settings.toast.profileSaved"))
+    },
     onError: (e: Error) => toast.error(e.message),
   })
 
@@ -74,8 +85,13 @@ export function Settings() {
 
   const onPickAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
-    if (file) setAvatarPreview(URL.createObjectURL(file))
+    if (file) {
+      setAvatarFile(file)
+      setAvatarPreview(URL.createObjectURL(file))
+    }
   }
+
+  const nameChanged = !!name.trim() && name.trim() !== session?.user?.name
 
   const initial = (session?.user?.name?.[0] ?? "?").toUpperCase()
   const avatarSrc = avatarPreview ?? session?.user?.image ?? undefined
@@ -129,7 +145,7 @@ export function Settings() {
           </FieldGroup>
           <Button
             onClick={() => profileMutation.mutate()}
-            disabled={!name.trim() || name.trim() === session?.user?.name || profileMutation.isPending}
+            disabled={profileMutation.isPending || (!nameChanged && !avatarFile)}
           >
             {profileMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
             {t("common.save")}

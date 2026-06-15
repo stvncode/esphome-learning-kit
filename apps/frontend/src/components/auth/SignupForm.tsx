@@ -1,9 +1,10 @@
+import { VerifyEmailCard } from "@/components/auth/VerifyEmailCard"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { acceptInvite } from "@/lib/api"
-import { signUp } from "@/lib/auth-client"
+import { authClient, signIn, signUp } from "@/lib/auth-client"
 import { signUpSchema } from "@esphome-learning-kit/types"
 import { useMutation } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
@@ -21,12 +22,14 @@ interface SignupFormProps extends React.ComponentProps<"div"> {
 
 export function SignupForm({ onSwitchToLogin, inviteToken, lockedEmail }: SignupFormProps) {
   const navigate = useNavigate()
+  const [step, setStep] = useState<"details" | "verify">("details")
   const [name, setName] = useState("")
   const [email, setEmail] = useState(lockedEmail ?? "")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
 
-  const mutation = useMutation({
+  // Step 1: create the account (no session yet — autoSignIn is off) and email a code.
+  const signupMutation = useMutation({
     mutationFn: async () => {
       const payload = signUpSchema.parse({ name, email, password, confirmPassword })
       const { error } = await signUp.email({
@@ -35,19 +38,42 @@ export function SignupForm({ onSwitchToLogin, inviteToken, lockedEmail }: Signup
         password: payload.password,
       })
       if (error) throw new Error(error.message ?? "Unable to create account")
-      if (inviteToken) await acceptInvite(inviteToken)
+      const { error: otpError } = await authClient.emailOtp.sendVerificationOtp({
+        email: payload.email,
+        type: "email-verification",
+      })
+      if (otpError) throw new Error(otpError.message ?? "Unable to send verification code")
     },
     onSuccess: () => {
-      if (inviteToken) {
-        toast.success("Account created — you've joined the class!")
-        navigate("/app/classes", { replace: true })
-      } else {
-        toast.success("Account created!")
-        navigate("/app", { replace: true })
-      }
+      setStep("verify")
+      toast.success("We sent a verification code to your email")
     },
     onError: (error: Error) => toast.error(error.message),
   })
+
+  // Step 2 hand-off: the email is verified, so sign in and accept any invite.
+  const finishSignup = async () => {
+    const { error } = await signIn.email({ email, password })
+    if (error) throw new Error(error.message ?? "Unable to sign in")
+    if (inviteToken) {
+      await acceptInvite(inviteToken)
+      toast.success("Account created — you've joined the class!")
+      navigate("/app/classes", { replace: true })
+    } else {
+      toast.success("Account created!")
+      navigate("/app", { replace: true })
+    }
+  }
+
+  if (step === "verify") {
+    return (
+      <VerifyEmailCard
+        email={email}
+        onVerified={finishSignup}
+        onBack={() => setStep("details")}
+      />
+    )
+  }
 
   return (
     <Card className="border-border bg-card shadow-none">
@@ -59,7 +85,7 @@ export function SignupForm({ onSwitchToLogin, inviteToken, lockedEmail }: Signup
         <form
           onSubmit={(e) => {
             e.preventDefault()
-            mutation.mutate()
+            signupMutation.mutate()
           }}
         >
           <FieldGroup>
@@ -109,8 +135,8 @@ export function SignupForm({ onSwitchToLogin, inviteToken, lockedEmail }: Signup
               </Field>
             </div>
             <FieldDescription>Must be at least 8 characters long.</FieldDescription>
-            <Button type="submit" className="w-full" disabled={mutation.isPending}>
-              {mutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
+            <Button type="submit" className="w-full" disabled={signupMutation.isPending}>
+              {signupMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
               Create Account
             </Button>
             <FieldDescription className="text-center">

@@ -1,9 +1,10 @@
+import { VerifyEmailCard } from "@/components/auth/VerifyEmailCard"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { acceptInvite } from "@/lib/api"
-import { signIn } from "@/lib/auth-client"
+import { authClient, signIn } from "@/lib/auth-client"
 import { signInSchema } from "@esphome-learning-kit/types"
 import { useMutation } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
@@ -20,30 +21,70 @@ interface LoginFormProps extends React.ComponentProps<"div"> {
 export function LoginForm({ onSwitchToSignup, inviteToken }: LoginFormProps) {
   const navigate = useNavigate()
   const location = useLocation()
+  const [step, setStep] = useState<"credentials" | "verify">("credentials")
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   const redirectTo =
     (location.state as { from?: { pathname?: string } } | null)?.from?.pathname ?? "/app"
 
+  // Land in the app once a session exists (after sign-in, or after verifying).
+  const finishLogin = async () => {
+    if (inviteToken) {
+      await acceptInvite(inviteToken)
+      toast.success("You've joined the class!")
+      navigate("/app/classes", { replace: true })
+    } else {
+      toast.success("Welcome !")
+      navigate(redirectTo, { replace: true })
+    }
+  }
+
   const mutation = useMutation({
     mutationFn: async () => {
       const credentials = signInSchema.parse({ email, password })
       const { error } = await signIn.email(credentials)
-      if (error) throw new Error(error.message ?? "Unable to sign in")
-      if (inviteToken) await acceptInvite(inviteToken)
+      if (error) {
+        // Account exists but the email was never verified — send a fresh code
+        // and route to the OTP step instead of failing outright.
+        if ((error as { code?: string }).code === "EMAIL_NOT_VERIFIED") {
+          const { error: otpError } = await authClient.emailOtp.sendVerificationOtp({
+            email,
+            type: "email-verification",
+          })
+          if (otpError) throw new Error(otpError.message ?? "Unable to send verification code")
+          return { needsVerification: true as const }
+        }
+        throw new Error(error.message ?? "Unable to sign in")
+      }
+      await finishLogin()
+      return { needsVerification: false as const }
     },
-    onSuccess: () => {
-      if (inviteToken) {
-        toast.success("You've joined the class!")
-        navigate("/app/classes", { replace: true })
-      } else {
-        toast.success("Welcome !")
-        navigate(redirectTo, { replace: true })
+    onSuccess: (result) => {
+      if (result.needsVerification) {
+        setStep("verify")
+        toast.info("Please verify your email — we sent you a code")
       }
     },
     onError: (error: Error) => toast.error(error.message),
   })
+
+  // After the code is accepted the email is verified, so signing in now succeeds.
+  const finishAfterVerify = async () => {
+    const { error } = await signIn.email({ email, password })
+    if (error) throw new Error(error.message ?? "Unable to sign in")
+    await finishLogin()
+  }
+
+  if (step === "verify") {
+    return (
+      <VerifyEmailCard
+        email={email}
+        onVerified={finishAfterVerify}
+        onBack={() => setStep("credentials")}
+      />
+    )
+  }
 
   return (
     <Card className="border-border bg-card shadow-none">

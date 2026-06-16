@@ -30,6 +30,10 @@ export function LoginForm({ onSwitchToSignup, inviteToken }: LoginFormProps) {
 
   // Land in the app once a session exists (after sign-in, or after verifying).
   const finishLogin = async () => {
+    // The session cookie is cross-site (frontend and backend are different
+    // origins), so force a fresh session fetch before navigating — otherwise
+    // ProtectedRoute can read a stale null and bounce back to /signin.
+    await authClient.getSession({ query: { disableCookieCache: true } })
     if (inviteToken) {
       await acceptInvite(inviteToken)
       toast.success("You've joined the class!")

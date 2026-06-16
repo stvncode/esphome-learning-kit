@@ -55,6 +55,9 @@ export function SignupForm({ onSwitchToLogin, inviteToken, lockedEmail }: Signup
   const finishSignup = async () => {
     const { error } = await signIn.email({ email, password })
     if (error) throw new Error(error.message ?? "Unable to sign in")
+    // Cross-site session cookie — confirm the session resolves before we
+    // navigate so ProtectedRoute doesn't bounce us back to /signin.
+    await authClient.getSession({ query: { disableCookieCache: true } })
     if (inviteToken) {
       await acceptInvite(inviteToken)
       toast.success("Account created — you've joined the class!")

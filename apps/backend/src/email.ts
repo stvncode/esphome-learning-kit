@@ -21,7 +21,12 @@ export async function sendEmail(opts: {
     body: JSON.stringify({ from, to: opts.to, subject: opts.subject, html: opts.html }),
   });
   if (!res.ok) {
-    console.error(`[email] Resend failed (${res.status}) for ${opts.to}. ${opts.devNote ?? ""}`);
+    // Surface Resend's actual reason (e.g. unverified domain / test-mode
+    // recipient restriction) instead of just the status code.
+    const detail = await res.text().catch(() => "");
+    console.error(
+      `[email] Resend failed (${res.status}) for ${opts.to}: ${detail} ${opts.devNote ?? ""}`,
+    );
   }
 }
 

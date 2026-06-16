@@ -35,7 +35,6 @@ export function LoginForm({ onSwitchToSignup, inviteToken }: LoginFormProps) {
       toast.success("You've joined the class!")
       navigate("/app/classes", { replace: true })
     } else {
-      toast.success("Welcome !")
       navigate(redirectTo, { replace: true })
     }
   }

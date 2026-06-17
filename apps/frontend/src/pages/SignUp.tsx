@@ -4,7 +4,7 @@ import { acceptInvite, getInviteInfo } from "@/lib/api"
 import { useSession } from "@/lib/auth-client"
 import { useQuery } from "@tanstack/react-query"
 import { ArrowLeft, GraduationCap, Loader2 } from "lucide-react"
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link, useNavigate, useSearchParams } from "react-router-dom"
 import { toast } from "sonner"
 
@@ -14,6 +14,13 @@ export function SignUp() {
   const inviteToken = searchParams.get("invite") ?? undefined
   const { data: session, isPending: sessionPending } = useSession()
   const accepting = useRef(false)
+  // True once the session check has settled at least once. Sign-up triggers a
+  // session refetch (flipping `sessionPending` back to true), and we must NOT
+  // tear the form down for that — doing so drops the in-progress verify step.
+  const [sessionSettled, setSessionSettled] = useState(false)
+  useEffect(() => {
+    if (!sessionPending) setSessionSettled(true)
+  }, [sessionPending])
 
   // Look up the invite so we can show the class name and lock the email.
   const { data: invite, isLoading: inviteLoading } = useQuery({
@@ -35,7 +42,10 @@ export function SignUp() {
       .catch((e: Error) => toast.error(e.message))
   }, [inviteToken, session, sessionPending, navigate])
 
-  if (inviteToken && (sessionPending || session)) {
+  // Show the spinner when an invited user is already signed in (the effect
+  // above auto-joins them), or on the very first session check before we know.
+  // Once settled, keep the form mounted through later refetches.
+  if (inviteToken && (session || (sessionPending && !sessionSettled))) {
     return (
       <div className="flex min-h-svh items-center justify-center bg-background">
         <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />

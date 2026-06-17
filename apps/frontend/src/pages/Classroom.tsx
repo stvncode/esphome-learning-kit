@@ -24,7 +24,7 @@ import {
 import { useClassesT, useCurriculumLabels } from "@/lib/i18n"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { AnimatePresence, motion } from "framer-motion"
-import { Check, Copy, Loader2, LogOut, Mail, Pencil, Trash2, Trophy, UserX } from "lucide-react"
+import { Check, Copy, Loader2, LogOut, Mail, Pencil, Trash2, Trophy, UserX, X } from "lucide-react"
 import { useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { toast } from "sonner"
@@ -40,7 +40,8 @@ export function Classroom() {
   const [renameOpen, setRenameOpen] = useState(false)
   const [newName, setNewName] = useState("")
   const [inviteOpen, setInviteOpen] = useState(false)
-  const [emailsText, setEmailsText] = useState("")
+  const [emails, setEmails] = useState<string[]>([])
+  const [emailInput, setEmailInput] = useState("")
   const [viewing, setViewing] = useState<{ userId: string; name: string } | null>(null)
   const { confirm, dialog: confirmDialog } = useDeleteConfirm()
 
@@ -98,18 +99,64 @@ export function Classroom() {
     onError: (e: Error) => toast.error(e.message),
   })
 
+  // Split a raw string on whitespace/comma/semicolon into normalized emails.
+  const parseEmails = (raw: string) =>
+    raw
+      .split(/[\s,;]+/)
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean)
+
+  // Commit one or more emails to the chip list, de-duplicating against existing.
+  const addEmails = (raw: string) => {
+    const parts = parseEmails(raw)
+    if (parts.length) setEmails((prev) => Array.from(new Set([...prev, ...parts])))
+  }
+
+  const removeEmail = (email: string) => setEmails((prev) => prev.filter((e) => e !== email))
+
+  // Commit on change rather than keydown: a typed/pasted/autofilled delimiter
+  // reliably lands in the value, whereas keydown can miss it (IME, mobile,
+  // some keyboard locales). Whatever follows the last delimiter keeps typing.
+  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    if (/[\s,;]/.test(value)) {
+      const parts = value.split(/[\s,;]+/)
+      const trailing = parts.pop() ?? ""
+      addEmails(parts.join(" "))
+      setEmailInput(trailing)
+    } else {
+      setEmailInput(value)
+    }
+  }
+
+  const onEmailKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      // Enter doesn't alter the value, so commit it explicitly here.
+      e.preventDefault()
+      addEmails(emailInput)
+      setEmailInput("")
+    } else if (e.key === "Backspace" && !emailInput) {
+      // Backspace on an empty input removes the last chip.
+      setEmails((prev) => prev.slice(0, -1))
+    }
+  }
+
+  const onEmailPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    addEmails(e.clipboardData.getData("text"))
+  }
+
   const inviteMutation = useMutation({
     mutationFn: () => {
-      const emails = emailsText
-        .split(/[\s,;]+/)
-        .map((e) => e.trim())
-        .filter(Boolean)
-      if (emails.length === 0) throw new Error("Enter at least one email address")
-      return inviteStudents(id!, emails)
+      // Include any text still in the input that wasn't turned into a chip yet.
+      const all = Array.from(new Set([...emails, ...parseEmails(emailInput)]))
+      if (all.length === 0) throw new Error("Enter at least one email address")
+      return inviteStudents(id!, all)
     },
     onSuccess: ({ invited }) => {
       setInviteOpen(false)
-      setEmailsText("")
+      setEmails([])
+      setEmailInput("")
       toast.success(t("toastInvited", { n: invited }))
     },
     onError: (e: Error) => toast.error(e.message),
@@ -305,17 +352,37 @@ export function Classroom() {
             <DialogTitle>{t("inviteTitle")}</DialogTitle>
             <DialogDescription>{t("inviteDesc", { name: room.name })}</DialogDescription>
           </DialogHeader>
-          <textarea
-            value={emailsText}
-            onChange={(e) => setEmailsText(e.target.value)}
-            rows={4}
-            placeholder={t("invitePlaceholder")}
-            className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm outline-none focus-visible:ring-1 focus-visible:ring-ring"
-          />
+          <div className="flex min-h-20 w-full flex-wrap content-start gap-1.5 rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm focus-within:ring-1 focus-within:ring-ring">
+            {emails.map((email) => (
+              <Badge key={email} variant="secondary" className="gap-1 pr-1">
+                {email}
+                <button
+                  type="button"
+                  onClick={() => removeEmail(email)}
+                  aria-label={`Remove ${email}`}
+                  className="rounded-full p-0.5 text-muted-foreground transition-colors hover:bg-background hover:text-destructive"
+                >
+                  <X className="h-3 w-3" />
+                </button>
+              </Badge>
+            ))}
+            <input
+              value={emailInput}
+              onChange={onEmailChange}
+              onKeyDown={onEmailKeyDown}
+              onPaste={onEmailPaste}
+              onBlur={() => {
+                addEmails(emailInput)
+                setEmailInput("")
+              }}
+              placeholder={emails.length === 0 ? t("invitePlaceholder") : ""}
+              className="min-w-[8rem] flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
+            />
+          </div>
           <DialogFooter>
             <Button
               onClick={() => inviteMutation.mutate()}
-              disabled={!emailsText.trim() || inviteMutation.isPending}
+              disabled={(emails.length === 0 && !emailInput.trim()) || inviteMutation.isPending}
             >
               {inviteMutation.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
               {t("inviteBtn")}

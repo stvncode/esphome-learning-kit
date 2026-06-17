@@ -8,7 +8,7 @@ import { authClient, signIn, signUp } from "@/lib/auth-client"
 import { signUpSchema } from "@esphome-learning-kit/types"
 import { useMutation } from "@tanstack/react-query"
 import { Loader2 } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "sonner"
 
@@ -27,6 +27,13 @@ export function SignupForm({ onSwitchToLogin, inviteToken, lockedEmail }: Signup
   const [email, setEmail] = useState(lockedEmail ?? "")
   const [password, setPassword] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("")
+
+  // The invite (and thus `lockedEmail`) loads async, after this form first
+  // renders — so the useState initializer above misses it. Sync it in when it
+  // arrives so the invited email pre-fills the read-only field.
+  useEffect(() => {
+    if (lockedEmail) setEmail(lockedEmail)
+  }, [lockedEmail])
 
   // Step 1: create the account (no session yet — autoSignIn is off) and email a code.
   const signupMutation = useMutation({

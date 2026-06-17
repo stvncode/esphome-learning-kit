@@ -24,7 +24,7 @@ import { toast } from "sonner"
 export function Settings() {
   const { t, locale, setLocale } = useTranslation()
   const { theme, setTheme } = useTheme()
-  const { data: session } = useSession()
+  const { data: session, refetch: refetchSession } = useSession()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const clearProgress = useProgressStore((s) => s.clear)
@@ -50,8 +50,10 @@ export function Settings() {
       })
       if (error) throw new Error(error.message ?? "Failed to update profile")
     },
-    onSuccess: () => {
+    onSuccess: async () => {
+      await refetchSession()
       setAvatarFile(null)
+      setAvatarPreview(null)
       toast.success(t("settings.toast.profileSaved"))
     },
     onError: (e: Error) => toast.error(e.message),
@@ -128,7 +130,13 @@ export function Settings() {
                 <Camera className="h-5 w-5" />
               </span>
             </button>
-            <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={onPickAvatar} />
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={onPickAvatar}
+            />
             <p className="text-xs text-muted-foreground">{t("settings.profile.avatarHint")}</p>
           </div>
 

@@ -221,8 +221,12 @@ export function Header() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full">
-              <span className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 text-xs font-semibold text-white">
-                {session?.user?.name?.[0]?.toUpperCase() ?? <User className="h-4 w-4" />}
+              <span className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 text-xs font-semibold text-white">
+                {session?.user?.image ? (
+                  <img src={session.user.image} alt="" className="h-full w-full object-cover" />
+                ) : (
+                  (session?.user?.name?.[0]?.toUpperCase() ?? <User className="h-4 w-4" />)
+                )}
               </span>
               <span className="sr-only">Account menu</span>
             </Button>

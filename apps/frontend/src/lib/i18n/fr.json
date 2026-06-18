@@ -204,10 +204,30 @@
     }
   },
   "landing": {
+    "why": {
+      "badge": "Pourquoi ce projet",
+      "titleStart": "Débuter avec ESPHome,",
+      "titleAccent": "sans le YAML ni l'électronique",
+      "intro": "ESPHome permet de créer ses propres objets connectés à partir d'une simple carte électronique. Mais pour débuter, il faut souvent affronter le YAML et quelques notions d'électronique en même temps — deux barrières qui découragent vite. Ce kit est pensé comme un outil d'apprentissage : on avance pas à pas, par le visuel d'abord et le code ensuite, en autonomie comme en classe.",
+      "featuresTitle": "Ce que le kit propose",
+      "levelsTitle": "22 niveaux interactifs",
+      "levelsDesc": "Un parcours en 6 phases, du visuel à l'écriture de YAML, avec démos et quiz.",
+      "builderTitle": "Éditeur visuel",
+      "builderDesc": "On glisse-dépose des blocs, le YAML correspondant se génère à côté.",
+      "glossaryTitle": "Glossaire",
+      "glossaryDesc": "Les termes clés (ESP32, GPIO, lambda, I²C…) expliqués simplement.",
+      "trackingTitle": "Suivi & certificat",
+      "trackingDesc": "Progression, badges, série de jours, et un certificat à la fin.",
+      "teacherTitle": "Espace enseignant",
+      "teacherDesc": "Créer une classe, inviter ses élèves, suivre chacun d'un coup d'œil.",
+      "languagesTitle": "Multilingue",
+      "languagesDesc": "Disponible en français, anglais et néerlandais."
+    },
     "header": {
       "features": "Fonctionnalités",
       "builder": "Éditeur",
       "curriculum": "Programme",
+      "why": "Pourquoi",
       "signIn": "Se connecter",
       "getStarted": "Commencer"
     },

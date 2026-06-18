@@ -67,6 +67,9 @@ export function SignupForm({ onSwitchToLogin, inviteToken, lockedEmail }: Signup
     await authClient.getSession({ query: { disableCookieCache: true } })
     if (inviteToken) {
       await acceptInvite(inviteToken)
+      // Accepting flips a brand-new account's role to "student" server-side;
+      // re-fetch the session so the UI (e.g. the create-class button) hides.
+      await authClient.getSession({ query: { disableCookieCache: true } })
       toast.success("Account created — you've joined the class!")
       navigate("/app/classes", { replace: true })
     } else {

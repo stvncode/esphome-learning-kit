@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button"
+import { useLandingT } from "@/lib/i18n"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
-import { Link } from "react-router-dom"
-import { useLandingT } from "@/lib/i18n"
+import { Link, useNavigate } from "react-router-dom"
 
 const NAV = [
   { key: "header.features" as const, href: "#features" },
@@ -14,6 +14,7 @@ const NAV = [
 export function LandingHeader() {
   const [scrolled, setScrolled] = useState(false)
   const { theme, setTheme } = useTheme()
+  const navigate = useNavigate()
   const t = useLandingT()
 
   useEffect(() => {
@@ -29,7 +30,7 @@ export function LandingHeader() {
       }`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <div className="flex items-center gap-2.5">
+        <div onClick={() => navigate("/")} className="flex items-center gap-2.5 cursor-pointer">
           <img src="/esp32.png" className="h-10 w-10" />
           <span className="font-semibold text-foreground">ESPHome Learning</span>
         </div>
@@ -44,6 +45,12 @@ export function LandingHeader() {
               {t(item.key)}
             </a>
           ))}
+          <Link
+            to="/why"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            {t("header.why")}
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">

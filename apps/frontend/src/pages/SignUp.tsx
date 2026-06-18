@@ -1,7 +1,7 @@
 import { AuthBackground } from "@/components/auth/AuthBackground"
 import { SignupForm } from "@/components/auth/SignupForm"
 import { acceptInvite, getInviteInfo } from "@/lib/api"
-import { useSession } from "@/lib/auth-client"
+import { authClient, useSession } from "@/lib/auth-client"
 import { useQuery } from "@tanstack/react-query"
 import { ArrowLeft, GraduationCap, Loader2 } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
@@ -35,6 +35,8 @@ export function SignUp() {
     if (!inviteToken || sessionPending || !session || accepting.current) return
     accepting.current = true
     acceptInvite(inviteToken)
+      // Refresh the session in case accepting flipped this account to "student".
+      .then(() => authClient.getSession({ query: { disableCookieCache: true } }))
       .then(() => {
         toast.success("You've joined the class!")
         navigate("/app/classes", { replace: true })

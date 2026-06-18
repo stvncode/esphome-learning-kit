@@ -15,6 +15,7 @@ const ForgotPassword = lazy(() =>
 const ResetPassword = lazy(() =>
   import("@/pages/ResetPassword").then((m) => ({ default: m.ResetPassword })),
 )
+const Why = lazy(() => import("@/pages/Why").then((m) => ({ default: m.Why })))
 const NotFound = lazy(() => import("@/pages/NotFound").then((m) => ({ default: m.NotFound })))
 
 // App pages — the heavy ones (flow canvas, YAML, animations).
@@ -46,6 +47,7 @@ function App() {
         <Routes>
           {/* Public routes — no AppShell */}
           <Route path="/" element={<Landing />} />
+          <Route path="/why" element={<Why />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />

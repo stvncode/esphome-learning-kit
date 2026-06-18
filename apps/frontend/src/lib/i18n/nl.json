@@ -204,10 +204,30 @@
     }
   },
   "landing": {
+    "why": {
+      "badge": "Waarom dit project",
+      "titleStart": "Beginnen met ESPHome,",
+      "titleAccent": "zonder de YAML of de elektronica",
+      "intro": "Met ESPHome maak je je eigen verbonden apparaten vanaf een eenvoudig elektronicabord. Maar om te beginnen moet je vaak tegelijk YAML en wat elektronicabegrippen onder de knie krijgen — twee drempels die beginners snel ontmoedigen. Deze kit is bedoeld als leermiddel: je gaat stap voor stap vooruit, eerst visueel en daarna met code, zelfstandig of in de klas.",
+      "featuresTitle": "Wat de kit biedt",
+      "levelsTitle": "22 interactieve niveaus",
+      "levelsDesc": "Een traject in 6 fases, van visueel tot YAML schrijven, met demo's en quizzen.",
+      "builderTitle": "Visuele editor",
+      "builderDesc": "Sleep blokken en de bijbehorende YAML wordt ernaast gegenereerd.",
+      "glossaryTitle": "Woordenlijst",
+      "glossaryDesc": "Belangrijke termen (ESP32, GPIO, lambda, I²C…) eenvoudig uitgelegd.",
+      "trackingTitle": "Voortgang & certificaat",
+      "trackingDesc": "Voortgang, badges, dagreeksen en een certificaat aan het einde.",
+      "teacherTitle": "Docentruimte",
+      "teacherDesc": "Maak een klas, nodig je leerlingen uit, volg elk in één oogopslag.",
+      "languagesTitle": "Meertalig",
+      "languagesDesc": "Beschikbaar in het Frans, Engels en Nederlands."
+    },
     "header": {
       "features": "Functies",
       "builder": "Bouwer",
       "curriculum": "Lesprogramma",
+      "why": "Waarom",
       "signIn": "Inloggen",
       "getStarted": "Aan de slag"
     },
